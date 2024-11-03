@@ -1,0 +1,36 @@
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Ombra per profondità */
+}
+
+.navbar-brand {
+  font-size: 1.5rem; /* Dimensione del testo del brand */
+}
+
+.nav-link {
+  font-size: 1.1rem; /* Dimensione del testo per i link */
+  transition: color 0.3s; /* Transizione per il colore al hover */
+  color: #fff; /* Colore normale */
+}
+
+.nav-link:hover {
+  color: #ffc107; /* Colore giallo per l'effetto hover */
+}
+
+.cart-link {
+  color: #fff; /* Colore normale del carrello */
+}
+
+.cart-link:hover {
+  color: #ffc107; /* Colore giallo per l'effetto hover sul carrello */
+}
+
+.form-control {
+  border-radius: 0; /* Bordo rettangolare per il campo di ricerca */
+  padding: 10px; /* Padding per migliorare l'aspetto */
+  border: 1px solid #ced4da; /* Bordo del campo di ricerca */
+}
+
+.btn-outline-light {
+  border-radius: 0; /* Bordo rettangolare per il bottone */
+  padding: 10px 20px; /* Padding per il bottone */
+}
