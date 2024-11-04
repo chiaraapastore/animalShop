@@ -12,7 +12,7 @@ export class FeedbackService {
   constructor(private http: HttpClient) {}
 
   // Metodo per inviare il feedback al backend
-  sendFeedback(feedback: { email: string; message: string; rating: number }): Observable<any> {
+  sendFeedback(feedback: { email: string; feedback:string }): Observable<any> {
     return this.http.post(this.apiUrl, feedback);
   }
 }

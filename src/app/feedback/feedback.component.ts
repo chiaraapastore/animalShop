@@ -1,30 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FeedbackService } from './feedback.service';
+
+export interface Feedback {
+  email: string;
+  feedback: string;
+}
 
 @Component({
   selector: 'app-feedback',
   templateUrl: './feedback.component.html',
-  styleUrl: './feedback.component.css'
+  styleUrls: ['./feedback.component.css']
 })
-export class FeedbackComponent {
+export class FeedbackComponent implements OnInit {
   email: string = '';
-  message: string = '';
-  rating: number = 0;
+  feedback: string = '';
 
   constructor(private feedbackService: FeedbackService) {}
 
-  setRating(value: number): void {
-    this.rating = value;
-  }
+  ngOnInit(): void {}
 
   sendFeedback(): void {
-    const feedback = {
+    const feedbackData: Feedback = {
       email: this.email,
-      message: this.message,
-      rating: this.rating
+      feedback: this.feedback
     };
 
-    this.feedbackService.sendFeedback(feedback).subscribe(
+    this.feedbackService.sendFeedback(feedbackData).subscribe(
       (response) => {
         alert('Grazie per il tuo feedback!');
         this.resetForm();
@@ -37,7 +38,6 @@ export class FeedbackComponent {
 
   resetForm(): void {
     this.email = '';
-    this.message = '';
-    this.rating = 0;
+    this.feedback = '';
   }
 }
