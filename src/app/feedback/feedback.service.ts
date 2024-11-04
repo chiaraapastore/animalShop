@@ -7,7 +7,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class FeedbackService {
 
-  private apiUrl = 'http://localhost:8080/api/feedback'; // URL del backend
+  private apiUrl = 'http://localhost:8081/api/feedback/save'; // URL del backend
 
   constructor(private http: HttpClient) {}
 
