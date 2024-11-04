@@ -8,7 +8,12 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { NotesComponent } from './notes/notes.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import {Router, RouterModule, Routes} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
+import {config} from "rxjs";
+import { HomeComponent } from './home/home.component';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { ContactComponent } from './contact/contact.component';
+import { CartComponent } from './cart/cart.component';
 
 const appRoutes :Routes = [
   {
@@ -25,6 +30,22 @@ const appRoutes :Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'Home',
+    component: NavigationComponent
+  },
+  {
+    path:'About Us',
+    component: NavigationComponent
+  },
+  {
+    path:'Contact',
+    component: NavigationComponent
+  },
+  {
+    path:'Cart',
+    component: NavigationComponent
+  },
+  {
     path:'**',
     component: NotFoundComponent
   }
@@ -36,13 +57,17 @@ const appRoutes :Routes = [
     NavigationComponent,
     FeedbackComponent,
     NotesComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    HomeComponent,
+    AboutUsComponent,
+    ContactComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes, { enableTracing: true })
   ],
   providers: [
     provideClientHydration()
