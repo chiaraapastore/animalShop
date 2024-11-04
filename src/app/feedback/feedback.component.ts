@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FeedbackService } from './feedback.service';
+import { HttpClient } from '@angular/common/http';
 
 export interface Feedback {
   email: string;
-  feedback: string;
+  message: string;
+  rating: number;
 }
 
 @Component({
@@ -13,19 +15,27 @@ export interface Feedback {
 })
 export class FeedbackComponent implements OnInit {
   email: string = '';
-  feedback: string = '';
+  message: string = '';
+  rating: number = 0;
 
-  constructor(private feedbackService: FeedbackService) {}
+  private url: string = 'http://localhost:8081/api/feedback/save';
+
+  constructor(private feedbackService: FeedbackService, private http: HttpClient) {}
 
   ngOnInit(): void {}
 
+  setRating(value: number): void {
+    this.rating = value;
+  }
+
   sendFeedback(): void {
-    const feedbackData: Feedback = {
+    const feedback: Feedback = {
       email: this.email,
-      feedback: this.feedback
+      message: this.message,
+      rating: this.rating
     };
 
-    this.feedbackService.sendFeedback(feedbackData).subscribe(
+    this.http.post(this.url, feedback).subscribe(
       (response) => {
         alert('Grazie per il tuo feedback!');
         this.resetForm();
@@ -38,6 +48,7 @@ export class FeedbackComponent implements OnInit {
 
   resetForm(): void {
     this.email = '';
-    this.feedback = '';
+    this.message = '';
+    this.rating = 0;
   }
 }
