@@ -9,11 +9,12 @@ import { FeedbackComponent } from './feedback/feedback.component';
 import { NotesComponent } from './notes/notes.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import {RouterModule, Routes} from '@angular/router';
-import {config} from "rxjs";
+import {FormsModule} from "@angular/forms";
 import { HomeComponent } from './home/home.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactComponent } from './contact/contact.component';
 import { CartComponent } from './cart/cart.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const appRoutes :Routes = [
   {
@@ -30,20 +31,20 @@ const appRoutes :Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'Home',
-    component: NavigationComponent
+    path: 'home',
+    component: HomeComponent
   },
   {
-    path:'About Us',
-    component: NavigationComponent
+    path:'about-us',
+    component: AboutUsComponent
   },
   {
-    path:'Contact',
-    component: NavigationComponent
+    path:'contact',
+    component: ContactComponent
   },
   {
-    path:'Cart',
-    component: NavigationComponent
+    path:'cart',
+    component: CartComponent
   },
   {
     path:'**',
@@ -67,7 +68,9 @@ const appRoutes :Routes = [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true })
+    HttpClientModule,
+    RouterModule.forRoot(appRoutes, { enableTracing: true }),
+    FormsModule
   ],
   providers: [
     provideClientHydration()
