@@ -5,34 +5,53 @@
   font-family: Arial, sans-serif;
 }
 
+/* Sezione Hero */
 .hero {
+  position: relative;
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   text-align: center;
   background-image: url('/assets/images/dog.jpg');
   background-size: cover;
-  background-position: center 18%;
-  color: white;
-  padding: 4rem 2rem;
-  border-radius: 8px;
+  background-position: center 26%; /* Regola per centrare meglio il viso del cane */
+  background-repeat: no-repeat;
+  padding: 18rem 2rem 4rem 2rem; /* Incrementa il padding-top per maggiore distacco dalla navbar */
   margin-bottom: 2rem;
+  /* border-radius: 0;  Rimuove bordi smussati */
 }
 
+.hero .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3) 20%, rgba(255, 255, 255, 0.8) 100%);
+  backdrop-filter: blur(3px);
+  border-radius: 0; /* Assicura l'assenza di angoli smussati */
+  z-index: 1;
+}
 
-
+.hero h1,
+.hero p,
+.hero .btn-primary {
+  position: relative;
+  z-index: 2;
+  color: black;
+}
 
 .hero h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-size: 3rem; /* Dimensione del titolo più vicina all'immagine inviata */
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .hero p {
   font-size: 1.5rem;
   margin-bottom: 2rem;
   max-width: 600px;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .hero .btn-primary {
@@ -51,15 +70,49 @@
   background-color: #ff4757;
 }
 
-/* Categorie di Prodotti */
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.navbar, .hero, .overlay {
+  border-radius: 0; /* Rimuove gli angoli smussati */
+}
+
+.navbar-brand {
+  padding-left: 1rem; /* Aggiunge spazio a sinistra del logo "AnimalShop" */
+}
+
+.navbar .navbar-nav .cart-link {
+  color: #fff !important;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navbar .navbar-nav .cart-link:hover {
+  color: #ffc107 !important;
+}
+
+/* Container Fluid */
+.container-fluid {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  width: 100%;
+  margin: 0;
+}
+
+/* Sezione Categorie */
 .categories {
   text-align: center;
   margin: 2rem 0;
-}
-
-.categories h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  padding-bottom: 2rem;
 }
 
 .category-grid {
@@ -67,23 +120,45 @@
   gap: 1.5rem;
   justify-content: center;
   flex-wrap: wrap;
+  align-items: stretch;
 }
 
 .category {
   text-align: center;
   width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding-bottom: 1rem;
+  height: 100%;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
 }
 
 .category img {
   width: 100%;
+  height: 150px;
   border-radius: 8px;
+  object-fit: cover;
   margin-bottom: 0.5rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .category h3 {
   font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0;
+  min-height: 2.5rem;
+}
+
+.category p {
+  margin: 0;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 0.5rem;
 }
 
 /* Sezione Testimonianze */

@@ -1,36 +1,79 @@
+/* Barra di navigazione */
 .navbar {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Ombra per profondità */
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .navbar-brand {
-  font-size: 1.5rem; /* Dimensione del testo del brand */
+  padding-left: 1rem; /* Aggiunge spazio a sinistra del logo "AnimalShop" */
 }
 
-.nav-link {
-  font-size: 1.1rem; /* Dimensione del testo per i link */
-  transition: color 0.3s; /* Transizione per il colore al hover */
-  color: #fff; /* Colore normale */
+
+/* Link della navbar */
+.navbar .navbar-nav {
+  display: flex;
+  gap: 1rem;
 }
 
-.nav-link:hover {
-  color: #ffc107; /* Colore giallo per l'effetto hover */
+.navbar .navbar-nav .nav-link {
+  color: #fff;
+  font-weight: normal;
+  text-decoration: none;
+  padding: 0.5rem;
+  transition: color 0.3s ease;
 }
 
-.cart-link {
-  color: #fff; /* Colore normale del carrello */
+.navbar .navbar-nav .nav-link:hover {
+  color: #ffc107;
 }
 
-.cart-link:hover {
-  color: #ffc107; /* Colore giallo per l'effetto hover sul carrello */
+/* Stili per il link Cart */
+.navbar .navbar-nav .cart-link {
+  color: #fff;
+  font-weight: normal;
+  text-decoration: none;
+  padding: 0.5rem;
+  margin-right: 1rem; /* Spazio tra Cart e la barra di ricerca */
+  transition: color 0.3s ease;
 }
 
-.form-control {
-  border-radius: 0; /* Bordo rettangolare per il campo di ricerca */
-  padding: 10px; /* Padding per migliorare l'aspetto */
-  border: 1px solid #ced4da; /* Bordo del campo di ricerca */
+.navbar .navbar-nav .cart-link:hover {
+  color: #ffc107;
 }
 
-.btn-outline-light {
-  border-radius: 0; /* Bordo rettangolare per il bottone */
-  padding: 10px 20px; /* Padding per il bottone */
+.navbar, .hero, .overlay {
+  border-radius: 0; /* Rimuove gli angoli smussati */
+}
+
+
+
+/* Barra di ricerca con flex-grow */
+.form-inline {
+  display: flex;
+  flex-grow: 1; /* Occupa tutto lo spazio rimanente */
+  max-width: 400px; /* Limita la larghezza massima */
+  margin-left: auto; /* Spinge la barra di ricerca verso destra */
+  margin-right: 1rem;
+}
+
+.form-inline .form-control {
+  border-radius: 0;
+  flex-grow: 1;
+}
+
+.form-inline .btn {
+  border-radius: 0;
+  background-color: #555;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.form-inline .btn:hover {
+  background-color: #777;
 }
