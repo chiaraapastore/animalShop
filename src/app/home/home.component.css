@@ -111,9 +111,11 @@
 /* Sezione Categorie */
 .categories {
   text-align: center;
-  margin: 2rem 0;
-  padding-bottom: 2rem;
+  margin: 6rem 0 2rem 0; /* Aumenta il margine superiore a 6rem */
+  padding-bottom: 2rem; /* Spazio extra sotto la sezione */
 }
+
+
 
 .category-grid {
   display: flex;
@@ -151,6 +153,12 @@
   min-height: 2.5rem;
 }
 
+.categories h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2.5rem; /* Aumenta questo valore per più spazio */
+}
+
+
 .category p {
   margin: 0;
   height: 3.5rem;
@@ -168,9 +176,11 @@
 }
 
 .testimonials h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  font-size: 2.5rem; /* Dimensione uguale al titolo sopra */
+  margin-top: 4rem; /* Aumenta lo spazio sopra */
+  margin-bottom: 2.5rem; /* Eventuale spazio sotto, se necessario */
 }
+
 
 .testimonial-grid {
   display: flex;
