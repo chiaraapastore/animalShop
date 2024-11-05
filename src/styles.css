@@ -25,18 +25,20 @@ body, html {
   margin: 0;
   border-radius: 0;
 }
-
 body.feedback-page::before {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: -10%; /* Estendi l’immagine oltre i bordi */
+  left: -10%;
+  width: 120vw; /* Estensione oltre il 100% della larghezza */
+  height: 120vh; /* Estensione oltre il 100% dell’altezza */
   background-image: url('/assets/images/animal.jpg');
   background-size: cover;
   background-position: center;
-  filter: blur(8px);
+  margin: 0;
+  border-radius: 0;
+  padding: 0;
+  filter: blur(8px); /* Mantieni il blur per sfocare lo sfondo */
   z-index: -1;
 }
 

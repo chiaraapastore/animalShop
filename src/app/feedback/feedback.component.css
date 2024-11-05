@@ -1,15 +1,16 @@
-/* Applica uno sfondo sfocato per il body solo in questa pagina */
 body.feedback-page {
   position: relative;
   font-family: Arial, sans-serif;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 .feedback-container {
   max-width: 500px;
   margin: 100px auto 0 auto;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.8); /* Sfondo bianco semi-trasparente */
+  background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid #ddd;
   border-radius: 8px;
   text-align: center;
