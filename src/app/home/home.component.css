@@ -54,6 +54,24 @@ body {
   text-align: center;
 }
 
+.hero .intro-text {
+  max-width: 600px;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 1.4rem;
+}
+
+.hero .intro-subtext {
+  max-width: 600px;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-top: 0.5rem;
+}
+
+
+
 .hero h1 {
   font-size: 3rem;
   margin-top: 0;
@@ -208,16 +226,19 @@ body {
 
 .testimonial-grid {
   display: flex;
+  gap: 1rem; /* Aggiunge uno spazio tra le card */
   transition: transform 0.5s ease;
+  justify-content: center; /* Centra le card */
 }
 
 .testimonial {
   min-width: 250px;
-  margin-bottom: 0;
-  box-sizing: border-box;
   padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.9); /* Colore di sfondo per ogni card */
   border-radius: 8px;
-  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0 0.5rem; /* Spazio laterale per uniformare */
+  box-sizing: border-box;
 }
 
 .carousel-btn {
