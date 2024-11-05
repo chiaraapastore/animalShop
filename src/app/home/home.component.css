@@ -1,5 +1,5 @@
 body {
-  background-image: url('/assets/images/dog.jpg'); /* Percorso dell'immagine */
+  background-image: url('/assets/images/dog.jpg');
   background-size: cover;
   background-position: -20% 40%;
   background-attachment: fixed;
@@ -124,8 +124,8 @@ body {
 /* Sezione Categorie */
 .categories {
   text-align: center;
-  margin: 4rem 0 1.5rem 0; /* Ridotto margine superiore */
-  padding-bottom: 1.5rem;
+  margin: 6rem 0 3rem 0; /* Aggiunto spazio sopra e sotto */
+  padding-bottom: 2rem;
 }
 
 .category-grid {
@@ -144,11 +144,10 @@ body {
   align-items: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  padding: 1rem;
-  margin-bottom: 1.5rem; /* Spazio sotto i box */
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
   height: 100%;
   justify-content: space-between;
-  border: 1px solid #ddd; /* Evidenzia il bordo del box */
 }
 
 .category img {
@@ -168,19 +167,29 @@ body {
 .categories h2,
 .testimonials h2 {
   font-size: 2.5rem;
-  margin-bottom: 0.75rem; /* Solleva leggermente i titoli */
+  margin-bottom: 1.5rem;
+}
+
+.category p {
+  margin: 0;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 0.5rem;
 }
 
 /* Sezione Testimonianze */
 .testimonials {
   text-align: center;
-  margin-top: 1rem;
-  padding-bottom: 0.5rem;
+  margin-top: 3rem; /* Spazio sopra le testimonianze */
+  padding-bottom: 2rem; /* Aggiunge spazio sotto la sezione delle testimonianze */
 }
 
 .testimonials h2 {
   margin-top: 0;
-  margin-bottom: 0.5rem; /* Solleva il titolo */
+  margin-bottom: 1rem;
 }
 
 .testimonial-carousel {

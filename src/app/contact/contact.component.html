@@ -1,1 +1,25 @@
-<p>contact works!</p>
+<div class="contact-container">
+  <h2>Contattaci</h2>
+  <p>Se hai domande o desideri ulteriori informazioni, compila il modulo qui sotto:</p>
+
+  <form (ngSubmit)="sendContact()">
+    <div class="form-group">
+      <label for="name">Nome</label>
+      <input type="text" id="name" [(ngModel)]="name" name="name" required />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" [(ngModel)]="email" name="email" required />
+    </div>
+    <div class="form-group">
+      <label for="phone">Numero di Telefono</label>
+      <input type="tel" id="phone" [(ngModel)]="phone" name="phone" pattern="[0-9]{10}" required />
+      <small>Inserisci un numero di telefono di 10 cifre</small>
+    </div>
+    <div class="form-group">
+      <label for="message">Messaggio</label>
+      <textarea id="message" [(ngModel)]="message" name="message" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Invia</button>
+  </form>
+</div>
