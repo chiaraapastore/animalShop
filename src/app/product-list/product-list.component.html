@@ -1,0 +1,14 @@
+<div class="filter-container">
+  <div class="dropdown">
+    <button class="dropdown-button">
+      {{ selectedCategory || 'Seleziona Categoria' }}
+      <span class="dropdown-icon">&#x25BC;</span>
+    </button>
+    <div class="dropdown-menu">
+      <div class="dropdown-item" (click)="onCategoryChange('')">Tutte le categorie</div>
+      <div class="dropdown-item" *ngFor="let category of categories" (click)="onCategoryChange(category.categoryName)">
+        {{ category.categoryName }}
+      </div>
+    </div>
+  </div>
+</div>
