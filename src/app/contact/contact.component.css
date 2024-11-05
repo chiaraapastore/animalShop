@@ -1,6 +1,6 @@
 /* Sfondo e stile generale */
 body.contact-page {
-  background-image: url('/assets/images/contact.jpg'); 
+  background-image: url('/assets/images/contact.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;

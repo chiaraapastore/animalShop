@@ -41,6 +41,20 @@ body.feedback-page::before {
   filter: blur(8px); /* Mantieni il blur per sfocare lo sfondo */
   z-index: -1;
 }
+body.contact-page::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/assets/images/contact-background.jpg'); /* Percorso immagine di sfondo */
+  background-size: cover;
+  background-position: center;
+  filter: blur(15px); /* Aumenta il valore per una sfocatura maggiore */
+  z-index: -1;
+}
+
 
 
 
