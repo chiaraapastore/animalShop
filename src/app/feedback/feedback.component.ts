@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Renderer2, OnInit} from '@angular/core';
 import { FeedbackService } from './feedback.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -20,9 +20,12 @@ export class FeedbackComponent implements OnInit {
 
   private url: string = 'http://localhost:8081/api/feedback/save';
 
-  constructor(private feedbackService: FeedbackService, private http: HttpClient) {}
+  constructor(private feedbackService: FeedbackService, private http: HttpClient, private render: Renderer2) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.render.addClass(document.body, 'feedback-page');
+  }
+
 
   setRating(value: number): void {
     this.rating = value;
@@ -51,4 +54,5 @@ export class FeedbackComponent implements OnInit {
     this.message = '';
     this.rating = 0;
   }
+
 }

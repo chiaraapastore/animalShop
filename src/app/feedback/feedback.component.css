@@ -1,18 +1,22 @@
-body {
+/* feedback.component.css */
+
+body.feedback-page {
   position: relative;
   font-family: Arial, sans-serif;
+  overflow: hidden; /* Per mantenere fisso lo sfondo */
 }
 
-body::before {
+body.feedback-page::before {
   content: "";
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(200, 200, 200, 0.5) url('/assets/images/animal.jpg') no-repeat center center;
+  background-image: url('/assets/images/animal.jpg'); /* Percorso dell'immagine */
   background-size: cover;
-  filter: blur(8px); /* Regola il livello di sfocatura */
+  background-position: center;
+  filter: blur(8px); /* Sfocatura */
   z-index: -1; /* Posiziona lo sfondo sotto il contenuto */
 }
 
@@ -20,11 +24,15 @@ body::before {
   max-width: 500px;
   margin: 100px auto 0 auto;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.8); /* Sfondo bianco semi-trasparente */
   border: 1px solid #ddd;
   border-radius: 8px;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feedback-container h2 {
+  margin-bottom: 20px;
 }
 
 .feedback-container h2 {
