@@ -1,4 +1,4 @@
-import { Component, Renderer2, OnInit} from '@angular/core';
+import {Component, Renderer2, OnInit, OnDestroy} from '@angular/core';
 import { FeedbackService } from './feedback.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -13,17 +13,20 @@ export interface Feedback {
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.css']
 })
-export class FeedbackComponent implements OnInit {
+export class FeedbackComponent implements OnInit, OnDestroy {
   email: string = '';
   message: string = '';
   rating: number = 0;
 
   private url: string = 'http://localhost:8081/api/feedback/save';
 
-  constructor(private feedbackService: FeedbackService, private http: HttpClient, private render: Renderer2) {}
+  constructor(private feedbackService: FeedbackService, private http: HttpClient, private renderer: Renderer2) {}
 
   ngOnInit(): void {
-    this.render.addClass(document.body, 'feedback-page');
+    this.renderer.addClass(document.body, 'feedback-page');
+  }
+  ngOnDestroy(): void {
+    this.renderer.removeClass(document.body, 'feedback-page');
   }
 
 
