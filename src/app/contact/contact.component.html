@@ -20,7 +20,7 @@
 
   <div class="form-group">
     <label for="phone">Numero di Telefono</label>
-    <input type="tel" id="phone" [(ngModel)]="phone" placeholder="Inserisci un numero di telefono di 10 cifre" />
+    <input type="tel" id="phone" [(ngModel)]="phoneNumber" placeholder="Inserisci un numero di telefono di 10 cifre" />
   </div>
 
   <div class="form-group">
@@ -28,5 +28,5 @@
     <textarea id="message" [(ngModel)]="message" placeholder="Scrivi il tuo messaggio qui..." required></textarea>
   </div>
 
-  <button (click)="sendContact()">Invia</button>
+  <button (click)="sendMessage()">Invia</button>
 </div>
