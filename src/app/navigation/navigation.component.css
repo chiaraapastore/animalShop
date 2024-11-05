@@ -1,16 +1,23 @@
 /* Barra di navigazione */
 .navbar {
-  display: flex;
-  align-items: center;
+  position: fixed; /* Rende la navbar fissa */
+  top: 0;
+  left: 0;
   width: 100%;
+  z-index: 1000;
   background-color: #333;
   color: white;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 1rem;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-brand {
   padding-left: 1rem; /* Aggiunge spazio a sinistra del logo "AnimalShop" */
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
 }
 
 

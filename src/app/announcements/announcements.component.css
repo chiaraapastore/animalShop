@@ -1,0 +1,35 @@
+.announcements-container {
+  max-width: 800px;
+  margin: 100px auto; /* Margine superiore per staccarlo dalla barra di navigazione */
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.85); /* Sfondo bianco semi-trasparente */
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.announcements-container h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.announcement {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.announcement h3 {
+  font-size: 1.8rem;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.announcement p {
+  font-size: 1.2rem;
+  margin: 0;
+}

@@ -44,16 +44,56 @@ body.feedback-page::before {
 body.contact-page::before {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
   background-image: url('/assets/images/contact.jpg');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat; /* Impedisce la ripetizione dell'immagine */
   filter: blur(5px); /* Maggiore sfocatura */
+  margin: 0;
+  border-radius: 0;
+  padding: 0;
   z-index: -1;
 }
+/* Sfondo sfocato per la pagina "About Us" */
+body.about-us-page::before {
+  content: "";
+  position: fixed;
+  top: -10%; /* Estende l’immagine oltre il bordo superiore */
+  left: -10%; /* Estende l’immagine oltre il bordo sinistro */
+  width: 120%; /* Estensione oltre il 100% della larghezza */
+  height: 120%; /* Estensione oltre il 100% dell’altezza */
+  background-image: url('/assets/images/about-us.jpg'); /* Assicurati che il percorso sia corretto */
+  background-size: cover; /* Copre l'intera area */
+  background-position: center; /* Centra l'immagine */
+  background-repeat: no-repeat; /* Impedisce la ripetizione dell'immagine */
+  filter: blur(5px); /* Sfocatura moderata */
+  z-index: -1;
+  margin: 0;
+  border-radius: 0;
+  padding: 0;
+}
+body.announcements-page::before {
+  content: "";
+  position: fixed;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  background-image: url('/assets/images/announce.jpg'); /* Percorso dell'immagine di sfondo */
+  background-size: cover;
+  background-position: center 5%;
+  filter: blur(4px); /* Aumenta la sfocatura per un effetto più forte */
+  z-index: -1;
+  margin: 0;
+  border-radius: 0;
+  padding: 0;
+}
+
+
 
 
 

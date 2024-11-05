@@ -6,20 +6,19 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavigationComponent } from './navigation/navigation.component';
 import { FeedbackComponent } from './feedback/feedback.component';
-import { NotesComponent } from './notes/notes.component';
+import { AnnouncementsComponent } from './announcements/announcements.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import {RouterModule, Routes} from '@angular/router';
 import {FormsModule} from "@angular/forms";
 import { HomeComponent } from './home/home.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactComponent } from './contact/contact.component';
-import { CartComponent } from './cart/cart.component';
 import { HttpClientModule } from '@angular/common/http';
 
 const appRoutes :Routes = [
   {
-    path: 'notes',
-    component: NotesComponent
+    path: 'announcements',
+    component: AnnouncementsComponent
   },/*percorso che si riferisce all'url che digito nel browser ed il componente che viene utilizzato quando viene raggiunto quell'url*/
   {
     path: 'feedback',
@@ -27,7 +26,7 @@ const appRoutes :Routes = [
   },
   {
     path: '',
-    component: NotesComponent,
+    component: AnnouncementsComponent,
     pathMatch: 'full'
   },
   {
@@ -42,10 +41,7 @@ const appRoutes :Routes = [
     path:'contact',
     component: ContactComponent
   },
-  {
-    path:'cart',
-    component: CartComponent
-  },
+
   {
     path:'**',
     component: NotFoundComponent
@@ -57,12 +53,11 @@ const appRoutes :Routes = [
     AppComponent,
     NavigationComponent,
     FeedbackComponent,
-    NotesComponent,
+    AnnouncementsComponent,
     NotFoundComponent,
     HomeComponent,
     AboutUsComponent,
-    ContactComponent,
-    CartComponent
+    ContactComponent
   ],
   imports: [
     BrowserModule,
