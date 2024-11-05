@@ -1,0 +1,18 @@
+<div class="filter-container">
+  <label for="category">Filtra per categoria:</label>
+  <select id="category" [(ngModel)]="selectedCategory" (change)="onCategoryChange(selectedCategory)">
+    <option value="">Tutte le categorie</option>
+    <option *ngFor="let category of categories" [value]="category.categoryName">
+      {{ category.categoryName }}
+    </option>
+  </select>
+</div>
+
+<div class="product-grid">
+  <div *ngFor="let product of products" class="product-card">
+    <h3>{{ product.productName }}</h3>
+    <p>{{ product.description }}</p>
+    <p>Prezzo: €{{ product.price }}</p>
+    <p>Quantità disponibile: {{ product.availableQuantity }}</p>
+  </div>
+</div>

@@ -7,6 +7,7 @@ import { Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  title = 'animalShop';
   constructor(private router: Router, private renderer: Renderer2) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {

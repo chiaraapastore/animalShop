@@ -14,6 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactComponent } from './contact/contact.component';
 import { HttpClientModule } from '@angular/common/http';
+import { ProductListComponent } from './product-list/product-list.component';
 
 const appRoutes :Routes = [
   {
@@ -57,7 +58,8 @@ const appRoutes :Routes = [
     NotFoundComponent,
     HomeComponent,
     AboutUsComponent,
-    ContactComponent
+    ContactComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserModule,
