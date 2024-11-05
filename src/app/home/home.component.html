@@ -28,20 +28,26 @@
 </div>
 
 <!-- Sezione Testimonianze -->
-<div class="container-fluid testimonials">
+<div class="testimonials">
   <h2>Cosa Dicono i Nostri Clienti</h2>
-  <div class="testimonial-grid">
-    <div class="testimonial">
-      <p>"Ottimo servizio e prodotti di qualità! Il mio cane adora il suo nuovo gioco."</p>
-      <span>- Sara B.</span>
+
+  <!-- Contenitore del carosello -->
+  <div class="testimonial-carousel">
+    <!-- Freccia sinistra -->
+    <button class="carousel-btn prev-btn" (click)="scrollCarousel(-1)">❮</button>
+
+    <!-- Wrapper per il carosello per limitare il numero di testimonianze visibili -->
+    <div class="testimonial-wrapper">
+      <div class="testimonial-grid">
+        <div *ngFor="let testimonial of visibleTestimonials" class="testimonial">
+          <p>"{{ testimonial.text }}"</p>
+          <span>- {{ testimonial.author }}</span>
+        </div>
+      </div>
     </div>
-    <div class="testimonial">
-      <p>"Ho trovato tutto ciò che cercavo per il mio cucciolo. Consegna rapida e prezzi convenienti!"</p>
-      <span>- Marco L.</span>
-    </div>
-    <div class="testimonial">
-      <p>"Prodotti eccellenti e un team molto disponibile. Super consigliato!"</p>
-      <span>- Anna R.</span>
-    </div>
+
+    <!-- Freccia destra -->
+    <button class="carousel-btn next-btn" (click)="scrollCarousel(1)">❯</button>
   </div>
 </div>
+
