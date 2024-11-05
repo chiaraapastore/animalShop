@@ -1,6 +1,7 @@
-import {Component, Renderer2, OnInit, OnDestroy} from '@angular/core';
+import { Component, Renderer2, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
 import { FeedbackService } from './feedback.service';
 import { HttpClient } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
 
 export interface Feedback {
   email: string;
@@ -20,15 +21,24 @@ export class FeedbackComponent implements OnInit, OnDestroy {
 
   private url: string = 'http://localhost:8081/api/feedback/save';
 
-  constructor(private feedbackService: FeedbackService, private http: HttpClient, private renderer: Renderer2) {}
+  constructor(
+    private feedbackService: FeedbackService,
+    private http: HttpClient,
+    private render: Renderer2,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
-    this.renderer.addClass(document.body, 'feedback-page');
-  }
-  ngOnDestroy(): void {
-    this.renderer.removeClass(document.body, 'feedback-page');
+    if (isPlatformBrowser(this.platformId)) {
+      this.render.addClass(document.body, 'feedback-page');
+    }
   }
 
+  ngOnDestroy(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.render.removeClass(document.body, 'feedback-page');
+    }
+  }
 
   setRating(value: number): void {
     this.rating = value;
@@ -57,5 +67,4 @@ export class FeedbackComponent implements OnInit, OnDestroy {
     this.message = '';
     this.rating = 0;
   }
-
 }
