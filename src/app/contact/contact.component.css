@@ -1,48 +1,64 @@
-.contact-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.9); /* Sfondo bianco semi-trasparente per il contenitore */
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: relative;
-  z-index: 1;
-}
-
+/* Sfondo e stile generale */
 body.contact-page {
-  background-image: url('/assets/images/contact.jpg');
+  background-image: url('/assets/images/contact.jpg'); 
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+  color: #333;
 }
 
-.contact-container h2,
-.contact-container p {
-  color: #333; /* Colore del testo */
+/* Contenitore principale per centrare */
+.contact-container {
+  max-width: 500px;
+  margin: 100px auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* Sfondo bianco semi-trasparente */
+  border-radius: 8px;
   text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Stile per il numero di telefono */
+.phone-number {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 1rem;
+}
+
+.phone-number a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.phone-number a:hover {
+  text-decoration: underline;
+}
+
+/* Stile per i campi del modulo */
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 15px;
 }
 
 input, textarea {
   width: 100%;
-  padding: 0.75rem;
-  margin-top: 0.5rem;
+  padding: 8px;
+  margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  box-sizing: border-box;
 }
 
+textarea {
+  height: 100px;
+}
+
+/* Stile per il pulsante di invio */
 button {
   background-color: #007bff;
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
+  padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
 }
