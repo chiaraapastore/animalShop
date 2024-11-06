@@ -7,20 +7,18 @@ import { FeedbackComponent } from './feedback/feedback.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactComponent } from './contact/contact.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { LoginComponent } from './login/login.component'; // Importa il componente Login
-import { AuthGuard } from './guards/auth.guard'; // Importa l'AuthGuard
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' }, // Reindirizza alla Home
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'shop', component: ProductListComponent, canActivate: [AuthGuard] }, // Proteggi questa rotta con il guard
+  { path: 'shop', component: ProductListComponent },
   { path: 'announcements', component: AnnouncementsComponent },
   { path: 'feedback', component: FeedbackComponent },
   { path: 'about-us', component: AboutUsComponent },
   { path: 'contact', component: ContactComponent },
-  { path: 'login', component: LoginComponent }, // Aggiungi la rotta di login
-  { path: '**', component: NotFoundComponent } // Fallback per 404
+  { path: '**', component: NotFoundComponent }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { enableTracing: true })],

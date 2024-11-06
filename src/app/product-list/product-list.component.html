@@ -1,13 +1,67 @@
-<div class="filter-container">
-  <div class="dropdown">
-    <button class="dropdown-button">
-      {{ selectedCategory || 'Seleziona Categoria' }}
-      <span class="dropdown-icon">&#x25BC;</span>
-    </button>
-    <div class="dropdown-menu">
-      <div class="dropdown-item" (click)="onCategoryChange('')">Tutte le categorie</div>
-      <div class="dropdown-item" *ngFor="let category of categories" (click)="onCategoryChange(category.categoryName)">
-        {{ category.categoryName }}
+<div class="container">
+  <div class="row">
+    <!-- Colonna Titolo e Accordion -->
+    <div class="col-4 mt-5">
+      <h2 class="title-category">Esplora le Categorie</h2> <!-- Titolo all'interno della stessa colonna dell'accordion -->
+      <div class="accordion-item mt-3">
+        <input type="checkbox" id="accordion-gioco" class="accordion-toggle">
+        <label for="accordion-gioco" class="accordion-header">Giochi</label>
+        <div class="accordion-content">
+          <ul>
+            <li>Palline</li>
+            <li>Corde</li>
+            <li>Giocattoli interattivi</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <input type="checkbox" id="accordion-cibo" class="accordion-toggle">
+        <label for="accordion-cibo" class="accordion-header">Cibo</label>
+        <div class="accordion-content">
+          <ul>
+            <li>Cibo secco</li>
+            <li>Cibo umido</li>
+            <li>Snack e premi</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <input type="checkbox" id="accordion-accessori" class="accordion-toggle">
+        <label for="accordion-accessori" class="accordion-header">Accessori</label>
+        <div class="accordion-content">
+          <ul>
+            <li>Collari</li>
+            <li>Guinzagli</li>
+            <li>Cuccette</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <!-- Colonna Card -->
+    <div class="col-8 d-flex justify-content-center flex-wrap">
+      <div class="card m-3">
+        <img [src]="" class="card-img-top" alt="Image">
+        <div class="card-body">
+          <p class="card-text">DESCRIZIONE PRODOTTO</p>
+        </div>
+      </div>
+      <div class="card m-3">
+        <img [src]="" class="card-img-top" alt="Image">
+        <div class="card-body">
+          <p class="card-text">DESCRIZIONE PRODOTTO</p>
+        </div>
+      </div>
+      <div class="card m-3">
+        <img [src]="" class="card-img-top" alt="Image">
+        <div class="card-body">
+          <p class="card-text">DESCRIZIONE PRODOTTO</p>
+        </div>
       </div>
     </div>
   </div>
