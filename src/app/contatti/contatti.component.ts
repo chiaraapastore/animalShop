@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './contatti.component.html',
   styleUrls: ['./contatti.component.css']
 })
-export class ContactComponent implements OnInit, OnDestroy {
+export class ContattiComponent implements OnInit, OnDestroy {
   name: string = '';
   email: string = '';
   phoneNumber: string = '';

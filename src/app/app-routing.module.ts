@@ -5,17 +5,17 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { AnnunciComponent } from './annunci/annunci.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { ChiSiamoComponent } from './chi-siamo/chi-siamo.component';
-import { ContactComponent } from './contatti/contatti.component';
+import { ContattiComponent } from './contatti/contatti.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'shop', component: ProductListComponent },
-  { path: 'announcements', component: AnnunciComponent },
+  { path: 'annunci', component: AnnunciComponent },
   { path: 'feedback', component: FeedbackComponent },
-  { path: 'about-us', component: ChiSiamoComponent },
-  { path: 'contact', component: ContactComponent },
+  { path: 'chi-siamo', component: ChiSiamoComponent },
+  { path: 'contatti', component: ContattiComponent },
   { path: '**', component: NotFoundComponent }
 ];
 

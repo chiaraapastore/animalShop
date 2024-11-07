@@ -10,7 +10,7 @@ import { AnnunciComponent } from './annunci/annunci.component';
 import {FormsModule} from "@angular/forms";
 import { HomeComponent } from './home/home.component';
 import { ChiSiamoComponent } from './chi-siamo/chi-siamo.component';
-import { ContactComponent } from './contatti/contatti.component';
+import { ContattiComponent } from './contatti/contatti.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductListComponent } from './product-list/product-list.component';
 
@@ -23,7 +23,7 @@ import { ProductListComponent } from './product-list/product-list.component';
     AnnunciComponent,
     HomeComponent,
     ChiSiamoComponent,
-    ContactComponent,
+    ContattiComponent,
     ProductListComponent
   ],
   imports: [
