@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-announcements',
-  templateUrl: './announcements.component.html',
-  styleUrls: ['./announcements.component.css']
+  templateUrl: './annunci.component.html',
+  styleUrls: ['./annunci.component.css']
 })
-export class AnnouncementsComponent {
+export class AnnunciComponent {
   announcements = [
     {
       title: 'Sconto del 20% su tutti gli alimenti per cani',

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { Product } from '../models/product.model';
 import { Category } from '../models/category.model';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-product-list',
@@ -12,11 +13,9 @@ export class ProductListComponent implements OnInit {
   products: Product[] = [];
   categories: Category[] = [];
   selectedCategory: string = '';
-  isDropdownOpen = false;
-  page = 0;
-  size = 10;
-  sortBy = 'productName';
-  sortDir = 'asc';
+  currentPage: number = 1;
+  itemsPerPage: number = 8;
+  totalProducts: number = 0; // Aggiunto per calcolare le pagine totali
 
   constructor(private productService: ProductService) {}
 
@@ -26,30 +25,23 @@ export class ProductListComponent implements OnInit {
   }
 
   loadCategories(): void {
-    this.productService.getCategories().subscribe((categories: Category[]) => {
-      this.categories = categories;
-      console.log('Categorie caricate:', this.categories);
+    this.productService.getCategories().subscribe({
+      next: (categories: Category[]) => {
+        this.categories = categories;
+      },
+      error: err => console.error('Errore nel caricamento delle categorie:', err)
     });
   }
 
   loadProducts(): void {
-    this.productService.getProducts(this.page, this.size, this.sortBy, this.sortDir, this.selectedCategory)
-      .subscribe(
-        (products: Product[]) => {
-          this.products = products;
-          console.log('Prodotti caricati:', this.products); // Questo log  dirà se i prodotti vengono effettivamente caricati
-        },
-        error => console.error('Errore nel caricamento dei prodotti:', error) // Questo log mostrerà eventuali errori
-      );
+    const page = this.currentPage - 1; // Backend inizia la paginazione da 0
+    this.productService.getProducts(page, this.itemsPerPage, 'productName', 'asc', this.selectedCategory).subscribe({
+      next: (response: any) => {
+        this.products = response.content;
+        this.totalProducts = response.totalElements;
+      },
+      error: err => console.error('Errore nel caricamento dei prodotti:', err)
+    });
   }
 
-
-  onCategoryChange(category: string): void {
-    this.selectedCategory = category;
-    this.loadProducts();
-  }
-
-  toggleDropdown(): void {
-    this.isDropdownOpen = !this.isDropdownOpen;
-  }
 }
