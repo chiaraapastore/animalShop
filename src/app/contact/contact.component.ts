@@ -3,10 +3,10 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-contact',
-  templateUrl: './contatti.component.html',
-  styleUrls: ['./contatti.component.css']
+  templateUrl: './contact.component.html',
+  styleUrls: ['./contact.component.css']
 })
-export class ContattiComponent implements OnInit, OnDestroy {
+export class ContactComponent implements OnInit, OnDestroy {
   name: string = '';
   email: string = '';
   phoneNumber: string = '';

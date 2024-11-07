@@ -2,20 +2,20 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ProductListComponent } from './product-list/product-list.component';
-import { AnnunciComponent } from './annunci/annunci.component';
+import { AnnouncementsComponent } from './announcements/announcements.component';
 import { FeedbackComponent } from './feedback/feedback.component';
-import { ChiSiamoComponent } from './chi-siamo/chi-siamo.component';
-import { ContattiComponent } from './contatti/contatti.component';
+import { AboutUsComponent } from './about-us/about-us.component';
+import { ContactComponent } from './contact/contact.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'shop', component: ProductListComponent },
-  { path: 'annunci', component: AnnunciComponent },
+  { path: 'announcements', component: AnnouncementsComponent },
   { path: 'feedback', component: FeedbackComponent },
-  { path: 'chi-siamo', component: ChiSiamoComponent },
-  { path: 'contatti', component: ContattiComponent },
+  { path: 'about-us', component: AboutUsComponent },
+  { path: 'contact', component: ContactComponent },
   { path: '**', component: NotFoundComponent }
 ];
 
