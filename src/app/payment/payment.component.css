@@ -1,0 +1,38 @@
+.payment-card {
+  border-radius: 15px;
+  border: 2px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.order-summary {
+  border-top: 1px solid #ccc;
+  padding-top: 15px;
+  margin-top: 15px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.btn-dark {
+  width: 100%;
+}
+.visa-icon {
+  color: #1A1F71;
+}
+
+.mastercard-icon {
+  color: #EB001B;
+}
+
+.amex-icon {
+  color: #2E77BC;
+}
+
+.paypal-icon {
+  color: #003087;
+}
+
+.payment-icons i:hover {
+  opacity: 0.8;
+}

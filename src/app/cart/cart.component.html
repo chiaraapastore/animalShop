@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center align-items-start min-vh-100" style="margin-top: 20px;">
+  <div class="cart-container" style="width: 100%; max-width: 1000px; padding: 20px;">
+    <!-- Titolo in alto con margine inferiore per distanziare dai prodotti -->
+    <h1 class="my-4 text-center" style="margin-bottom: 30px;">Il Tuo Carrello</h1>
+
+    <div *ngIf="cartItems.length > 0; else emptyCart">
+      <div class="cart-items">
+        <div *ngFor="let item of cartItems" class="cart-item row align-items-center mb-3">
+          <!-- Immagine del prodotto, centrata -->
+          <div class="col-12 col-md-3 text-center">
+            <img [src]="item.product.imageUrl" alt="{{ item.product.name }}" class="img-fluid rounded cart-item-img">
+          </div>
+          <!-- Nome, prezzo e quantità più ampi -->
+          <div class="col-12 col-md-7">
+            <h5 class="mb-2">{{ item.product.name }}</h5>
+            <p class="text-muted mb-1">Prezzo: {{ item.product.price | currency:'EUR' }}</p>
+            <p class="text-muted">Quantità: {{ item.quantity }}</p>
+          </div>
+          <!-- Pulsante per rimuovere il prodotto -->
+          <div class="col-12 col-md-2 text-md-right text-center">
+            <button (click)="removeFromCart(item)" class="btn btn-outline-danger">
+              <i class="bi bi-trash"></i> Rimuovi
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Totale del carrello -->
+      <div class="cart-total mt-4 text-right">
+        <h4>Total: {{ totalAmount | currency:'EUR' }}</h4>
+      </div>
+
+      <!-- Pulsante per procedere al pagamento -->
+      <div class="checkout-btn mt-4 text-center">
+        <button class="btn btn-dark btn-lg" (click)="checkout()">Procedi al pagamento</button>
+      </div>
+    </div>
+
+    <!-- Messaggio quando il carrello è vuoto -->
+    <ng-template #emptyCart>
+      <p class="text-center text-muted">Il tuo carrello è vuoto. Aggiungi dei prodotti per procedere.</p>
+
+      <div class="text-center mt-3">
+        <button class="btn btn-dark" routerLink="/shop">Torna ai prodotti</button>
+      </div>
+    </ng-template>
+  </div>
+</div>

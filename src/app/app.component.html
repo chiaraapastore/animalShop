@@ -1,4 +1,44 @@
-<app-navigation></app-navigation>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" routerLink="/">AnimalShop</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/announcements">Annunci</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/feedback">Feedback</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/about-us">Chi Siamo</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/contact">Contatti</a>
+      </li>
+    </ul>
+
+    <form class="form-inline my-2 my-lg-0 mx-auto">
+      <input class="form-control mr-sm-2" type="search" placeholder="Ricerca prodotti..." aria-label="Search">
+      <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Cerca</button>
+    </form>
+
+    <div class="icons-container d-flex align-items-center">
+      <a class="nav-link" routerLink="/user-profile" style="margin-right: 15px;">
+        <i class="bi bi-person-circle fs-2"></i>
+      </a>
+      <a class="nav-link" routerLink="/cart">
+        <i class="bi bi-cart fs-2"></i>
+      </a>
+    </div>
+  </div>
+</nav>
+
 <div class="page-content">
   <router-outlet></router-outlet>
 </div>

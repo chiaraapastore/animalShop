@@ -1,36 +1,47 @@
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, PLATFORM_ID } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
-import { environment } from './environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavigationComponent } from './navigation/navigation.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
-import { FormsModule } from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HomeComponent } from './home/home.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactComponent } from './contact/contact.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
+import { PaymentComponent } from './payment/payment.component';
+import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
+import { ProfileComponent } from './profile/profile.component';
+import { OrdersComponent } from './orders/orders.component';
+import {CartComponent} from "./cart/cart.component";
+import { ErrorComponent } from './error/error.component';
 
-function initializeKeycloak(keycloak: KeycloakService) {
+export function initializeKeycloak(keycloak: KeycloakService, platformId: Object) {
   return () =>
-    keycloak.init({
-      config: {
-        url: environment.keycloak.url,
-        realm: environment.keycloak.realm,
-        clientId: environment.keycloak.clientId
-      },
-      initOptions: {
-        onLoad: 'login-required',   // Avvia la sessione all'avvio
-        checkLoginIframe: false
-      }
-    });
+    isPlatformBrowser(platformId)
+      ? keycloak.init({
+        config: {
+          url: 'http://localhost:8080',
+          realm: 'dog-shop-realm',
+          clientId: 'dog-shop-app'
+        },
+        initOptions: {
+          onLoad: 'login-required',
+          checkLoginIframe: false
+        },
+        enableBearerInterceptor: true,
+        bearerPrefix: 'Bearer',
+      })
+      : Promise.resolve();
 }
+
 
 @NgModule({
   declarations: [
@@ -42,6 +53,12 @@ function initializeKeycloak(keycloak: KeycloakService) {
     AboutUsComponent,
     ContactComponent,
     ProductListComponent,
+    CartComponent,
+    PaymentComponent,
+    ConfirmPageComponent,
+    ProfileComponent,
+    OrdersComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +66,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
     NgbModule,
     FormsModule,
     KeycloakAngularModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideClientHydration(),
@@ -57,7 +75,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
       provide: APP_INITIALIZER,
       useFactory: initializeKeycloak,
       multi: true,
-      deps: [KeycloakService]
+      deps: [KeycloakService, PLATFORM_ID]
     },
     {
       provide: HTTP_INTERCEPTORS,

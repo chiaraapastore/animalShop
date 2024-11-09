@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
 import { Category } from '../models/category.model';
@@ -13,31 +13,27 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  // Ottieni il token dal localStorage
-  private getAuthHeaders(): HttpHeaders {
-    const token = localStorage.getItem('authToken');
-    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  }
 
-  // Metodo per ottenere tutte le categorie
   getCategories(): Observable<Category[]> {
-    const headers = this.getAuthHeaders();
-    return this.http.get<Category[]>(this.categoriesUrl, { headers });
+    return this.http.get<Category[]>(this.categoriesUrl);
   }
 
-  // Metodo per ottenere tutti i prodotti con paginazione e filtro
-  getProducts(page: number, size: number, sortBy: string, sortDir: string, category?: string): Observable<Product[]> {
+  getProducts(page: number, size: number, sortBy: string, sortDir: string, category?: string, sizeProduct?: string): Observable<Product[]> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
       .set('sortBy', sortBy)
-      .set('sortDir', sortDir);
+      .set('sortDir', sortDir)
 
     if (category) {
       params = params.set('category', category);
     }
 
-    const headers = this.getAuthHeaders();
-    return this.http.get<Product[]>(this.productsUrl, { headers, params });
+    if (sizeProduct) {
+      params = params.set('sizeProduct', sizeProduct); // Aggiunge il filtro della taglia
+    }
+
+    return this.http.get<Product[]>(this.productsUrl, { params });
   }
+
 }

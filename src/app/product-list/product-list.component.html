@@ -1,140 +1,91 @@
 <div class="container">
   <div class="row">
-    <!-- Colonna Titolo e Accordion -->
     <div class="col-4 mt-5">
       <h2 class="title-category">Esplora le Categorie</h2>
       <div class="accordion-item mt-3">
-        <input type="checkbox" id="accordion-gioco" class="accordion-toggle">
-        <label for="accordion-gioco" class="accordion-header">Giochi</label>
-        <div class="accordion-content">
-          <ul>
-            <li>Palline</li>
-            <li>Corde</li>
-            <li>Giocattoli interattivi</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="accordion-item">
-        <input type="checkbox" id="accordion-cibo" class="accordion-toggle">
-        <label for="accordion-cibo" class="accordion-header">Cibo</label>
-        <div class="accordion-content">
-          <ul>
-            <li>Cibo secco</li>
-            <li>Cibo umido</li>
-            <li>Snack e premi</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="accordion-item">
-        <input type="checkbox" id="accordion-accessori" class="accordion-toggle">
-        <label for="accordion-accessori" class="accordion-header">Accessori</label>
-        <div class="accordion-content">
-          <ul>
-            <li>Collari</li>
-            <li>Guinzagli</li>
-            <li>Cuccette</li>
-          </ul>
-        </div>
+        <ul *ngFor="let category of categories" class="list-group">
+          <li
+            class="list-group-item d-flex justify-content-between align-items-center"
+            (click)="onCategorySelect(category.categoryName)">
+            {{ category.categoryName }}
+            <span class="badge text-bg-dark rounded-pill">{{category.countProduct}}</span>
+          </li>
+        </ul>
       </div>
     </div>
 
     <!-- Colonna Card -->
     <div class="col-8 d-flex justify-content-center flex-wrap">
-      <div class="card m-3">
-        <img src="" class="card-img-top" alt="Image">
-        <div class="card-body">
-          <p class="card-text">DESCRIZIONE PRODOTTO</p>
+      <!-- Barra Filtri -->
+      <div class="filter-bar mb-4 d-flex gap-3 align-items-center">
+        <div class="filter-dropdown">
+          <label>Ordina:</label>
+          <select [(ngModel)]="selectedSort" (change)="onSortChange()">
+            <option value="default">Predefinito</option>
+            <option value="priceAsc">Prezzo crescente</option>
+            <option value="priceDesc">Prezzo decrescente</option>
+          </select>
         </div>
-        <div class="card-footer text-center">
-          <a href="#" class="btn btn-primary">Aggiungi al carrello</a>
-        </div>
-      </div>
-      <div class="card m-3">
-        <img src="" class="card-img-top" alt="Image">
-        <div class="card-body">
-          <p class="card-text">DESCRIZIONE PRODOTTO</p>
-        </div>
-        <div class="card-footer text-center">
-          <a href="#" class="btn btn-primary">Aggiungi al carrello</a>
-        </div>
-      </div>
-      <div class="card m-3">
-        <img src="" class="card-img-top" alt="Image">
-        <div class="card-body">
-          <p class="card-text">DESCRIZIONE PRODOTTO</p>
-        </div>
-        <div class="card-footer text-center">
-          <a href="#" class="btn btn-primary">Aggiungi al carrello</a>
+        <div class="filter-dropdown">
+          <select [(ngModel)]="sizeProduct" (change)="onFilterChange()">
+            <option value="">Tutte le taglie</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+          </select>
         </div>
       </div>
 
-      <div class="card m-3">
-        <img src="" class="card-img-top" alt="Image">
-        <div class="card-body">
-          <p class="card-text">DESCRIZIONE PRODOTTO</p>
-        </div>
+
+
+      <div *ngFor="let product of filteredProducts" class="card m-3 position-relative" style="width: 18rem;">
+        <img [src]="product.imageUrl" class="card-img-top" alt="{{ product.productName }}">
+
         <div class="card-footer text-center">
-          <a href="#" class="btn btn-primary">Aggiungi al carrello</a>
+          <p class="card-price"><strong>{{ product.price | currency }}</strong></p>
         </div>
+
+        <!-- Bottone "Aggiungi al carrello" come icona in alto a destra -->
+        <button (click)="addToCart(product)" class="cart-icon-btn position-absolute" style="top: 10px; right: 10px;">
+          <i class="fa fa-shopping-cart"></i>
+        </button>
       </div>
-      <div class="card m-3">
-        <img src="" class="card-img-top" alt="Image">
-        <div class="card-body">
-          <p class="card-text">DESCRIZIONE PRODOTTO</p>
+
+        <div *ngIf="!isAuthenticated" class="alert alert-info">
+          Effettua il login per visualizzare e aggiungere prodotti al carrello.
         </div>
-        <div class="card-footer text-center">
-          <a href="#" class="btn btn-primary">Aggiungi al carrello</a>
-        </div>
-      </div>
-      <div class="card m-3">
-        <img src="" class="card-img-top" alt="Image">
-        <div class="card-body">
-          <p class="card-text">DESCRIZIONE PRODOTTO</p>
-        </div>
-        <div class="card-footer text-center">
-          <a href="#" class="btn btn-primary">Aggiungi al carrello</a>
-        </div>
-      </div>
-      <div class="card m-3">
-        <img src="" class="card-img-top" alt="Image">
-        <div class="card-body">
-          <p class="card-text">DESCRIZIONE PRODOTTO</p>
-        </div>
-        <div class="card-footer text-center">
-          <a href="#" class="btn btn-primary">Aggiungi al carrello</a>
-        </div>
-      </div>
-      <div class="card m-3">
-        <img src="" class="card-img-top" alt="Image">
-        <div class="card-body">
-          <p class="card-text">DESCRIZIONE PRODOTTO</p>
-        </div>
-        <div class="card-footer text-center">
-          <a href="#" class="btn btn-primary">Aggiungi al carrello</a>
-        </div>
-      </div>
-      <div class="pagination-container">
+
+      <button *ngIf="cartId" (click)="checkout()">Procedi al checkout</button>
+
+
+      <!-- Paginazione -->
+      <div class="pagination-container mt-4">
         <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" [class.disabled]="page === 1">
+              <button class="page-link" (click)="goToPreviousPage()" [disabled]="page === 1" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
-              </a>
+              </button>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">4</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
+            <li class="page-item disabled">
+              <span class="page-link">Pagina {{page}} di {{totalPages}}</span>
+            </li>
+            <li class="page-item" [class.disabled]="page >= totalPages">
+              <button class="page-link" (click)="goToNextPage()" [disabled]="page >= totalPages" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
-              </a>
+              </button>
             </li>
           </ul>
         </nav>
+        <div class="page-size-selector mt-3 text-center">
+          <label for="pageSizeSelect">Prodotti per pagina:</label>
+          <select id="pageSizeSelect" [(ngModel)]="pageSize" (change)="onPageSizeChange($event)" class="form-select d-inline w-auto ms-2">
+            <option *ngFor="let size of tableSize" [value]="size">{{ size }}</option>
+          </select>
+        </div>
       </div>
     </div>
   </div>
 </div>
+

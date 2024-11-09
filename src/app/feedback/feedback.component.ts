@@ -1,5 +1,5 @@
 import { Component, Renderer2, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
-import { FeedbackService } from './feedback.service';
+import { FeedbackService } from '../services/feedback.service';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
 

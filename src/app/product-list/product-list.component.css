@@ -1,9 +1,9 @@
-/* Contenitore principale per il titolo e l'accordion */
+
 .title-and-accordion-container {
   display: flex;
-  align-items: flex-start; /* Allinea il titolo e l'accordion verticalmente all'inizio */
+  align-items: flex-start;
   margin-top: 40px;
-  margin-left: 40px; /* Allinea a sinistra con l'accordion */
+  margin-left: 40px;
 }
 
 /* Stile del titolo */
@@ -15,75 +15,40 @@
   font-family: Arial, sans-serif;
 }
 
-/* Stile per l'accordion */
-.accordion-item {
-  margin-top: 10px;
-  text-align: left;
-}
-
-.accordion-toggle {
-  display: none;
-}
-
-.accordion-header {
-  display: block;
-  background-color: #f0f0f0;
-  padding: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  text-align: center;
-  color: #333;
-  font-family: Arial, sans-serif;
-}
-
-.accordion-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-top: none;
-  padding: 0 15px;
-}
-
-.accordion-toggle:checked + .accordion-header + .accordion-content {
-  max-height: 200px;
-  padding: 10px;
-}
-
-/* Colonna per l'accordion */
-.col-4 {
-  width: 250px;
-  margin-top: 20px;
-}
-
-/* Colonna per le card */
-.col-8 {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-left: 100px; /* Sposta le card ulteriormente a destra */
-  margin-top: 80px; /* Abbassa le card rispetto all'accordion */
-  max-width: calc(100% - 360px);
-}
-
-/* Stile per le card */
 .card {
-  width: 18rem;
+  width: 250px; /* Imposta una larghezza fissa per le card */
   height: 350px;
-  transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
+  transition: transform 0.2s;
 }
 
 .card:hover {
   transform: scale(1.05);
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cart-icon-btn {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.cart-icon-btn:hover {
+  color:black;
+}
+
+.card-footer {
+  background-color: transparent;
+  border-top: none;
+  padding-top: 0.5rem;
 }
 
 .card-img-top {
@@ -102,34 +67,41 @@
   color: #000;
 }
 
-.card-text {
-  font-size: 1rem;
-  text-align: center;
-  color: #000;
-  font-family: Arial, sans-serif;
+.card-title {
+  font-size: 1.2em;
+  margin-bottom: 0.5rem;
 }
 
-/* Contenitore per la griglia dei prodotti */
-.product-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: space-between; /* Allinea le card */
-  margin-top: 40px;
-  max-width: 100%;
+
+.card-text {
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 1rem;
 }
+
+.card-price {
+  font-weight: bold;
+  color: #333;
+}
+
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Imposta una larghezza minima per ogni card */
+  gap: 20px; /* Spazio tra le card */
+  justify-items: center; /* Centra le card all'interno della griglia */
+}
+
 
 /* Card del prodotto */
 .product-card {
-  flex: 1 1 calc(25% - 20px); /* 25% della larghezza per 4 immagini per riga */
-  min-width: 200px;
-  max-width: 300px;
+  flex: 1 1 250px; /* Larghezza minima di 250px per ogni card, si espande fino a riempire lo spazio */
+  max-width: 300px; /* Larghezza massima per evitare che le card diventino troppo grandi */
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
-  font-family: Arial, sans-serif;
 }
 
 .product-card:hover {
@@ -152,7 +124,7 @@
 /* Informazioni del prodotto */
 .product-info {
   padding: 15px;
-  text-align: left;
+  text-align: center;
 }
 
 .product-title {
@@ -168,19 +140,17 @@
   margin-bottom: 10px;
 }
 
-.add-to-cart-btn {
-  background-color: #007bff;
-  color: #fff;
-  padding: 8px 12px;
+.cart-icon-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
   border: none;
-  border-radius: 5px;
+  color: black;
+  font-size: 1.5em;
   cursor: pointer;
-  font-weight: bold;
 }
 
-.add-to-cart-btn:hover {
-  background-color: #0056b3;
-}
 
 .pagination {
   display: flex;
@@ -195,26 +165,41 @@
 
 .pagination a {
   text-decoration: none;
-  color: #007bff;
+  color: black;
   font-weight: bold;
 }
 
 .pagination a:hover {
-  color: #0056b3;
+  color: black;
 }
 
 
 .pagination-container {
   display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  width: 100%;
+}
+
+
+
+.page-size-selector {
+  margin-left: 10px;
+  position: relative;
+  top: -14px;
+}
+
+
+.page-size-selector label{
+  margin-left: auto;
+  font-weight: normal;
+  color: black;
 }
 
 
 .pagination .page-item .page-link {
-  color: #007bff;
-  font-weight: bold;
+  color: black;
   border: none;
   padding: 8px 12px;
   margin: 0 5px;
@@ -225,16 +210,57 @@
 
 .pagination .page-item .page-link:hover {
   background-color: #e0e0e0;
-  color: #0056b3;
+  color: black;
 }
 
 .pagination .page-item.active .page-link {
-  background-color: #007bff;
+  background-color: black;
   color: white;
   border: none;
 }
 
+
 .pagination .page-item.disabled .page-link {
-  color: #ddd;
+  color: #333; /* Colore più scuro */
+  opacity: 1; /* Impedisce al colore di essere semi-trasparente */
 }
 
+.pagination .page-item.disabled .page-link:hover {
+  color: #333; /* Mantiene il colore scuro anche al passaggio del mouse */
+  text-decoration: none; /* Rimuove eventuali sottolineature */
+}
+
+.pagination-controls .page-item.disabled .page-link {
+  color: #333; /* Colore più scuro per migliorare la visibilità */
+  background-color: #f8f9fa;
+}
+
+.pagination-controls {
+  flex-grow: 1; /* Permette ai controlli di espandersi */
+  display: flex;
+  justify-content: center; /* Centra la paginazione */
+}
+
+/* Stile per la barra dei filtri */
+.filter-bar {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px; /* Aggiunge spazio sopra la barra */
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: flex-end; /* Allinea la barra a destra */
+  padding-top: 10px; /* Aggiunge spazio interno in alto */
+  width: 100%;
+}
+
+.filter-dropdown label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.filter-dropdown select {
+  width: 160px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}

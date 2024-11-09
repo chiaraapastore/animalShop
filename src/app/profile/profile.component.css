@@ -1,0 +1,48 @@
+.d-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+}
+
+.profile-container {
+  text-align: center;
+  padding: 1rem;
+}
+
+.profile-icon {
+  font-size: 6rem;
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.profile-details {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.profile-details label {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 15px;
+}
+
+
+.profile-edit-icon {
+  font-size: 2.5rem;
+  color: #000000;
+  margin-top: 30px;
+}
+
+.btn-link {
+  display: inline-block;
+  padding: 0;
+  position: relative;
+}

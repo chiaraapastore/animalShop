@@ -1,0 +1,29 @@
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="profile-container text-center">
+
+    <!-- Icona Persona sopra il titolo -->
+    <i class="bi bi-person-circle profile-icon"></i>
+
+    <!-- Titolo Dettaglio Profilo -->
+    <h2>Dettaglio Profilo</h2>
+
+    <!-- Dettagli del Profilo -->
+    <div class="profile-details">
+      <div class="mb-3">
+        <label><strong>Nome:</strong> {{ user.firstName }}</label>
+      </div>
+      <div class="mb-3">
+        <label><strong>Cognome:</strong> {{ user.lastName }}</label>
+      </div>
+      <div class="mb-3">
+        <label><strong>Email:</strong> {{ user.email }}</label>
+      </div>
+
+      <!-- Icona Modifica Profilo -->
+      <a href="#" class="btn-link">
+        <i class="bi bi-pencil-square profile-edit-icon"></i>
+      </a>
+    </div>
+
+  </div>
+</div>
