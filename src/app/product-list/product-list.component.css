@@ -1,3 +1,25 @@
+.background-blur {
+  background-image: url('/assets/images/product.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(5px);
+  position: fixed;
+  top: 0;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  top: -10%; /* Estendi l’immagine oltre i bordi */
+  left: -10%;
+  width: 120vw; /* Estensione oltre il 100% della larghezza */
+  height: 120vh; /* Estensione oltre il 100% dell’altezza */
+  z-index: -1;
+}
+
+.container {
+  position: relative;
+  z-index: 1; /* Porta il contenuto sopra lo sfondo */
+}
 
 .title-and-accordion-container {
   display: flex;
@@ -26,6 +48,7 @@
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
+  padding-top: 20px;
 }
 
 .card:hover {
@@ -51,12 +74,17 @@
   padding-top: 0.5rem;
 }
 
+
 .card-img-top {
-  height: 200px;
-  object-fit: cover;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  margin-top: 10px; /* Aggiusta questo valore per ottenere l'altezza desiderata */
+  max-height: 200px;
+  object-fit: contain; /* Assicura che l'immagine sia contenuta senza distorsioni */
 }
+
+.card-footer {
+  padding-top: 10px; /* Aggiunge spazio tra l'immagine e il titolo/prezzo */
+}
+
 
 /* Allineamento del contenuto della card */
 .card-body {
@@ -68,8 +96,10 @@
 }
 
 .card-title {
-  font-size: 1.2em;
-  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
 }
 
 
@@ -83,6 +113,7 @@
   font-weight: bold;
   color: #333;
 }
+
 
 
 .product-grid {

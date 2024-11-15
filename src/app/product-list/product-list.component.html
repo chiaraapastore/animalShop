@@ -1,18 +1,19 @@
-<div class="container">
-  <div class="row">
-    <div class="col-4 mt-5">
-      <h2 class="title-category">Esplora le Categorie</h2>
-      <div class="accordion-item mt-3">
-        <ul *ngFor="let category of categories" class="list-group">
-          <li
-            class="list-group-item d-flex justify-content-between align-items-center"
-            (click)="onCategorySelect(category.categoryName)">
-            {{ category.categoryName }}
-            <span class="badge text-bg-dark rounded-pill">{{category.countProduct}}</span>
-          </li>
-        </ul>
+<div class="background-blur"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-4 mt-5">
+        <h2 class="title-category">Esplora le Categorie</h2>
+        <div class="accordion-item mt-3">
+          <ul *ngFor="let category of categories" class="list-group">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+              (click)="onCategorySelect(category.categoryName)">
+              {{ category.categoryName }}
+              <span class="badge text-bg-dark rounded-pill">{{category.countProduct}}</span>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
 
     <!-- Colonna Card -->
     <div class="col-8 d-flex justify-content-center flex-wrap">
@@ -33,6 +34,10 @@
             <option value="M">M</option>
             <option value="L">L</option>
             <option value="XL">XL</option>
+            <option value="Media">Media</option>
+            <option value="Grande">Grande</option>
+            <option value="Piccolo">Piccolo</option>
+            <option value="Unica">Unica</option>
           </select>
         </div>
       </div>
@@ -43,6 +48,7 @@
         <img [src]="product.imageUrl" class="card-img-top" alt="{{ product.productName }}">
 
         <div class="card-footer text-center">
+          <h5 class="card-title">{{ product.productName }}</h5>
           <p class="card-price"><strong>{{ product.price | currency }}</strong></p>
         </div>
 

@@ -1,43 +1,63 @@
-.d-flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  text-align: center;
+
+.background-blur {
+  position: fixed;
+  top: -10%; /* Estendi l’immagine oltre i bordi */
+  left: -10%;
+  width: 120vw; /* Estensione oltre il 100% della larghezza */
+  height: 120vh; /* Estensione oltre il 100% dell’altezza */
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  background-image: url('/assets/images/sfondo-profile.jpg'); /* Inserisci il percorso corretto */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(5px); /* Applica la sfocatura solo allo sfondo */
+  z-index: -1; /* Posiziona sotto il contenuto */
+  overflow: hidden;
 }
 
+
+/* Contenitore del profilo */
 .profile-container {
   text-align: center;
-  padding: 1rem;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.9); /* Sfondo semi-trasparente per leggibilità */
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1; /* Sopra lo sfondo */
 }
 
+/* Icona del profilo */
 .profile-icon {
   font-size: 6rem;
-  color: #000000;
+  color: #000;
   margin-bottom: 20px;
 }
 
+/* Titolo del profilo */
 h2 {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
+/* Dettagli del profilo */
 .profile-details {
   text-align: center;
   margin-top: 20px;
 }
 
 .profile-details label {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   display: block;
   margin-bottom: 15px;
 }
 
-
+/* Icona di modifica del profilo */
 .profile-edit-icon {
-  font-size: 2.5rem;
-  color: #000000;
+  font-size: 1.5rem;
+  color: #000;
   margin-top: 30px;
 }
 
