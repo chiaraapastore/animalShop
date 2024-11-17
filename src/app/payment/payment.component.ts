@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
+import { Payment } from "../models/payment.model";
+import { PaymentService } from "../services/payment.service";
+import { CartService } from "../services/cart.service";
+import {AuthenticationService} from "../auth/authenticationService";
 
 @Component({
   selector: 'app-payment',
@@ -7,8 +11,6 @@ import {Router} from "@angular/router";
   styleUrls: ['./payment.component.css']
 })
 export class PaymentComponent implements OnInit {
-  cartItems: any[] = [];
-  totalAmount: number = 0;
 
   cardNumber: string = '';
   cardHolderName: string = '';
@@ -16,22 +18,77 @@ export class PaymentComponent implements OnInit {
   expiryDate: string = '';
   cvv: string = '';
   billingAddress: string = '';
+  cartItems: any[] = [];
+  totalAmount: number = 0;
 
-  constructor(private router:Router) { }
+  constructor(
+    private router: Router,
+    private paymentService: PaymentService,
+    private cartService: CartService,
+    private auth: AuthenticationService,
+  ) { }
 
   ngOnInit(): void {
+    this.loadCartProducts();
+  }
 
+  async loadCartProducts(): Promise<void> {
+    const user = await this.auth.getLoggedInUser();
+    if (user) {
+      const username = user.username || 'Email non disponibile';
+      this.cartService.getCartProducts(username).subscribe(
+        (products) => {
+          console.log("Carrello con prodotti", products);
+          this.cartItems = products.map(product => ({
+            product,
+            quantity: 1
+          }));
+          this.calculateTotalAmount();
+        },
+        (error) => {
+          console.error("Errore nel caricare i prodotti del carrello:", error);
+        }
+      );
+    } else {
+      console.warn("User not logged in");
+    }
+  }
+
+  calculateTotalAmount(): void {
+    this.totalAmount = this.cartItems.reduce((total, item) => total + (item.product.price * item.quantity), 0);
   }
 
   processPayment(): void {
-    console.log('Pagamento effettuato con successo!');
-    console.log(`Card Number: ${this.cardNumber}`);
-    console.log(`Expiry Date: ${this.expiryDate}`);
-    console.log(`CVV: ${this.cvv}`);
-    console.log(`Billing Address: ${this.billingAddress}`);
+    const payment: Payment = {
+      customerOrder: {
+        items: this.cartItems,
+        totalAmount: this.totalAmount,
+        paymentDetails: {
+          cardNumber: this.cardNumber,
+          cardHolderName: this.cardHolderName,
+          cardHolderSurname: this.cardHolderSurname,
+          expiryDate: this.expiryDate,
+          cvv: this.cvv,
+          billingAddress: this.billingAddress
+        }
+      },
+      paymentDate: new Date().toISOString(),
+      paymentMethod: "Credit Card",
+      status: "PENDING"
+    };
+
+    this.paymentService.createPayment(payment).subscribe({
+      next: (savedPayment: Payment) => {
+        console.log("Pagamento effettuato con successo!", savedPayment);
+        this.goToConfirmPage();
+      },
+      error: (err: any) => {
+        console.error("Errore nel creare il pagamento:", err);
+      }
+    });
   }
 
-  goToConfirmPage(){
-    this.router.navigate(["/confirm-page"])
+  goToConfirmPage() {
+    this.router.navigate(["/confirm-page"]);
   }
 }

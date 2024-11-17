@@ -5,6 +5,8 @@ import { Category } from '../models/category.model';
 import { CartService } from "../services/cart.service";
 import { KeycloakService } from "keycloak-angular";
 import {Order} from "../models/order.model";
+import {AuthenticationService} from "../auth/authenticationService";
+import {Cart} from "../models/cart.model";
 import {isPlatformBrowser} from "@angular/common";
 
 
@@ -21,6 +23,8 @@ export class ProductListComponent implements OnInit {
   pageSize: number = 8;
   totalProducts: number = 0;
   tableSize: number[] = [5, 10, 20];
+  sizes: string[] = ['S', 'M', 'L', 'XL'];
+  cart: Cart | null = null;
   filteredProducts: Product[] = [];
   selectedSort: string = 'default';
   sizeProduct: string = '';
@@ -32,26 +36,23 @@ export class ProductListComponent implements OnInit {
     private productService: ProductService,
     private cartService: CartService,
     private keycloakService: KeycloakService,
-    @Inject(PLATFORM_ID) platformId: Object // Inietta PLATFORM_ID nel costruttore
+    private auth: AuthenticationService,
+    @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.platformId = platformId;
   }
 
   ngOnInit(): void {
-    this.checkAuthentication();
     this.loadCategories();
     this.loadProducts();
-    console.log("Cart ID after ngOnInit:", this.cartId);
-    if (this.cartId === null) {
-      console.warn("Cart ID is null - Cart may not be initialized properly");
-    }
+    this.checkAuthentication();
   }
 
   async checkAuthentication(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
       this.isAuthenticated = await this.keycloakService.isLoggedIn();
       if (this.isAuthenticated) {
-        this.loadCart();  // Carica il carrello se l'utente è autenticato
+        this.loadCart();
       } else {
         await this.keycloakService.login();
       }
@@ -59,64 +60,43 @@ export class ProductListComponent implements OnInit {
   }
 
   loadCart(): void {
-    const userId = this.getUserIdFromToken();
-    if (userId) {
-      this.cartService.getCartByUserId(userId).subscribe({
+  }
+
+
+
+  async addToCart(productId: string, quantity: number = 1): Promise<void> {
+    const user = await this.auth.getLoggedInUser();
+    if (user) {
+      const username = user.username || 'Email non disponibile';
+
+      this.cartService.addProductToCart(productId, quantity, username).subscribe({
         next: (cart) => {
-          if (!cart) {
-            this.createCart(userId);  // Se il carrello non esiste, lo crea
-          } else {
-            this.cartId = cart.id;  // Altrimenti, imposta l'ID del carrello esistente
-          }
+          console.log('Prodotto aggiunto al carrello con successo:', cart);
+
         },
-        error: (error) => console.error("Errore nel caricamento del carrello:", error)
+        error: (err) => {
+          console.error('Errore durante l\'aggiunta del prodotto al carrello:', err);
+        }
       });
+    } else {
+      console.warn('Utente non autenticato. Effettua il login per aggiungere prodotti al carrello.');
     }
   }
 
-  createCart(userId: string): void {
-    this.cartService.createCart(userId).subscribe({
-      next: (cart) => {
-        this.cartId = cart.id;  // Imposta il nuovo carrello creato
-        console.log("Nuovo carrello creato con ID:", this.cartId);
-      },
-      error: (error) => console.error("Errore nella creazione del carrello:", error)
-    });
-  }
-
-  addToCart(product: Product): void {
-    if (this.cartId) {
-      // Se il carrello esiste, aggiunge direttamente il prodotto
-      this.cartService.addProductToCart(this.cartId, product.id.toString(), 1).subscribe({
-        next: (cart) => console.log(`${product.productName} aggiunto al carrello.`, cart),
-        error: err => console.error("Errore nell'aggiungere il prodotto al carrello:", err)
-      });
+  private updateCartState(cart: Cart, productId: string, quantity: number) {
+    if (!this.cart) {
+      this.cart = cart;
     } else {
-      // Se il carrello non esiste, lo crea prima di aggiungere il prodotto
-      const userId = this.getUserIdFromToken();
-      if (userId) {
-        this.createCartAndAddProduct(userId, product);
-      } else {
-        console.warn("Impossibile aggiungere al carrello - User ID non trovato.");
+      const existingProduct = this.cart.cartProduct.find(
+        (cartProduct) => cartProduct.product.id.toString() === productId
+      );
+
+      if (existingProduct) {
+        existingProduct.quantity += quantity;
       }
     }
   }
 
-  createCartAndAddProduct(userId: string, product: Product): void {
-    this.cartService.createCart(userId).subscribe({
-      next: (cart) => {
-        this.cartId = cart.id;  // Imposta l'ID del nuovo carrello
-        console.log("Nuovo carrello creato con ID:", this.cartId);
-
-        // Dopo aver creato il carrello, aggiunge il prodotto
-        this.cartService.addProductToCart(this.cartId, product.id.toString(), 1).subscribe({
-          next: (updatedCart) => console.log(`${product.productName} aggiunto al nuovo carrello.`, updatedCart),
-          error: err => console.error("Errore nell'aggiungere il prodotto al nuovo carrello:", err)
-        });
-      },
-      error: (error) => console.error("Errore nella creazione del carrello:", error)
-    });
-  }
 
   loadCategories(): void {
     this.productService.getCategories().subscribe({
@@ -144,6 +124,7 @@ export class ProductListComponent implements OnInit {
       error: err => console.error('Errore nel caricamento dei prodotti:', err)
     });
   }
+
 
   getImageUrlForProduct(productName: string): string {
     const images: { [key: string]: string } = {
@@ -182,14 +163,16 @@ export class ProductListComponent implements OnInit {
     this.loadProducts();
   }
 
-  onSortChange(): void {
-    this.loadProducts();
-  }
-
   onFilterChange(): void {
     this.filteredProducts = this.products.filter((product) => product.sizeProduct === this.sizeProduct || this.sizeProduct === '');
     this.onSortChange();
   }
+
+
+  onSortChange(): void {
+    this.loadProducts();
+  }
+
 
   goToPreviousPage(): void {
     if (this.page > 1) {
@@ -229,9 +212,4 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-
-  getUserIdFromToken(): string | null {
-    const tokenParsed: any = this.keycloakService.getKeycloakInstance().tokenParsed;
-    return tokenParsed ? tokenParsed.sub : null;
-  }
 }

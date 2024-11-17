@@ -1,25 +1,25 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" routerLink="/">AnimalShop</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <a class="navbar-brand" routerLink="/" data-bs-toggle="tooltip" title="Home">AnimalShop</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/">Home</a>
+        <a class="nav-link" routerLink="/" data-bs-toggle="tooltip" title="Home">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/announcements">Annunci</a>
+        <a class="nav-link" routerLink="/announcements" data-bs-toggle="tooltip" title="Annunci">Annunci</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/feedback">Feedback</a>
+        <a class="nav-link" routerLink="/feedback" data-bs-toggle="tooltip" title="Feedback">Feedback</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/about-us">Chi Siamo</a>
+        <a class="nav-link" routerLink="/about-us" data-bs-toggle="tooltip" title="Chi Siamo">Chi Siamo</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/contact">Contatti</a>
+        <a class="nav-link" routerLink="/contact" data-bs-toggle="tooltip" title="Contatti">Contatti</a>
       </li>
     </ul>
 
@@ -29,11 +29,15 @@
     </form>
 
     <div class="icons-container d-flex align-items-center">
-      <a class="nav-link" routerLink="/user-profile" style="margin-right: 15px;">
+      <a class="nav-link" routerLink="/user-profile" style="margin-right: 15px;" data-bs-toggle="tooltip" title="Profilo Utente">
         <i class="bi bi-person-circle fs-2"></i>
       </a>
-      <a class="nav-link" routerLink="/cart">
+      <a class="nav-link" routerLink="/cart" style="margin-right: 15px;" data-bs-toggle="tooltip" title="Carrello">
         <i class="bi bi-cart fs-2"></i>
+      </a>
+
+      <a class="nav-link" (click)="logout()" style="margin-right: 15px;" data-bs-toggle="tooltip" title="Logout">
+        <i class="bi bi-box-arrow-right fs-2"></i>
       </a>
     </div>
   </div>

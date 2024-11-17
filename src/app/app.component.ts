@@ -1,6 +1,8 @@
 import { Component, Renderer2 } from '@angular/core';
 import { Router, NavigationEnd, Event, ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import {AuthenticationService} from "./auth/authenticationService";
+
 
 @Component({
   selector: 'app-root',
@@ -11,7 +13,7 @@ export class AppComponent {
   title = 'AnimalShop';
   isProductPage = false;
 
-  constructor(private router: Router, private renderer: Renderer2, private route: ActivatedRoute) {
+  constructor(private router: Router, private renderer: Renderer2, private route: ActivatedRoute, private auth: AuthenticationService) {
     this.router.events
       .pipe(filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
@@ -42,5 +44,9 @@ export class AppComponent {
           console.log("isProductPage:", this.isProductPage); // Debug per vedere se funziona
         }
       });
+  }
+
+  logout() {
+    this.auth.logout();
   }
 }

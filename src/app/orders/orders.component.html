@@ -1,34 +1,25 @@
 <div class="ordini-container">
   <h1>I tuoi ordini</h1>
 
-  <!-- Messaggio di errore -->
-  <div class="no-orders">
+  <div *ngIf="orders.length === 0" class="no-orders">
     <p>Non hai ancora effettuato alcun ordine.</p>
   </div>
 
-  <!-- Tabella degli ordini -->
-  <table class="table">
+  <table *ngIf="orders.length > 0" class="table">
     <thead>
     <tr>
       <th>Numero Ordine</th>
       <th>Data Ordine</th>
       <th>Totale</th>
       <th>Status</th>
-      <th>Dettagli</th>
     </tr>
     </thead>
     <tbody>
-    <tr >
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>
-        <!-- Link con icona info -->
-        <a  title="Visualizza Dettagli">
-          <i class="bi bi-info-circle" style="font-size: 1.5rem;"></i>
-        </a>
-      </td>
+    <tr *ngFor="let order of orders">
+      <td>{{ order.orderNumber }}</td>
+      <td>{{ order.orderDate | date:'dd/MM/yyyy' }}</td>
+      <td>{{ order.totalAmount | currency:'EUR':'symbol' }}</td>
+      <td>{{ order.status }}</td>
     </tr>
     </tbody>
   </table>

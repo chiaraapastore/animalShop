@@ -1,6 +1,7 @@
 export interface Payment {
-  id: number;
-  paymentType: string;
-  amount: number;
-  paymentDate: Date;
+  id?: number;
+  customerOrder: any;
+  paymentDate: string;
+  paymentMethod: string;
+  status: string;
 }

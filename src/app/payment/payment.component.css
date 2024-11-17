@@ -1,8 +1,19 @@
+
 .payment-card {
   border-radius: 15px;
   border: 2px solid #ddd;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+
+.payment-container {
+  margin-top: 10px; /* Aggiungi spazio dall'alto */
+}
+
+.d-flex {
+  padding-top: 10px; /* Spinge tutto il contenuto verso il basso */
+}
+
 
 .order-summary {
   border-top: 1px solid #ccc;

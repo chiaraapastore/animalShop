@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {UtenteShopService} from "../services/utenteShop.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-profile',
@@ -7,19 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
   user = {
-    firstName: 'Mario',
-    lastName: 'Rossi',
-    email: 'mario.rossi@example.com'
+    firstName: '',
+    lastName: '',
+    email: ''
   };
+  errorMessage: string = '';
 
-  constructor() { }
+  constructor(private utenteShopService: UtenteShopService, private router: Router) { }
 
   ngOnInit(): void {
-    //TODO caricare i dati del profilo al caricamneto della pagina tramite API userDetails
+    this.utenteShopService.getUserDetails().subscribe(
+      (userData) => {
+        this.user = userData;
+      },
+      (error) => {
+        console.error('Errore durante il recupero dei dati dell\'utente:', error);
+      }
+    );
   }
 
-  editProfile(): void {
-    //TODO richiamare API che ti permette di aggiornare il profilo
-    console.log('Modifica profilo cliccata');
+  goToOrders(): void {
+    this.router.navigate(['/orders']);
   }
 }

@@ -23,7 +23,7 @@ export class ProductService {
       .set('page', page.toString())
       .set('size', size.toString())
       .set('sortBy', sortBy)
-      .set('sortDir', sortDir)
+      .set('sortDir', sortDir);
 
     if (category) {
       params = params.set('category', category);
@@ -35,5 +35,6 @@ export class ProductService {
 
     return this.http.get<Product[]>(this.productsUrl, { params });
   }
+
 
 }

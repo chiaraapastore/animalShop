@@ -1,7 +1,7 @@
 .cart-background {
   position: fixed;
-  top: -8%; /* Estendi l’immagine oltre i bordi */
-  left: -8%;
+  top: -9%; /* Estendi l’immagine oltre i bordi */
+  left: -9%;
   width: 110vw; /* Estensione oltre il 100% della larghezza */
   height: 110vh; /* Estensione oltre il 100% dell’altezza */
   border-radius: 0;

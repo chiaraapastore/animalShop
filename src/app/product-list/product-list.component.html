@@ -53,7 +53,7 @@
         </div>
 
         <!-- Bottone "Aggiungi al carrello" come icona in alto a destra -->
-        <button (click)="addToCart(product)" class="cart-icon-btn position-absolute" style="top: 10px; right: 10px;">
+        <button (click)="addToCart(product.id.toString())" class="cart-icon-btn position-absolute" style="top: 10px; right: 10px;">
           <i class="fa fa-shopping-cart"></i>
         </button>
       </div>

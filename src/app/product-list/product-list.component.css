@@ -9,8 +9,8 @@
   margin: 0;
   padding: 0;
   left: 0;
-  top: -10%; /* Estendi l’immagine oltre i bordi */
-  left: -10%;
+  top: -5%; /* Estendi l’immagine oltre i bordi */
+  left: -5%;
   width: 120vw; /* Estensione oltre il 100% della larghezza */
   height: 120vh; /* Estensione oltre il 100% dell’altezza */
   z-index: -1;

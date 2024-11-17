@@ -23,13 +23,13 @@ const routes: Routes = [
   { path: 'feedback', component: FeedbackComponent, canActivate: [AuthGuard] },
   { path: 'about-us', component: AboutUsComponent, canActivate: [AuthGuard] },
   { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] },
-  { path: 'cart', component: CartComponent },
-  { path: 'payment', component: PaymentComponent },
-  { path: 'confirm-page', component: ConfirmPageComponent },
-  { path: 'user-profile', component: ProfileComponent },
-  { path: 'orders', component: OrdersComponent },
-  { path: 'not-authorized', component: NotFoundComponent },
-  { path: 'error', component: ErrorComponent },
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
+  { path: 'payment', component: PaymentComponent, canActivate: [AuthGuard] },
+  { path: 'confirm-page', component: ConfirmPageComponent, canActivate: [AuthGuard] },
+  { path: 'user-profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
+  { path: 'not-authorized', component: NotFoundComponent, canActivate: [AuthGuard] },
+  { path: 'error', component: ErrorComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/error' }
 ];
 

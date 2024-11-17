@@ -1,13 +1,11 @@
-<div class="d-flex justify-content-center align-items-center min-vh-100">
-  <div class="d-flex flex-wrap payment-container" style="width: 100%; max-width: 900px;">
 
-    <!-- Colonna per la compilazione del pagamento -->
-    <div class="payment-form-col" style="flex: 1; min-width: 300px; padding: 20px;">
-      <div class="card payment-card" style="border-radius: 10px; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-        <div class="card-body">
+  <div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="d-flex flex-wrap payment-container" style="width: 100%; max-width: 900px;">
+      <div class="payment-form-col" style="flex: 1; min-width: 300px; padding: 20px;">
+        <div class="card payment-card" style="border-radius: 10px; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+          <div class="card-body">
           <h1 class="text-center my-4">Pagamento</h1>
 
-          <!-- Icone dei tipi di pagamento -->
           <div class="payment-icons text-center mb-3">
             <i class="fab fa-cc-visa fa-2x mx-2 visa-icon"></i>
             <i class="fab fa-cc-mastercard fa-2x mx-2 mastercard-icon"></i>
@@ -16,7 +14,6 @@
 
           <!-- Modulo di pagamento -->
           <form (ngSubmit)="processPayment()">
-            <!-- Nome e cognome del titolare della carta -->
             <div class="form-group">
               <label for="cardHolderName">Nome del Titolare</label>
               <input type="text" id="cardHolderName" class="form-control" [(ngModel)]="cardHolderName" name="cardHolderName" required>
@@ -47,7 +44,7 @@
               <input type="text" id="billingAddress" class="form-control" [(ngModel)]="billingAddress" name="billingAddress" required>
             </div>
 
-            <button type="submit" class="btn btn-dark mt-3" (click)="goToConfirmPage()">Concludi Pagamento</button>
+            <button type="submit" class="btn btn-dark mt-3" (click)="processPayment()">Concludi Pagamento</button>
           </form>
         </div>
       </div>
@@ -59,7 +56,7 @@
         <div class="card-body">
           <h3 class="text-center my-4">Riepilogo Ordine</h3>
           <div *ngFor="let item of cartItems" class="order-item">
-            <p><strong>{{ item.product.name }}</strong> - {{ item.quantity }} x {{ item.product.price | currency:'EUR' }}</p>
+            <p><strong>{{ item.productName }}</strong> - {{ item.quantity }} x {{ item.product.price | currency:'EUR' }}</p>
           </div>
           <hr>
           <p><strong>Totale:</strong> {{ totalAmount | currency:'EUR' }}</p>
