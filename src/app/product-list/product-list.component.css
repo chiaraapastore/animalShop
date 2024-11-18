@@ -28,6 +28,21 @@
   margin-left: 40px;
 }
 
+
+.btn-outline-secondary {
+  border: none;
+  background: none;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.btn-outline-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
+
 /* Stile del titolo */
 .title-category {
   font-size: 22px;

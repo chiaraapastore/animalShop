@@ -1,23 +1,134 @@
 .orders-container {
-  padding: 30px;
+  max-width: 900px;
+  margin: 100px auto 0 400px; /* Incrementato il margine sinistro per spostare più a destra */
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   font-family: Arial, sans-serif;
-  background-color: rgba(255, 255, 255, 0.8); /* Bianco semi-trasparente */
-  border-radius: 15px; /* Angoli smussati */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Ombra */
-  max-width: 600px; /* Larghezza massima del contenitore */
-  margin: 150px auto; /* Centra verticalmente e orizzontalmente */
-  text-align: center; /* Centra il testo */
-  backdrop-filter: blur(10px); /* Sfoca il contenuto dietro al contenitore */
 }
+
 
 h1 {
-  font-size: 1.8rem; /* Dimensione del testo del titolo */
-  margin-bottom: 20px; /* Margine inferiore per distanziare */
-  color: #333; /* Colore del titolo */
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
 }
 
-.no-orders {
-  font-size: 1rem; /* Testo più piccolo */
-  color: #555; /* Colore leggermente più scuro */
-  margin-top: 20px; /* Sposta il messaggio più in basso */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.filters {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.filters input,
+.filters select,
+.filters button {
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.filters button {
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border: none;
+}
+
+.filters button:hover {
+  background-color: #0056b3;
+}
+
+.loading-spinner {
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+}
+
+.error {
+  text-align: center;
+  color: red;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.pagination button[disabled] {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  display: inline-block;
+  margin: 0 10px;
+  line-height: 32px;
+}
+
+.button-actions button {
+  margin-right: 5px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.button-actions .details-btn {
+  background-color: #17a2b8;
+  color: white;
+}
+
+.button-actions .details-btn:hover {
+  background-color: #117a8b;
+}
+
+.button-actions .cancel-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.button-actions .cancel-btn:hover {
+  background-color: #c82333;
 }
