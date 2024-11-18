@@ -1,20 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Order } from '../models/order.model';
-import {OrdersService} from "../services/order.service"; // Importiamo il modello dell'ordine
+import { OrdersService } from '../services/order.service'; // Importiamo il modello dell'ordine
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.css']
 })
-export class OrdersComponent implements OnInit {
+export class OrdersComponent implements OnInit, OnDestroy {
   orders: Order[] = [];
   errorMessage: string = '';
 
-  constructor(private ordersService: OrdersService) { }
+  constructor(
+    private ordersService: OrdersService,
+    @Inject(PLATFORM_ID) private platformId: Object // Aggiunto per identificare il contesto
+  ) {}
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.classList.add('orders-page'); // Aggiunge la classe al body solo nel browser
+    }
     this.loadOrders();
+  }
+
+  ngOnDestroy(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.classList.remove('orders-page'); // Rimuove la classe solo nel browser
+    }
   }
 
   loadOrders(): void {

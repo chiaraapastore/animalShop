@@ -1,4 +1,4 @@
-// auth.interceptor.ts
+
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import {Observable, from, catchError} from 'rxjs';

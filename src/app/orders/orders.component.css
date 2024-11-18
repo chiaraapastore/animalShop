@@ -1,42 +1,23 @@
-.ordini-container {
-  padding: 20px;
+.orders-container {
+  padding: 30px;
   font-family: Arial, sans-serif;
+  background-color: rgba(255, 255, 255, 0.8); /* Bianco semi-trasparente */
+  border-radius: 15px; /* Angoli smussati */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Ombra */
+  max-width: 600px; /* Larghezza massima del contenitore */
+  margin: 150px auto; /* Centra verticalmente e orizzontalmente */
+  text-align: center; /* Centra il testo */
+  backdrop-filter: blur(10px); /* Sfoca il contenuto dietro al contenitore */
 }
 
-h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.table th, .table td {
-  padding: 12px;
-  border: 1px solid #ddd;
-  text-align: left;
-}
-
-.table th {
-  background-color: #f4f4f4;
+h1 {
+  font-size: 1.8rem; /* Dimensione del testo del titolo */
+  margin-bottom: 20px; /* Margine inferiore per distanziare */
+  color: #333; /* Colore del titolo */
 }
 
 .no-orders {
-  font-size: 18px;
-  color: #777;
-}
-
-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
+  font-size: 1rem; /* Testo più piccolo */
+  color: #555; /* Colore leggermente più scuro */
+  margin-top: 20px; /* Sposta il messaggio più in basso */
 }

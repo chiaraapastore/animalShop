@@ -1,4 +1,3 @@
-// auth.guard.ts
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivate } from '@angular/router';
@@ -16,7 +15,6 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     if (!isPlatformBrowser(this.platformId)) {
-      // Se non siamo nel browser, salta l'accesso
       return true;
     }
 

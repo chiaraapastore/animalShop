@@ -1,7 +1,7 @@
 .cart-background {
   position: fixed;
   top: -9%; /* Estendi l’immagine oltre i bordi */
-  left: -9%;
+  left: -16%;
   width: 110vw; /* Estensione oltre il 100% della larghezza */
   height: 110vh; /* Estensione oltre il 100% dell’altezza */
   border-radius: 0;
@@ -9,9 +9,9 @@
   padding: 0;
   background-image: url('/assets/images/carrello-sfondo.jpg'); /* Sostituisci con il percorso corretto */
   background-size: cover;
-  background-position: center 2%;
+  background-position: center;
   background-repeat: no-repeat;
-  filter: blur(5px);
+  filter: blur(4px);
   z-index: -1;
 }
 

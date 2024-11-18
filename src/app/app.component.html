@@ -23,9 +23,9 @@
       </li>
     </ul>
 
-    <form class="form-inline my-2 my-lg-0 mx-auto">
-      <input class="form-control mr-sm-2" type="search" placeholder="Ricerca prodotti..." aria-label="Search">
-      <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Cerca</button>
+    <form class="form-inline" (ngSubmit)="searchProducts($event)">
+      <input type="text" [(ngModel)]="searchKeyword" name="searchKeyword" placeholder="Cerca prodotti" class="form-control" required/>
+      <button type="submit" class="btn">Cerca</button>
     </form>
 
     <div class="icons-container d-flex align-items-center">

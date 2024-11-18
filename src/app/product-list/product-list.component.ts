@@ -8,6 +8,7 @@ import {Order} from "../models/order.model";
 import {AuthenticationService} from "../auth/authenticationService";
 import {Cart} from "../models/cart.model";
 import {isPlatformBrowser} from "@angular/common";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -17,6 +18,7 @@ import {isPlatformBrowser} from "@angular/common";
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
+  searchProducts: Product[] = [];
   categories: Category[] = [];
   selectedCategory: string = '';
   page: number = 1;
@@ -30,6 +32,7 @@ export class ProductListComponent implements OnInit {
   sizeProduct: string = '';
   cartId: number | null = null;
   isAuthenticated: boolean = false;
+  searchKeyword: string = '';
   @Inject(PLATFORM_ID) private platformId: Object
 
   constructor(
@@ -37,15 +40,55 @@ export class ProductListComponent implements OnInit {
     private cartService: CartService,
     private keycloakService: KeycloakService,
     private auth: AuthenticationService,
+    private route: ActivatedRoute,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.platformId = platformId;
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.searchKeyword = params['keyword'] || '';
+      if (this.searchKeyword) {
+        this.searchProductsByKeyword(this.searchKeyword);
+      } else {
+        this.loadProducts();
+      }
+    });
     this.loadCategories();
-    this.loadProducts();
     this.checkAuthentication();
+  }
+
+  searchProductsByKeyword(keyword: string): void {
+    if (!keyword) {
+      this.resetFilters();
+      return;
+    }
+    this.productService.searchProducts(keyword).subscribe({
+      next: (products) => {
+        this.searchProducts = products.map((product: Product) => ({
+          ...product,
+          imageUrl: this.getImageUrlForProduct(product.productName)
+        }));
+        this.filteredProducts = [...this.searchProducts];
+        this.totalProducts = products.length;
+      },
+      error: (err) => {
+        console.error('Errore durante il recupero dei prodotti cercati:', err);
+        this.filteredProducts = [];
+      },
+    });
+  }
+
+  resetFilters(): void {
+    this.searchKeyword = '';
+    this.selectedCategory = '';
+    this.selectedSort = 'default';
+    this.sizeProduct = '';
+    this.page = 1;
+
+    this.filteredProducts = [];
+    this.loadProducts();
   }
 
   async checkAuthentication(): Promise<void> {
@@ -59,20 +102,16 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-  loadCart(): void {
-  }
 
-
+  loadCart(): void {}
 
   async addToCart(productId: string, quantity: number = 1): Promise<void> {
     const user = await this.auth.getLoggedInUser();
     if (user) {
       const username = user.username || 'Email non disponibile';
-
       this.cartService.addProductToCart(productId, quantity, username).subscribe({
         next: (cart) => {
           console.log('Prodotto aggiunto al carrello con successo:', cart);
-
         },
         error: (err) => {
           console.error('Errore durante l\'aggiunta del prodotto al carrello:', err);
@@ -83,47 +122,49 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-  private updateCartState(cart: Cart, productId: string, quantity: number) {
-    if (!this.cart) {
-      this.cart = cart;
-    } else {
-      const existingProduct = this.cart.cartProduct.find(
-        (cartProduct) => cartProduct.product.id.toString() === productId
-      );
-
-      if (existingProduct) {
-        existingProduct.quantity += quantity;
-      }
-    }
-  }
-
 
   loadCategories(): void {
     this.productService.getCategories().subscribe({
       next: (categories: Category[]) => {
         this.categories = categories;
       },
-      error: err => console.error('Errore nel caricamento delle categorie:', err)
+      error: (err) => {
+        console.error('Errore nel caricamento delle categorie:', err);
+        this.categories = [];
+      },
     });
   }
+
 
   loadProducts(): void {
     const sortField = this.selectedSort === 'priceAsc' ? 'price' : this.selectedSort === 'priceDesc' ? 'price' : 'productName';
     const sortOrder = this.selectedSort === 'priceAsc' ? 'asc' : this.selectedSort === 'priceDesc' ? 'desc' : 'asc';
 
-    this.productService.getProducts(this.page - 1, this.pageSize, sortField, sortOrder, this.selectedCategory, this.sizeProduct).subscribe({
-      next: (response: any) => {
-        // Mappa i prodotti dal database e aggiungi `imageUrl` a ciascun prodotto
-        this.products = response.content.map((product: Product) => ({
-          ...product,
-          imageUrl: this.getImageUrlForProduct(product.productName)
-        }));
-        this.totalProducts = response.totalElements;
-        this.filteredProducts = [...this.products];
-      },
-      error: err => console.error('Errore nel caricamento dei prodotti:', err)
-    });
+    this.productService.getProducts(this.page - 1, this.pageSize, sortField, sortOrder, this.selectedCategory, this.sizeProduct)
+      .subscribe({
+        next: (response: any) => {
+          // Controllo aggiuntivo per evitare errori
+          if (response.content && Array.isArray(response.content)) {
+            this.products = response.content.map((product: Product) => ({
+              ...product,
+              imageUrl: this.getImageUrlForProduct(product.productName),
+            }));
+          } else {
+            console.error('La risposta non contiene un array valido:', response);
+            this.products = [];
+          }
+          this.totalProducts = response.totalElements || 0;
+          this.filteredProducts = [...this.products];
+        },
+        error: (err) => {
+          console.error('Errore nel caricamento dei prodotti:', err);
+          this.products = [];
+          this.filteredProducts = [];
+        },
+      });
   }
+
+
 
 
   getImageUrlForProduct(productName: string): string {
@@ -168,11 +209,9 @@ export class ProductListComponent implements OnInit {
     this.onSortChange();
   }
 
-
   onSortChange(): void {
     this.loadProducts();
   }
-
 
   goToPreviousPage(): void {
     if (this.page > 1) {
@@ -196,8 +235,9 @@ export class ProductListComponent implements OnInit {
   }
 
   get totalPages(): number {
-    return Math.ceil(this.totalProducts / this.pageSize);
+    return Math.ceil(this.totalProducts / this.pageSize) || 1; // Restituisci almeno 1 pagina
   }
+
 
   checkout(): void {
     if (this.cartId !== null) {
@@ -211,5 +251,4 @@ export class ProductListComponent implements OnInit {
       console.warn("Cart ID è null. Checkout non può essere completato.");
     }
   }
-
 }

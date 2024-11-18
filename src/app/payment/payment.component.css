@@ -1,14 +1,53 @@
+.payment-background {
+  position: fixed;
+  top: -11%; /* Estendi l’immagine oltre i bordi */
+  left: -11%;
+  width: 120%;
+  height: 120vh;
+  background-image: url('/assets/images/sfondo-pagamento.jpg'); /* Percorso corretto */
+  background-size: cover;
+  background-position: center 24%;
+  background-repeat: no-repeat;
+  filter: blur(3px); /* Applica la sfocatura solo allo sfondo */
+  z-index: -1; /* Posiziona sotto il contenuto */
+  overflow: hidden;
+}
+
+.payment-container {
+  position: relative;
+  background-color: transparent; /* Rimuove ogni colore di sfondo */
+  border: none; /* Rimuove il bordo */
+  box-shadow: none; /* Rimuove l'ombra */
+  z-index: 1; /* Porta i contenuti in primo piano */
+  padding: 20px; /* Mantieni padding per il contenuto interno */
+}
+
+body {
+  margin: 0; /* Elimina qualsiasi margine globale */
+  padding: 0; /* Elimina qualsiasi padding globale */
+}
+
+.card {
+  background-color: white; /* Mantiene il contenuto leggibile */
+  border-radius: 15px; /* Bordo arrotondato solo per il contenuto */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombra per distacco visivo */
+}
 
 .payment-card {
   border-radius: 15px;
-  border: 2px solid #ddd;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Bordo leggermente visibile */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.9); /* Bianco semitrasparente */
+}
+
+.order-summary-card {
+  border-radius: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Bordo leggero */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.9); /* Bianco semitrasparente */
 }
 
 
-.payment-container {
-  margin-top: 10px; /* Aggiungi spazio dall'alto */
-}
 
 .d-flex {
   padding-top: 10px; /* Spinge tutto il contenuto verso il basso */
@@ -18,7 +57,10 @@
 .order-summary {
   border-top: 1px solid #ccc;
   padding-top: 15px;
-  margin-top: 15px;
+}
+
+.order-summary-col {
+  margin-top: 20px; /* Aumenta il margine superiore */
 }
 
 .form-group {

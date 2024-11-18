@@ -58,7 +58,7 @@ export function initializeKeycloak(keycloak: KeycloakService, platformId: Object
     ConfirmPageComponent,
     ProfileComponent,
     OrdersComponent,
-    ErrorComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

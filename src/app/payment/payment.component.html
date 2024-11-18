@@ -1,58 +1,49 @@
+<div class="payment-background"></div>
 
-  <div class="d-flex justify-content-center align-items-center min-vh-100">
-    <div class="d-flex flex-wrap payment-container" style="width: 100%; max-width: 900px;">
-      <div class="payment-form-col" style="flex: 1; min-width: 300px; padding: 20px;">
-        <div class="card payment-card" style="border-radius: 10px; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-          <div class="card-body">
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="d-flex flex-wrap payment-container" style="width: 100%; max-width: 900px;">
+    <div class="payment-form-col" style="flex: 1; min-width: 300px; padding: 20px;">
+      <div class="card payment-card">
+        <div class="card-body">
           <h1 class="text-center my-4">Pagamento</h1>
-
           <div class="payment-icons text-center mb-3">
             <i class="fab fa-cc-visa fa-2x mx-2 visa-icon"></i>
             <i class="fab fa-cc-mastercard fa-2x mx-2 mastercard-icon"></i>
             <i class="fab fa-cc-amex fa-2x mx-2 amex-icon"></i>
           </div>
-
           <!-- Modulo di pagamento -->
           <form (ngSubmit)="processPayment()">
             <div class="form-group">
               <label for="cardHolderName">Nome del Titolare</label>
               <input type="text" id="cardHolderName" class="form-control" [(ngModel)]="cardHolderName" name="cardHolderName" required>
             </div>
-
             <div class="form-group">
               <label for="cardHolderSurname">Cognome del Titolare</label>
               <input type="text" id="cardHolderSurname" class="form-control" [(ngModel)]="cardHolderSurname" name="cardHolderSurname" required>
             </div>
-
             <div class="form-group">
               <label for="cardNumber">Numero Carta</label>
               <input type="text" id="cardNumber" class="form-control" [(ngModel)]="cardNumber" name="cardNumber" required>
             </div>
-
             <div class="form-group">
               <label for="expiryDate">Data di Scadenza</label>
               <input type="month" id="expiryDate" class="form-control" [(ngModel)]="expiryDate" name="expiryDate" required>
             </div>
-
             <div class="form-group">
               <label for="cvv">CVV</label>
               <input type="text" id="cvv" class="form-control" [(ngModel)]="cvv" name="cvv" required>
             </div>
-
             <div class="form-group">
               <label for="billingAddress">Indirizzo di Fatturazione</label>
               <input type="text" id="billingAddress" class="form-control" [(ngModel)]="billingAddress" name="billingAddress" required>
             </div>
-
             <button type="submit" class="btn btn-dark mt-3" (click)="processPayment()">Concludi Pagamento</button>
           </form>
         </div>
       </div>
     </div>
-
-    <!-- Colonna per il riepilogo dell'ordine -->
-    <div class="order-summary-col" style="flex: 1; min-width: 300px; padding: 20px;">
-      <div class="card order-summary-card" style="border-radius: 10px; border: 1px solid #ddd; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div class="order-summary-col">
+      <div class="card order-summary-card">
         <div class="card-body">
           <h3 class="text-center my-4">Riepilogo Ordine</h3>
           <div *ngFor="let item of cartItems" class="order-item">
