@@ -6,16 +6,15 @@
 
     <h2>Dettaglio Profilo</h2>
 
-    <!-- Dettagli del Profilo -->
     <div class="profile-details">
       <div class="mb-3">
-        <label><strong>Nome:</strong> {{ user.firstName }}</label>
+        <label><strong>Nome:</strong> {{ user?.firstName }}</label>
       </div>
       <div class="mb-3">
-        <label><strong>Cognome:</strong> {{ user.lastName }}</label>
+        <label><strong>Cognome:</strong> {{ user?.lastName }}</label>
       </div>
       <div class="mb-3">
-        <label><strong>Email:</strong> {{ user.email }}</label>
+        <label><strong>Email:</strong> {{ user?.email }}</label>
       </div>
 
       <button class="btn btn-dark btn-lg" (click)="goToOrders()">
