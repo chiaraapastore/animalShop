@@ -12,32 +12,51 @@
             <i class="fab fa-cc-amex fa-2x mx-2 amex-icon"></i>
           </div>
           <!-- Modulo di pagamento -->
-          <form (ngSubmit)="processPayment()">
+          <form (ngSubmit)="processPayment()" #paymentForm="ngForm" novalidate>
             <div class="form-group">
               <label for="cardHolderName">Nome del Titolare</label>
-              <input type="text" id="cardHolderName" class="form-control" [(ngModel)]="cardHolderName" name="cardHolderName" required>
+              <input type="text" id="cardHolderName" class="form-control" [(ngModel)]="cardHolderName" name="cardHolderName" required #cardHolderNameField="ngModel">
+              <div *ngIf="cardHolderNameField.invalid && cardHolderNameField.touched" class="text-danger">Nome del titolare è obbligatorio.
+              </div>
             </div>
+
             <div class="form-group">
               <label for="cardHolderSurname">Cognome del Titolare</label>
-              <input type="text" id="cardHolderSurname" class="form-control" [(ngModel)]="cardHolderSurname" name="cardHolderSurname" required>
+              <input type="text" id="cardHolderSurname" class="form-control" [(ngModel)]="cardHolderSurname" name="cardHolderSurname" required #cardHolderSurnameField="ngModel">
+              <div *ngIf="cardHolderSurnameField.invalid && cardHolderSurnameField.touched" class="text-danger">Cognome del titolare è obbligatorio.
+              </div>
             </div>
+
             <div class="form-group">
               <label for="cardNumber">Numero Carta</label>
-              <input type="text" id="cardNumber" class="form-control" [(ngModel)]="cardNumber" name="cardNumber" required>
+              <input type="text" id="cardNumber" class="form-control" [(ngModel)]="cardNumber" name="cardNumber" required pattern="^[0-9]{16}$" #cardNumberField="ngModel">
+              <div *ngIf="cardNumberField.invalid && cardNumberField.touched" class="text-danger">
+                Inserisci un numero di carta valido (16 cifre).
+              </div>
             </div>
+
             <div class="form-group">
               <label for="expiryDate">Data di Scadenza</label>
-              <input type="month" id="expiryDate" class="form-control" [(ngModel)]="expiryDate" name="expiryDate" required>
+              <input type="month" id="expiryDate" class="form-control" [(ngModel)]="expiryDate" name="expiryDate" required #expiryDateField="ngModel">
+              <div *ngIf="expiryDateField.invalid && expiryDateField.touched" class="text-danger">Inserisci una data di scadenza valida.
+              </div>
             </div>
+
             <div class="form-group">
               <label for="cvv">CVV</label>
-              <input type="text" id="cvv" class="form-control" [(ngModel)]="cvv" name="cvv" required>
+              <input type="text" id="cvv" class="form-control" [(ngModel)]="cvv" name="cvv" required pattern="^[0-9]{3,4}$" #cvvField="ngModel">
+              <div *ngIf="cvvField.invalid && cvvField.touched" class="text-danger">Inserisci un CVV valido (3 cifre).
+              </div>
             </div>
+
             <div class="form-group">
               <label for="billingAddress">Indirizzo di Fatturazione</label>
-              <input type="text" id="billingAddress" class="form-control" [(ngModel)]="billingAddress" name="billingAddress" required>
+              <input type="text" id="billingAddress" class="form-control" [(ngModel)]="billingAddress" name="billingAddress" required #billingAddressField="ngModel">
+              <div *ngIf="billingAddressField.invalid && billingAddressField.touched" class="text-danger">L'indirizzo di fatturazione è obbligatorio.
+              </div>
             </div>
-            <button type="submit" class="btn btn-dark mt-3" (click)="processPayment()">Concludi Pagamento</button>
+            <button type="submit" class="btn btn-dark mt-3" [disabled]="paymentForm.invalid">Concludi Pagamento
+            </button>
           </form>
         </div>
       </div>

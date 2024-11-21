@@ -59,33 +59,37 @@ export class PaymentComponent implements OnInit {
   }
 
   processPayment(): void {
-    const payment: Payment = {
-      customerOrder: {
-        items: this.cartItems,
-        totalAmount: this.totalAmount,
-        paymentDetails: {
-          cardNumber: this.cardNumber,
-          cardHolderName: this.cardHolderName,
-          cardHolderSurname: this.cardHolderSurname,
-          expiryDate: this.expiryDate,
-          cvv: this.cvv,
-          billingAddress: this.billingAddress
-        }
-      },
-      paymentDate: new Date().toISOString(),
-      paymentMethod: "Credit Card",
-      status: "PENDING"
-    };
+    if (this.cardNumber && this.cardHolderName && this.cardHolderSurname && this.expiryDate && this.cvv && this.billingAddress) {
+      const payment: Payment = {
+        customerOrder: {
+          items: this.cartItems,
+          totalAmount: this.totalAmount,
+          paymentDetails: {
+            cardNumber: this.cardNumber,
+            cardHolderName: this.cardHolderName,
+            cardHolderSurname: this.cardHolderSurname,
+            expiryDate: this.expiryDate,
+            cvv: this.cvv,
+            billingAddress: this.billingAddress
+          }
+        },
+        paymentDate: new Date().toISOString(),
+        paymentMethod: "Credit Card",
+        status: "PENDING"
+      };
 
-    this.paymentService.createPayment(payment).subscribe({
-      next: (savedPayment: Payment) => {
-        console.log("Pagamento effettuato con successo!", savedPayment);
-        this.goToConfirmPage();
-      },
-      error: (err: any) => {
-        console.error("Errore nel creare il pagamento:", err);
-      }
-    });
+      this.paymentService.createPayment(payment).subscribe({
+        next: (savedPayment: Payment) => {
+          console.log("Pagamento effettuato con successo!", savedPayment);
+          this.goToConfirmPage();
+        },
+        error: (err: any) => {
+          console.error("Errore nel creare il pagamento:", err);
+        }
+      });
+    } else {
+      console.error("Errore: Tutti i campi sono obbligatori.");
+    }
   }
 
   goToConfirmPage() {

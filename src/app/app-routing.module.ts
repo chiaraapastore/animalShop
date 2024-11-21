@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
-import { FeedbackComponent } from './feedback/feedback.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactComponent } from './contact/contact.component';
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -20,7 +19,6 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'shop', component: ProductListComponent, canActivate: [AuthGuard] },
   { path: 'announcements', component: AnnouncementsComponent, canActivate: [AuthGuard] },
-  { path: 'feedback', component: FeedbackComponent, canActivate: [AuthGuard] },
   { path: 'about-us', component: AboutUsComponent, canActivate: [AuthGuard] },
   { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] },
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },

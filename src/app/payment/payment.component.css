@@ -48,7 +48,6 @@ body {
 }
 
 
-
 .d-flex {
   padding-top: 10px; /* Spinge tutto il contenuto verso il basso */
 }
@@ -89,3 +88,13 @@ body {
 .payment-icons i:hover {
   opacity: 0.8;
 }
+
+input.ng-touched.ng-invalid {
+  border-color: #dc3545;
+}
+
+.text-danger {
+  font-size: 0.875em;
+  color: #dc3545;
+}
+

@@ -119,7 +119,7 @@ body.orders-page::before {
   border-radius: 0;
   margin: 0;
   padding: 0;
-  background-image: url('/assets/images/ordini.jpg'); /* Percorso dell'immagine */
+  background-image: url('/assets/images/sfondo-profile.jpg'); /* Percorso dell'immagine */
   background-size: cover;
   background-position: center 40%;
   filter: blur(3px);

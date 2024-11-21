@@ -8,7 +8,7 @@ import {Order} from "../models/order.model";
 import {AuthenticationService} from "../auth/authenticationService";
 import {Cart} from "../models/cart.model";
 import {isPlatformBrowser} from "@angular/common";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Component({
@@ -22,7 +22,7 @@ export class ProductListComponent implements OnInit {
   categories: Category[] = [];
   selectedCategory: string = '';
   page: number = 1;
-  pageSize: number = 8;
+  pageSize: number = 5;
   totalProducts: number = 0;
   tableSize: number[] = [5, 10, 20];
   sizes: string[] = ['S', 'M', 'L', 'XL'];
@@ -41,6 +41,7 @@ export class ProductListComponent implements OnInit {
     private keycloakService: KeycloakService,
     private auth: AuthenticationService,
     private route: ActivatedRoute,
+    private router: Router,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.platformId = platformId;
@@ -60,7 +61,7 @@ export class ProductListComponent implements OnInit {
   }
 
   searchProductsByKeyword(keyword: string): void {
-    if (!keyword) {
+    if (!keyword.trim()) {
       this.resetFilters();
       return;
     }
@@ -68,7 +69,7 @@ export class ProductListComponent implements OnInit {
       next: (products) => {
         this.searchProducts = products.map((product: Product) => ({
           ...product,
-          imageUrl: this.getImageUrlForProduct(product.productName)
+          imageUrl: this.getImageUrlForProduct(product.productName),
         }));
         this.filteredProducts = [...this.searchProducts];
         this.totalProducts = products.length;
@@ -78,7 +79,9 @@ export class ProductListComponent implements OnInit {
         this.filteredProducts = [];
       },
     });
+    this.router.navigate(['/shop'], {queryParams: {keyword}});
   }
+
 
   resetFilters(): void {
     this.searchKeyword = '';
@@ -86,9 +89,11 @@ export class ProductListComponent implements OnInit {
     this.selectedSort = 'default';
     this.sizeProduct = '';
     this.page = 1;
-
     this.filteredProducts = [];
-    this.loadProducts();
+    window.location.reload();
+    this.router.navigate(['/shop'], { queryParams: {} }).then(() => {
+      this.loadProducts();
+    });
   }
 
   async checkAuthentication(): Promise<void> {
@@ -104,6 +109,46 @@ export class ProductListComponent implements OnInit {
 
 
   loadCart(): void {}
+
+  loadCategories(): void {
+    this.productService.getCategories().subscribe({
+      next: (categories: Category[]) => {
+        this.categories = categories;
+      },
+      error: (err) => {
+        console.error('Errore nel caricamento delle categorie:', err);
+        this.categories = [];
+      },
+    });
+  }
+
+  loadProducts(): void {
+    const sortField = this.selectedSort === 'priceAsc' ? 'price' : this.selectedSort === 'priceDesc' ? 'price' : 'productName';
+    const sortOrder = this.selectedSort === 'priceAsc' ? 'asc' : this.selectedSort === 'priceDesc' ? 'desc' : 'asc';
+
+    this.productService.getProducts(this.page - 1, this.pageSize, sortField, sortOrder, this.selectedCategory, this.sizeProduct)
+      .subscribe({
+        next: (response: any) => {
+          if (response.content && Array.isArray(response.content)) {
+            this.products = response.content.map((product: Product) => ({
+              ...product,
+              imageUrl: this.getImageUrlForProduct(product.productName),
+            }));
+            this.filteredProducts = [...this.products];
+            this.totalProducts = response.totalElements || 0;
+          } else {
+            console.error('La risposta non contiene un array valido:', response);
+            this.products = [];
+            this.filteredProducts = [];
+          }
+        },
+        error: (err) => {
+          console.error('Errore nel caricamento dei prodotti:', err);
+          this.products = [];
+          this.filteredProducts = [];
+        },
+      });
+  }
 
   async addToCart(productId: string, quantity: number = 1): Promise<void> {
     const user = await this.auth.getLoggedInUser();
@@ -121,50 +166,6 @@ export class ProductListComponent implements OnInit {
       console.warn('Utente non autenticato. Effettua il login per aggiungere prodotti al carrello.');
     }
   }
-
-
-  loadCategories(): void {
-    this.productService.getCategories().subscribe({
-      next: (categories: Category[]) => {
-        this.categories = categories;
-      },
-      error: (err) => {
-        console.error('Errore nel caricamento delle categorie:', err);
-        this.categories = [];
-      },
-    });
-  }
-
-
-  loadProducts(): void {
-    const sortField = this.selectedSort === 'priceAsc' ? 'price' : this.selectedSort === 'priceDesc' ? 'price' : 'productName';
-    const sortOrder = this.selectedSort === 'priceAsc' ? 'asc' : this.selectedSort === 'priceDesc' ? 'desc' : 'asc';
-
-    this.productService.getProducts(this.page - 1, this.pageSize, sortField, sortOrder, this.selectedCategory, this.sizeProduct)
-      .subscribe({
-        next: (response: any) => {
-          // Controllo aggiuntivo per evitare errori
-          if (response.content && Array.isArray(response.content)) {
-            this.products = response.content.map((product: Product) => ({
-              ...product,
-              imageUrl: this.getImageUrlForProduct(product.productName),
-            }));
-          } else {
-            console.error('La risposta non contiene un array valido:', response);
-            this.products = [];
-          }
-          this.totalProducts = response.totalElements || 0;
-          this.filteredProducts = [...this.products];
-        },
-        error: (err) => {
-          console.error('Errore nel caricamento dei prodotti:', err);
-          this.products = [];
-          this.filteredProducts = [];
-        },
-      });
-  }
-
-
 
 
   getImageUrlForProduct(productName: string): string {
@@ -210,6 +211,7 @@ export class ProductListComponent implements OnInit {
   }
 
   onSortChange(): void {
+    this.page = 1;
     this.loadProducts();
   }
 

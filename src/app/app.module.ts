@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavigationComponent } from './navigation/navigation.component';
-import { FeedbackComponent } from './feedback/feedback.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HomeComponent } from './home/home.component';
@@ -22,6 +21,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { OrdersComponent } from './orders/orders.component';
 import {CartComponent} from "./cart/cart.component";
 import { ErrorComponent } from './error/error.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 export function initializeKeycloak(keycloak: KeycloakService, platformId: Object) {
   return () =>
@@ -47,7 +48,6 @@ export function initializeKeycloak(keycloak: KeycloakService, platformId: Object
   declarations: [
     AppComponent,
     NavigationComponent,
-    FeedbackComponent,
     AnnouncementsComponent,
     HomeComponent,
     AboutUsComponent,
@@ -66,7 +66,15 @@ export function initializeKeycloak(keycloak: KeycloakService, platformId: Object
     NgbModule,
     FormsModule,
     KeycloakAngularModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule, // Necessario per ngx-toastr
+    ToastrModule.forRoot({
+      toastClass: 'ngx-toastr', // Usa la classe personalizzata
+      positionClass: 'toast-top-right', // Posizione
+      timeOut: 5000, // Durata in millisecondi
+      closeButton: true, // Mostra il pulsante di chiusura
+      progressBar: true, // Mostra la barra di progresso
+    }),
   ],
   providers: [
     provideClientHydration(),
