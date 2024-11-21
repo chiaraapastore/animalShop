@@ -34,7 +34,7 @@ export function initializeKeycloak(keycloak: KeycloakService, platformId: Object
           clientId: 'dog-shop-app'
         },
         initOptions: {
-          onLoad: 'login-required',
+          onLoad: 'check-sso',
           checkLoginIframe: false
         },
         enableBearerInterceptor: true,

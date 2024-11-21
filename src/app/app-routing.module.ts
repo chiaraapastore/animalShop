@@ -16,7 +16,7 @@ import { ErrorComponent } from './error/error.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'home', component: HomeComponent },
   { path: 'shop', component: ProductListComponent, canActivate: [AuthGuard] },
   { path: 'announcements', component: AnnouncementsComponent, canActivate: [AuthGuard] },
   { path: 'about-us', component: AboutUsComponent, canActivate: [AuthGuard] },
@@ -30,6 +30,7 @@ const routes: Routes = [
   { path: 'error', component: ErrorComponent },
   { path: '**', redirectTo: '/error' },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { enableTracing: true })],

@@ -1,13 +1,21 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" routerLink="/" data-bs-toggle="tooltip" title="Home">AnimalShop</a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-target="#navbarNav"
+    aria-controls="navbarNav"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/" data-bs-toggle="tooltip" title="Home">Home</a>
+        <a class="nav-link" routerLink="/home" data-bs-toggle="tooltip" title="Home">Home</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/announcements" data-bs-toggle="tooltip" title="Annunci">Annunci</a>
@@ -20,13 +28,8 @@
       </li>
     </ul>
 
-    <form class="form-inline" (ngSubmit)="searchProducts($event)">
-      <input type="text" [(ngModel)]="searchKeyword" name="searchKeyword" placeholder="Cerca prodotti" class="form-control" required/>
-      <button type="submit" class="btn">Cerca</button>
-    </form>
-
     <div class="icons-container d-flex align-items-center">
-      <a class="nav-link" routerLink="/user-profile" style="margin-right: 15px;" data-bs-toggle="tooltip" title="Profilo Utente">
+      <a class="nav-link" (click)="goToUserProfile()" style="margin-right: 15px;" data-bs-toggle="tooltip" title="Profilo Utente">
         <i class="bi bi-person-circle fs-2"></i>
       </a>
       <a class="nav-link" routerLink="/cart" style="margin-right: 15px;" data-bs-toggle="tooltip" title="Carrello">
