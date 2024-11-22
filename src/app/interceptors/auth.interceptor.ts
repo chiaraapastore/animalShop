@@ -1,9 +1,8 @@
-
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
-import {Observable, from, catchError} from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { KeycloakService } from 'keycloak-angular';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, catchError } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
@@ -28,12 +27,10 @@ export class AuthInterceptor implements HttpInterceptor {
             }
           })
           : req;
-
         return next.handle(clonedRequest);
       }),
-      // Gestione errori per debug
       catchError(error => {
-        console.error('Errore durante l\'intercettazione della richiesta:', error);
+        console.error("Errore durante l'intercettazione della richiesta:", error);
         return next.handle(req); // Continua senza token in caso di errore
       })
     );

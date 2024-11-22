@@ -21,21 +21,17 @@ export class AuthGuard implements CanActivate {
     try {
       const isAuthenticated = await this.keycloakService.isLoggedIn();
       if (!isAuthenticated) {
-        await this.keycloakService.login();
+        await this.keycloakService.login({ redirectUri: state.url });
         return false;
       }
 
       const keycloakInstance = this.keycloakService.getKeycloakInstance();
-      if (keycloakInstance && keycloakInstance.tokenParsed) {
-        const tokenParsed = keycloakInstance.tokenParsed;
-        if (tokenParsed['resource_access']?.['dog-shop-app']) {
-          const roles = tokenParsed['resource_access']['dog-shop-app'].roles;
-          if (roles.includes('user')) {
-            return true;
-          } else {
-            this.router.navigate(['/not-authorized']);
-            return false;
-          }
+      if (keycloakInstance?.tokenParsed) {
+        const tokenParsed: any = keycloakInstance.tokenParsed;
+        const roles = tokenParsed?.resource_access?.['dog-shop-app']?.roles || [];
+
+        if (roles.includes('user')) {
+          return true;
         } else {
           this.router.navigate(['/not-authorized']);
           return false;
@@ -45,7 +41,7 @@ export class AuthGuard implements CanActivate {
         return false;
       }
     } catch (error) {
-      console.error('Errore durante l\'accesso:', error);
+      console.error("Errore durante l'accesso:", error);
       this.router.navigate(['/error']);
       return false;
     }

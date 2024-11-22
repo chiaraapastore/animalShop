@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {UtenteShopService} from "../services/utenteShop.service";
-import {Router} from "@angular/router";
+import { UtenteShopService } from '../services/utenteShop.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -15,15 +15,16 @@ export class ProfileComponent implements OnInit {
   };
   errorMessage: string = '';
 
-  constructor(private utenteShopService: UtenteShopService, private router: Router) { }
+  constructor(private utenteShopService: UtenteShopService, private router: Router) {}
 
   ngOnInit(): void {
     this.utenteShopService.getUserDetails().subscribe(
-      (userData) => {
+      userData => {
         this.user = userData;
       },
-      (error) => {
-        console.error('Errore durante il recupero dei dati dell\'utente:', error);
+      error => {
+        console.error("Errore durante il recupero dei dati dell'utente:", error);
+        this.errorMessage = 'Errore durante il recupero del profilo utente.';
       }
     );
   }
