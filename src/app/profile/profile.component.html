@@ -1,6 +1,6 @@
 <div class="background-blur"></div>
 <div class="d-flex justify-content-center align-items-center min-vh-100">
-  <div class="profile-container text-center">
+  <div class="profile-container text-center" *ngIf="user?.firstName; else loading">
 
     <i class="bi bi-person-circle profile-icon"></i>
 
@@ -8,13 +8,18 @@
 
     <div class="profile-details">
       <div class="mb-3">
-        <label><strong>Nome:</strong> {{ user?.firstName }}</label>
+        <label><strong>Nome:</strong> {{ user.firstName }}</label>
       </div>
       <div class="mb-3">
-        <label><strong>Cognome:</strong> {{ user?.lastName }}</label>
+        <label><strong>Cognome:</strong> {{ user.lastName }}</label>
       </div>
       <div class="mb-3">
-        <label><strong>Email:</strong> {{ user?.email }}</label>
+        <label><strong>Email:</strong> {{ user.email }}</label>
+      </div>
+
+      <!-- Messaggio di errore -->
+      <div *ngIf="errorMessage" class="error">
+        <p>{{ errorMessage }}</p>
       </div>
 
       <button class="btn btn-dark btn-lg" (click)="goToOrders()">
@@ -24,4 +29,11 @@
     </div>
 
   </div>
+
+  <!-- Messaggio di caricamento -->
+  <ng-template #loading>
+    <div class="loading-message">
+      <p>Caricamento profilo...</p>
+    </div>
+  </ng-template>
 </div>

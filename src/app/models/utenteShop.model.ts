@@ -4,4 +4,7 @@ export interface UtenteShop {
   lastName: string;
   email: string;
   username: string;
+  address: string;
+  numberCell: string;
+  role: string;
 }

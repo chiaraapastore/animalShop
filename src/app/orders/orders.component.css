@@ -6,7 +6,7 @@
   background-color: #fff; /* Sfondo bianco */
   border: 1px solid #ddd;
   font-family: 'Roboto', sans-serif;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.6);
   border-radius: 8px; /* Angoli arrotondati */
 }
 
@@ -50,7 +50,7 @@
   font-size: 14px;
   font-weight: bold;
   color: #fff;
-  background-color: #333;
+  background-color: black;
   border: none;
   cursor: pointer;
   border-radius: 4px;
@@ -78,14 +78,14 @@
 }
 
 .table th {
-  background-color: #333;
+  background-color: black;
   color: #fff;
   font-weight: bold;
 }
 
 .table td {
   background-color: #f9f9f9;
-  color: #555;
+  color: black;
 }
 
 .table tr:hover td {
@@ -134,7 +134,7 @@
 .pagination button {
   padding: 8px 14px;
   font-size: 12px;
-  background-color: #333;
+  background-color: black;
   color: white;
   border: none;
   border-radius: 4px;
@@ -151,7 +151,7 @@
 .pagination span {
   font-size: 14px;
   font-weight: bold;
-  color: #333;
+  color: black;
 }
 
 /* Popup di conferma */
@@ -172,7 +172,7 @@
   transform: translate(-50%, -50%);
   width: 400px;
   background-color: #fff;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
   border-radius: 8px;
   padding: 20px;
   text-align: center;
@@ -182,12 +182,13 @@
 .confirmation-popup p {
   font-size: 16px;
   margin-bottom: 20px;
-  color: #333;
+  color: black;
 }
 
 .confirmation-popup button {
   padding: 10px 20px;
   margin: 0 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
   border: none;
   border-radius: 4px;
   font-size: 14px;

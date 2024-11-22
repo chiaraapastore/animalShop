@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core
 import { isPlatformBrowser } from '@angular/common';
 import { Order } from '../models/order.model';
 import { OrdersService } from '../services/order.service';
-import {ToastrService} from "ngx-toastr";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: 'app-orders',
@@ -20,14 +20,8 @@ export class OrdersComponent implements OnInit, OnDestroy {
   currentPage: number = 1;
   pageSize: number = 5;
   totalPages: number = 1;
-  showConfirmationPopup: boolean = false; // Stato del popup
-  orderToCancelId: number | null = null; // Memorizza l'ID dell'ordine da cancellare
-
-  // Mostra il popup di conferma
-  showCancelConfirmation(orderId: number): void {
-    this.showConfirmationPopup = true;
-    this.orderToCancelId = orderId;
-  }
+  showConfirmationPopup: boolean = false;
+  orderToCancelId: number | null = null;
 
   constructor(
     private ordersService: OrdersService,
@@ -77,13 +71,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
       return matchesSearch && matchesStatus;
     });
 
-    this.currentPage = 1; // Reset to the first page after filtering
+    this.currentPage = 1;
     this.updatePagination();
     this.errorMessage =
       this.filteredOrders.length === 0 ? 'Nessun ordine corrisponde ai tuoi filtri.' : '';
   }
-
-
 
   updatePagination(): void {
     this.totalPages = Math.ceil(this.filteredOrders.length / this.pageSize);
@@ -110,9 +102,38 @@ export class OrdersComponent implements OnInit, OnDestroy {
     );
   }
 
+  showCancelConfirmation(orderId: number): void {
+    this.orderToCancelId = orderId;
+    this.showConfirmationPopup = true;
+  }
+
+  confirmCancel(): void {
+    if (this.orderToCancelId !== null) {
+      this.ordersService.cancelOrder(this.orderToCancelId).subscribe({
+        next: () => {
+          this.orders = this.orders.filter(order => order.id !== this.orderToCancelId);
+          this.filteredOrders = this.filteredOrders.filter(order => order.id !== this.orderToCancelId);
+          this.updatePagination();
+          this.toastr.success('Ordine cancellato con successo.', 'Cancellazione Completata');
+          this.closePopup();
+        },
+        error: () => {
+          this.toastr.error('Errore durante la cancellazione.', 'Errore');
+        }
+      });
+    }
+  }
 
 
+  cancelAction(): void {
+    this.closePopup();
+    this.toastr.info('Cancellazione annullata.', 'Operazione Annullata');
+  }
 
+  closePopup(): void {
+    this.showConfirmationPopup = false;
+    this.orderToCancelId = null;
+  }
 
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
@@ -126,110 +147,5 @@ export class OrdersComponent implements OnInit, OnDestroy {
       this.currentPage--;
       this.updatePagination();
     }
-  }
-
-
-  cancelOrder(orderId: number): void {
-    this.showConfirmation(
-      'Sei sicuro di voler cancellare questo ordine?',
-      () => {
-        // Azione in caso di conferma
-        this.ordersService.cancelOrder(orderId).subscribe({
-          next: () => {
-            this.orders = this.orders.filter((order) => order.id !== orderId);
-            this.applyFilters();
-            this.toastr.success('Ordine cancellato con successo.', 'Cancellazione Completata');
-          },
-          error: () => {
-            this.toastr.error('Si è verificato un errore durante la cancellazione.', 'Errore');
-          }
-        });
-      },
-      () => {
-        // Azione in caso di annullamento
-        this.toastr.info('Cancellazione annullata.', 'Operazione Annullata');
-      }
-    );
-  }
-  showConfirmation(message: string, onConfirm: () => void, onCancel: () => void): void {
-    const confirmationMessage = `
-    <div style="text-align: left;">
-      <p>${message}</p>
-      <div style="display: flex; justify-content: space-around; margin-top: 10px;">
-        <button id="confirmButton" style="
-          background-color: #4caf50;
-          color: white;
-          padding: 5px 10px;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-        ">Conferma</button>
-        <button id="cancelButton" style="
-          background-color: #f44336;
-          color: white;
-          padding: 5px 10px;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-        ">Annulla</button>
-      </div>
-    </div>
-  `;
-
-    // Mostra il messaggio con i pulsanti
-    this.toastr.info(confirmationMessage, 'Conferma Cancellazione', {
-      enableHtml: true,
-      disableTimeOut: true,
-      tapToDismiss: false,
-      closeButton: true, // Pulsante di chiusura abilitato
-      progressBar: false, // Disabilita la barra di progresso se non necessaria
-    });
-
-    // Usa `setTimeout` per collegare gli eventi ai pulsanti dopo il rendering
-    setTimeout(() => {
-      const confirmButton = document.getElementById('confirmButton');
-      const cancelButton = document.getElementById('cancelButton');
-
-      if (confirmButton) {
-        confirmButton.onclick = () => {
-          this.toastr.clear(); // Chiude la notifica
-          onConfirm(); // Esegue l'azione di conferma
-        };
-      }
-
-      if (cancelButton) {
-        cancelButton.onclick = () => {
-          this.toastr.clear(); // Chiude la notifica
-          onCancel(); // Esegue l'azione di annullamento
-        };
-      }
-    }, 0);
-  }
-
-  confirmCancel(): void {
-    if (this.orderToCancelId !== null) {
-      this.ordersService.cancelOrder(this.orderToCancelId).subscribe({
-        next: () => {
-          this.orders = this.orders.filter(order => order.id !== this.orderToCancelId);
-          this.applyFilters();
-          this.toastr.success('Ordine cancellato con successo.', 'Cancellazione Completata');
-        },
-        error: () => {
-          this.toastr.error('Errore durante la cancellazione.', 'Errore');
-        }
-      });
-    }
-    this.closePopup();
-  }
-
-  cancelAction(): void {
-    this.closePopup();
-    this.toastr.info('Cancellazione annullata.', 'Operazione Annullata');
-  }
-
-  // Chiude il popup
-  private closePopup(): void {
-    this.showConfirmationPopup = false;
-    this.orderToCancelId = null;
   }
 }

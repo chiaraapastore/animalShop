@@ -28,6 +28,11 @@
       </li>
     </ul>
 
+    <form class="form-inline" (ngSubmit)="searchProducts($event)">
+      <input type="text" [(ngModel)]="searchKeyword" name="searchKeyword" placeholder="Cerca prodotti" class="form-control" required/>
+      <button type="submit" class="btn">Cerca</button>
+    </form>
+
     <div class="icons-container d-flex align-items-center">
       <a class="nav-link" (click)="goToUserProfile()" style="margin-right: 15px;" data-bs-toggle="tooltip" title="Profilo Utente">
         <i class="bi bi-person-circle fs-2"></i>
