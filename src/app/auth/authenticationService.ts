@@ -27,12 +27,16 @@ export class AuthenticationService {
     }
   }
   logout() {
-    this.keycloakService.logout('').then(() => {
-      console.log("Logout effettuato");
-    }).catch(error => {
-      console.error("Errore durante il logout", error);
-    });
+    const redirectUri = window.location.origin; // Torna alla homepage dopo il logout
+    this.keycloakService.logout(redirectUri)
+      .then(() => {
+        console.log('Logout effettuato con successo');
+      })
+      .catch(error => {
+        console.error('Errore durante il logout:', error);
+      });
   }
+
 
 
 }

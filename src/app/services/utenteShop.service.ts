@@ -11,10 +11,6 @@ export class UtenteShopService {
 
   constructor(private http: HttpClient) {}
 
-  registerUser(user: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/create/users/keycloak`, user);
-  }
-
   getUserDetails(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/userDetails`);
   }
