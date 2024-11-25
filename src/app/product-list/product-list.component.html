@@ -15,6 +15,7 @@
     </div>
 
 
+
     <!-- Colonna Prodotti -->
     <div class="col-8 d-flex justify-content-center flex-wrap">
       <!-- Barra Filtri -->
@@ -58,10 +59,6 @@
         </button>
       </div>
 
-      <!-- Messaggio Login -->
-      <div *ngIf="!isAuthenticated" class="alert alert-info">
-        Effettua il login per visualizzare e aggiungere prodotti al carrello.
-      </div>
 
       <!-- Checkout -->
       <button *ngIf="cartId" (click)="checkout()">Procedi al checkout</button>

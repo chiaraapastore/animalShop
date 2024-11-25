@@ -21,4 +21,7 @@ export class UtenteShopService {
     return this.http.get<any>(`${this.apiUrl}/userDetailsDataBase`);
   }
 
+  checkUserExists(username: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/exists?username=${username}`);
+  }
 }

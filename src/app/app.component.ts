@@ -19,6 +19,7 @@ export class AppComponent implements OnInit{
   searchResults: Product[] = []; // Risultati della ricerca
   userDetails: any; // Dettagli utente autenticato
 
+
   constructor(
     private router: Router,
     private renderer: Renderer2,
@@ -70,9 +71,6 @@ export class AppComponent implements OnInit{
       keycloakId: keycloak.tokenParsed?.sub,
     };
 
-    //Aggiunta ruolo
-
-    // Stampa dei dati utente nella console
     console.log('Dati utente recuperati da Keycloak:');
     console.log('Email:', this.userDetails.email);
     console.log('Username:', this.userDetails.username);
@@ -80,9 +78,21 @@ export class AppComponent implements OnInit{
     console.log('Cognome:', this.userDetails.lastName);
     console.log('Keycloak ID:', this.userDetails.keycloakId);
 
-    // Salva l'utente nel backend solo se non esiste già
-    this.saveUserToBackend(this.userDetails);
+    // Controlla se l'utente esiste nel backend prima di salvarlo
+    this.utenteService.checkUserExists(this.userDetails.username).subscribe({
+      next: (exists) => {
+        if (!exists) {
+          this.saveUserToBackend(this.userDetails);
+        } else {
+          console.log('Utente già esistente nel backend.');
+        }
+      },
+      error: (error) => {
+        console.error('Errore durante il controllo dell\'utente:', error);
+      }
+    });
   }
+
 
 
 

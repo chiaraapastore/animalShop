@@ -7,8 +7,9 @@ import { KeycloakService } from "keycloak-angular";
 import {Order} from "../models/order.model";
 import {AuthenticationService} from "../auth/authenticationService";
 import {Cart} from "../models/cart.model";
-import {isPlatformBrowser} from "@angular/common";
 import {ActivatedRoute, Router} from "@angular/router";
+import { ToastrService } from 'ngx-toastr';
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 
 @Component({
@@ -42,6 +43,7 @@ export class ProductListComponent implements OnInit {
     private auth: AuthenticationService,
     private route: ActivatedRoute,
     private router: Router,
+    private toastr: ToastrService,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.platformId = platformId;
@@ -57,7 +59,6 @@ export class ProductListComponent implements OnInit {
       }
     });
     this.loadCategories();
-    this.checkAuthentication();
   }
 
   searchProductsByKeyword(keyword: string): void {
@@ -96,19 +97,6 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  async checkAuthentication(): Promise<void> {
-    if (isPlatformBrowser(this.platformId)) {
-      this.isAuthenticated = await this.keycloakService.isLoggedIn();
-      if (this.isAuthenticated) {
-        this.loadCart();
-      } else {
-        await this.keycloakService.login();
-      }
-    }
-  }
-
-
-  loadCart(): void {}
 
   loadCategories(): void {
     this.productService.getCategories().subscribe({
@@ -151,21 +139,37 @@ export class ProductListComponent implements OnInit {
   }
 
   async addToCart(productId: string, quantity: number = 1): Promise<void> {
-    const user = await this.auth.getLoggedInUser();
-    if (user) {
-      const username = user.username || 'Email non disponibile';
+    try {
+      // Controlla se l'utente è loggato
+      const isAuthenticated = await this.keycloakService.isLoggedIn();
+
+      if (!isAuthenticated) {
+        console.warn('Utente non autenticato. Effettua il login per aggiungere prodotti al carrello.');
+        this.toastr.warning('Effettua il login per aggiungere prodotti al carrello.', 'Attenzione');
+        return; // Esci dalla funzione se l'utente non è loggato
+      }
+
+      // Recupera le informazioni sull'utente loggato
+      const user = await this.auth.getLoggedInUser();
+      const username = user?.username || 'Email non disponibile';
+
+      // Aggiungi il prodotto al carrello
       this.cartService.addProductToCart(productId, quantity, username).subscribe({
         next: (cart) => {
           console.log('Prodotto aggiunto al carrello con successo:', cart);
+          this.toastr.success('Prodotto aggiunto al carrello con successo!', 'Successo');
         },
         error: (err) => {
           console.error('Errore durante l\'aggiunta del prodotto al carrello:', err);
+          this.toastr.error('Errore durante l\'aggiunta del prodotto al carrello.', 'Errore');
         }
       });
-    } else {
-      console.warn('Utente non autenticato. Effettua il login per aggiungere prodotti al carrello.');
+    } catch (err) {
+      console.error('Errore durante il controllo autenticazione:', err);
+      this.toastr.error('Errore durante il controllo autenticazione.', 'Errore');
     }
   }
+
 
 
   getImageUrlForProduct(productName: string): string {
