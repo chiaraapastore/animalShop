@@ -25,12 +25,14 @@ export class AuthGuard implements CanActivate {
         return false;
       }
 
+      const requiredRoles: string[] = route.data['roles'] || [];
+
       const keycloakInstance = this.keycloakService.getKeycloakInstance();
       if (keycloakInstance?.tokenParsed) {
         const tokenParsed: any = keycloakInstance.tokenParsed;
         const roles = tokenParsed?.resource_access?.['dog-shop-app']?.roles || [];
 
-        if (roles.includes('user')) {
+        if (requiredRoles.some(role => roles.includes(role))) {
           return true;
         } else {
           this.router.navigate(['/not-authorized']);
@@ -41,7 +43,7 @@ export class AuthGuard implements CanActivate {
         return false;
       }
     } catch (error) {
-      console.error("Errore durante l'accesso:", error);
+      console.error('Errore durante la verifica dei permessi:', error);
       this.router.navigate(['/error']);
       return false;
     }

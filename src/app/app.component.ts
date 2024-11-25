@@ -1,26 +1,31 @@
-import { Component, Renderer2 } from '@angular/core';
+import {Component, OnInit, Renderer2} from '@angular/core';
 import { Router, NavigationEnd, Event } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthenticationService } from "./auth/authenticationService";
 import { ProductService } from "./services/product.service";
 import { KeycloakService } from 'keycloak-angular';
+import {Product} from "./models/product.model";
+import {UtenteShopService} from "./services/utenteShop.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'AnimalShop'; // Titolo dell'app
   isProductPage = false; // Indica se l'utente si trova nella pagina dei prodotti
   searchKeyword: string = ''; // Parola chiave per la ricerca dei prodotti
+  searchResults: Product[] = []; // Risultati della ricerca
+  userDetails: any; // Dettagli utente autenticato
 
   constructor(
     private router: Router,
     private renderer: Renderer2,
     private auth: AuthenticationService,
     private productService: ProductService,
-    private keycloakService: KeycloakService // Import del servizio Keycloak
+    private keycloakService: KeycloakService, // Import del servizio Keycloak
+    private utenteService: UtenteShopService
   ) {
     // Monitoraggio delle navigazioni per aggiungere/rimuovere classi specifiche al body
     this.router.events
@@ -31,6 +36,12 @@ export class AppComponent {
           this.isProductPage = this.checkIfProductPage(event.url);
         }
       });
+  }
+
+  ngOnInit(): void {
+    if (this.keycloakService.isLoggedIn()) {
+      this.getUserDetails();
+    }
   }
 
   async goToUserProfile(): Promise<void> {
@@ -48,9 +59,51 @@ export class AppComponent {
     }
   }
 
+
+  private getUserDetails(): void {
+    const keycloak = this.keycloakService.getKeycloakInstance();
+    this.userDetails = {
+      email: keycloak.tokenParsed?.email,
+      username: keycloak.tokenParsed?.preferred_username,
+      firstName: keycloak.tokenParsed?.given_name,
+      lastName: keycloak.tokenParsed?.family_name,
+      keycloakId: keycloak.tokenParsed?.sub,
+    };
+
+    //Aggiunta ruolo
+
+    // Stampa dei dati utente nella console
+    console.log('Dati utente recuperati da Keycloak:');
+    console.log('Email:', this.userDetails.email);
+    console.log('Username:', this.userDetails.username);
+    console.log('Nome:', this.userDetails.firstName);
+    console.log('Cognome:', this.userDetails.lastName);
+    console.log('Keycloak ID:', this.userDetails.keycloakId);
+
+    // Salva l'utente nel backend solo se non esiste già
+    this.saveUserToBackend(this.userDetails);
+  }
+
+
+
+  private saveUserToBackend(userDetails: any): void {
+    this.utenteService.createUser(userDetails).subscribe({
+      next: (response) => {
+        console.log('Utente creato con successo:', response);
+      },
+      error: (error) => {
+        if (error.status === 409) {
+          console.log('Utente già esistente nel backend.');
+        } else {
+          console.error('Errore nella creazione dell\'utente:', error);
+        }
+      }
+    });
+  }
+
   private updateBodyClasses(url: string): void {
     // Rimuove classi esistenti
-    const bodyClasses = ['about-us-page', 'contact-page', 'feedback-page', 'announcements-page'];
+    const bodyClasses = ['about-us-page', 'contact-page', 'announcements-page'];
     bodyClasses.forEach(cls => this.renderer.removeClass(document.body, cls));
 
     // Aggiunge la classe corretta in base all'URL

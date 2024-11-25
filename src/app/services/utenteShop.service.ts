@@ -11,8 +11,14 @@ export class UtenteShopService {
 
   constructor(private http: HttpClient) {}
 
-  getUserDetails(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/userDetails`);
+
+  createUser(utenteShop: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/createUser`, utenteShop);
+  }
+
+
+  getUserDetailsDataBase():Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/userDetailsDataBase`);
   }
 
 }

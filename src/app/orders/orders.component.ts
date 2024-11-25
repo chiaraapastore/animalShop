@@ -78,6 +78,11 @@ export class OrdersComponent implements OnInit, OnDestroy {
   }
 
   updatePagination(): void {
+    if (this.filteredOrders.length === 0) {
+      this.paginatedOrders = [];
+      this.totalPages = 1;
+      return;
+    }
     this.totalPages = Math.ceil(this.filteredOrders.length / this.pageSize);
     const start = (this.currentPage - 1) * this.pageSize;
     const end = this.currentPage * this.pageSize;
@@ -101,6 +106,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
       { enableHtml: true }
     );
   }
+
 
   showCancelConfirmation(orderId: number): void {
     this.orderToCancelId = orderId;

@@ -42,10 +42,25 @@ export class ProductService {
     );
   }
 
+  // Crea un nuovo prodotto
+  createProduct(product: Product, categoryId: number): Observable<Product> {
+    return this.http.post<Product>(`${this.productsUrl}/create/${categoryId}`, product);
+  }
+
+  // Aggiorna un prodotto esistente
+  updateProduct(id: number, product: Product, categoryId: number): Observable<Product> {
+    return this.http.put<Product>(`${this.productsUrl}/${id}/${categoryId}`, product);
+  }
+
+  // Elimina un prodotto
+  deleteProduct(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.productsUrl}/${id}`);
+  }
+
 
 
   searchProducts(keyword: string): Observable<Product[]> {
-    let params = new HttpParams().set('keyword', keyword);
+    const params = new HttpParams().set('keyword', keyword);
     return this.http.get<Product[]>(this.searchUrl, { params });
   }
 

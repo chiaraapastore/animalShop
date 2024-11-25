@@ -8,19 +8,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  user = {
-    firstName: '',
-    lastName: '',
-    email: ''
-  };
+  userDetails: any;
   errorMessage: string = '';
 
   constructor(private utenteShopService: UtenteShopService, private router: Router) {}
 
   ngOnInit(): void {
-    this.utenteShopService.getUserDetails().subscribe(
+    this.utenteShopService.getUserDetailsDataBase().subscribe(
       userData => {
-        this.user = userData;
+        this.userDetails = userData;
       },
       error => {
         console.error("Errore durante il recupero dei dati dell'utente:", error);

@@ -13,19 +13,21 @@ import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
 import { ProfileComponent } from './profile/profile.component';
 import { OrdersComponent } from './orders/orders.component';
 import { ErrorComponent } from './error/error.component';
+import {AdminComponent} from "./admin/admin.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'shop', component: ProductListComponent, canActivate: [AuthGuard] },
-  { path: 'announcements', component: AnnouncementsComponent, canActivate: [AuthGuard] },
-  { path: 'about-us', component: AboutUsComponent, canActivate: [AuthGuard] },
-  { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] },
-  { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
-  { path: 'payment', component: PaymentComponent, canActivate: [AuthGuard] },
-  { path: 'confirm-page', component: ConfirmPageComponent, canActivate: [AuthGuard] },
-  { path: 'user-profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard] },
+  {path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } }, // Proteggi questa rotta per gli amministratori},
+  { path: 'shop', component: ProductListComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
+  { path: 'announcements', component: AnnouncementsComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
+  { path: 'about-us', component: AboutUsComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
+  { path: 'contact', component: ContactComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard], data: { roles: ['user'] } },
+  { path: 'payment', component: PaymentComponent, canActivate: [AuthGuard], data: { roles: ['user'] } },
+  { path: 'confirm-page', component: ConfirmPageComponent, canActivate: [AuthGuard], data: { roles: ['user'] } },
+  { path: 'user-profile', component: ProfileComponent, canActivate: [AuthGuard], data: { roles: ['user'] } },
+  { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard], data: { roles: ['user'] } },
   { path: 'not-authorized', component: NotFoundComponent },
   { path: 'error', component: ErrorComponent },
   { path: '**', redirectTo: '/error' },
@@ -33,7 +35,7 @@ const routes: Routes = [
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
+  imports: [RouterModule.forRoot(routes, { enableTracing: false })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

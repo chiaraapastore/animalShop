@@ -1,4 +1,4 @@
-import { NgModule, APP_INITIALIZER, PLATFORM_ID } from '@angular/core';
+import {NgModule, APP_INITIALIZER, PLATFORM_ID, inject} from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -23,6 +23,9 @@ import {CartComponent} from "./cart/cart.component";
 import { ErrorComponent } from './error/error.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { AdminComponent } from './admin/admin.component';
+
+
 
 export function initializeKeycloak(keycloak: KeycloakService, platformId: Object) {
   return () =>
@@ -43,7 +46,6 @@ export function initializeKeycloak(keycloak: KeycloakService, platformId: Object
       : Promise.resolve();
 }
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,7 +60,8 @@ export function initializeKeycloak(keycloak: KeycloakService, platformId: Object
     ConfirmPageComponent,
     ProfileComponent,
     OrdersComponent,
-    ErrorComponent
+    ErrorComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
