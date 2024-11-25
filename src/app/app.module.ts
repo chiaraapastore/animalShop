@@ -1,76 +1,98 @@
-import { NgModule } from '@angular/core';
+import {NgModule, APP_INITIALIZER, PLATFORM_ID, inject} from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
-
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavigationComponent } from './navigation/navigation.component';
-import { FeedbackComponent } from './feedback/feedback.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
-import { NotFoundComponent } from './not-found/not-found.component';
-import {RouterModule, Routes} from '@angular/router';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HomeComponent } from './home/home.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactComponent } from './contact/contact.component';
-import { HttpClientModule } from '@angular/common/http';
 import { ProductListComponent } from './product-list/product-list.component';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { isPlatformBrowser } from '@angular/common';
+import { PaymentComponent } from './payment/payment.component';
+import { ConfirmPageComponent } from './confirm-page/confirm-page.component';
+import { ProfileComponent } from './profile/profile.component';
+import { OrdersComponent } from './orders/orders.component';
+import {CartComponent} from "./cart/cart.component";
+import { ErrorComponent } from './error/error.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { AdminComponent } from './admin/admin.component';
 
-const appRoutes :Routes = [
-  {
-    path: 'announcements',
-    component: AnnouncementsComponent
-  },/*percorso che si riferisce all'url che digito nel browser ed il componente che viene utilizzato quando viene raggiunto quell'url*/
-  {
-    path: 'feedback',
-    component: FeedbackComponent
-  },
-  {
-    path: '',
-    component: AnnouncementsComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: 'home',
-    component: HomeComponent
-  },
-  {
-    path:'about-us',
-    component: AboutUsComponent
-  },
-  {
-    path:'contact',
-    component: ContactComponent
-  },
 
-  {
-    path:'**',
-    component: NotFoundComponent
-  }
-] /*elenco di rotte*/
+
+export function initializeKeycloak(keycloak: KeycloakService, platformId: Object) {
+  return () =>
+    isPlatformBrowser(platformId)
+      ? keycloak.init({
+        config: {
+          url: 'http://localhost:8080',
+          realm: 'dog-shop-realm',
+          clientId: 'dog-shop-app'
+        },
+        initOptions: {
+          onLoad: 'check-sso',
+          checkLoginIframe: false
+        },
+        enableBearerInterceptor: true,
+        bearerPrefix: 'Bearer',
+      })
+      : Promise.resolve();
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
-    FeedbackComponent,
     AnnouncementsComponent,
-    NotFoundComponent,
     HomeComponent,
     AboutUsComponent,
     ContactComponent,
-    ProductListComponent
+    ProductListComponent,
+    CartComponent,
+    PaymentComponent,
+    ConfirmPageComponent,
+    ProfileComponent,
+    OrdersComponent,
+    ErrorComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    HttpClientModule,
-    RouterModule.forRoot(appRoutes, { enableTracing: true }),
-    FormsModule
+    FormsModule,
+    KeycloakAngularModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule, // Necessario per ngx-toastr
+    ToastrModule.forRoot({
+      toastClass: 'ngx-toastr', // Usa la classe personalizzata
+      positionClass: 'toast-top-right', // Posizione
+      timeOut: 5000, // Durata in millisecondi
+      closeButton: true, // Mostra il pulsante di chiusura
+      progressBar: true, // Mostra la barra di progresso
+    }),
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
+      deps: [KeycloakService, PLATFORM_ID]
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

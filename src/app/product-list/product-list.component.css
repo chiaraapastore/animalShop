@@ -1,20 +1,312 @@
-.filter-container {
+.background-blur {
+  background-image: url('/assets/images/product.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(5px);
+  position: fixed;
+  top: 0;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  top: -5%; /* Estendi l’immagine oltre i bordi */
+  left: -5%;
+  width: 120vw; /* Estensione oltre il 100% della larghezza */
+  height: 120vh; /* Estensione oltre il 100% dell’altezza */
+  z-index: -1;
+}
+
+.container {
+  position: relative;
+  z-index: 1; /* Porta il contenuto sopra lo sfondo */
+}
+
+.title-and-accordion-container {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 40px;
+  margin-left: 40px;
+}
+
+
+.btn-outline-secondary {
+  border: none;
+  background: none;
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.btn-outline-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
+
+/* Stile del titolo */
+.title-category {
+  font-size: 22px;
+  font-weight: 400;
+  color: #000;
+  margin-right: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.card {
+  width: 250px; /* Imposta una larghezza fissa per le card */
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  padding-top: 20px;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cart-icon-btn {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.cart-icon-btn:hover {
+  color:black;
+}
+
+.card-footer {
+  background-color: transparent;
+  border-top: none;
+  padding-top: 0.5rem;
+}
+
+
+.card-img-top {
+  margin-top: 10px; /* Aggiusta questo valore per ottenere l'altezza desiderata */
+  max-height: 200px;
+  object-fit: contain; /* Assicura che l'immagine sia contenuta senza distorsioni */
+}
+
+.card-footer {
+  padding-top: 10px; /* Aggiunge spazio tra l'immagine e il titolo/prezzo */
+}
+
+
+/* Allineamento del contenuto della card */
+.card-body {
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  color: #000;
 }
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 10px;
+  text-align: center;
+}
+
+
+.card-text {
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.card-price {
+  font-weight: bold;
+  color: #333;
+}
+
+
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Imposta una larghezza minima per ogni card */
+  gap: 20px; /* Spazio tra le card */
+  justify-items: center; /* Centra le card all'interno della griglia */
 }
 
+
+/* Card del prodotto */
 .product-card {
+  flex: 1 1 250px; /* Larghezza minima di 250px per ogni card, si espande fino a riempire lo spazio */
+  max-width: 300px; /* Larghezza massima per evitare che le card diventino troppo grandi */
   border: 1px solid #ddd;
   border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.product-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Immagine del prodotto */
+.product-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.1);
+}
+
+/* Informazioni del prodotto */
+.product-info {
   padding: 15px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-title {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 5px 0;
+  color: #333;
+}
+
+.product-price {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.cart-icon-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: black;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination li {
+  list-style: none;
+  margin: 0 5px;
+}
+
+.pagination a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.pagination a:hover {
+  color: black;
+}
+
+
+.pagination-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 0;
+  width: 100%;
+}
+
+
+
+.page-size-selector {
+  margin-left: 10px;
+  position: relative;
+  top: -14px;
+}
+
+
+.page-size-selector label{
+  margin-left: auto;
+  font-weight: normal;
+  color: black;
+}
+
+
+.pagination .page-item .page-link {
+  color: black;
+  border: none;
+  padding: 8px 12px;
+  margin: 0 5px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s;
+}
+
+.pagination .page-item .page-link:hover {
+  background-color: #e0e0e0;
+  color: black;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: black;
+  color: white;
+  border: none;
+}
+
+
+.pagination .page-item.disabled .page-link {
+  color: #333; /* Colore più scuro */
+  opacity: 1; /* Impedisce al colore di essere semi-trasparente */
+}
+
+.pagination .page-item.disabled .page-link:hover {
+  color: #333; /* Mantiene il colore scuro anche al passaggio del mouse */
+  text-decoration: none; /* Rimuove eventuali sottolineature */
+}
+
+.pagination-controls .page-item.disabled .page-link {
+  color: #333; /* Colore più scuro per migliorare la visibilità */
+  background-color: #f8f9fa;
+}
+
+.pagination-controls {
+  flex-grow: 1; /* Permette ai controlli di espandersi */
+  display: flex;
+  justify-content: center; /* Centra la paginazione */
+}
+
+/* Stile per la barra dei filtri */
+.filter-bar {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px; /* Aggiunge spazio sopra la barra */
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: flex-end; /* Allinea la barra a destra */
+  padding-top: 10px; /* Aggiunge spazio interno in alto */
+  width: 100%;
+}
+
+.filter-dropdown label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.filter-dropdown select {
+  width: 160px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }

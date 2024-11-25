@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {catchError, Observable, of} from 'rxjs';
 import { Product } from '../models/product.model';
 import { Category } from '../models/category.model';
 
@@ -10,16 +10,16 @@ import { Category } from '../models/category.model';
 export class ProductService {
   private productsUrl = 'http://localhost:8081/api/products/list';
   private categoriesUrl = 'http://localhost:8081/category/categories';
+  private searchUrl = 'http://localhost:8081/api/products/search';
 
   constructor(private http: HttpClient) {}
 
-  // Metodo per ottenere tutte le categorie
+
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.categoriesUrl);
   }
 
-  // Metodo per ottenere tutti i prodotti con paginazione e filtro
-  getProducts(page: number, size: number, sortBy: string, sortDir: string, category?: string): Observable<Product[]> {
+  getProducts(page: number, size: number, sortBy: string, sortDir: string, category?: string, sizeProduct?: string): Observable<any> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
@@ -30,6 +30,39 @@ export class ProductService {
       params = params.set('category', category);
     }
 
-    return this.http.get<Product[]>(this.productsUrl, { params });
+    if (sizeProduct) {
+      params = params.set('sizeProduct', sizeProduct);
+    }
+
+    return this.http.get<any>(this.productsUrl, { params }).pipe(
+      catchError((error) => {
+        console.error('Errore durante il recupero dei prodotti:', error);
+        return of({ content: [], totalElements: 0 }); // Risposta vuota in caso di errore
+      })
+    );
   }
+
+  // Crea un nuovo prodotto
+  createProduct(product: Product, categoryId: number): Observable<Product> {
+    return this.http.post<Product>(`${this.productsUrl}/create/${categoryId}`, product);
+  }
+
+  // Aggiorna un prodotto esistente
+  updateProduct(id: number, product: Product, categoryId: number): Observable<Product> {
+    return this.http.put<Product>(`${this.productsUrl}/${id}/${categoryId}`, product);
+  }
+
+  // Elimina un prodotto
+  deleteProduct(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.productsUrl}/${id}`);
+  }
+
+
+
+  searchProducts(keyword: string): Observable<Product[]> {
+    const params = new HttpParams().set('keyword', keyword);
+    return this.http.get<Product[]>(this.searchUrl, { params });
+  }
+
+
 }

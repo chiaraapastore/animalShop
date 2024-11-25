@@ -1,0 +1,7 @@
+
+/* Stile per la card (opzionale per trasparenza) */
+.card {
+  background-color: rgba(255, 255, 255, 0.9); /* Bianco semi-trasparente */
+  border-radius: 20px; /* Angoli arrotondati */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Ombra */
+}

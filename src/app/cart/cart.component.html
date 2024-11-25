@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-center align-items-start min-vh-100">
+  <!-- Sfondo del carrello -->
+  <div class="cart-background"></div>
+
+  <!-- Contenitore del carrello -->
+  <div class="cart-container text-center">
+    <h1 class="my-4 text-center">Il Tuo Carrello</h1>
+
+    <div *ngIf="cartItems.length > 0; else emptyCart">
+      <div class="cart-items">
+        <div *ngFor="let item of cartItems" class="cart-item">
+          <img [src]="item.product.imageUrl" alt="{{ item.product.productName }}" class="cart-item-img">
+          <div class="cart-item-details">
+            <h5>{{ item.product.productName }}</h5>
+            <p class="text-muted">Prezzo: {{ item.product.price | currency:'EUR' }}</p>
+            <p class="text-muted">Quantità: {{ item.quantity }}</p>
+          </div>
+          <div class="cart-item-actions">
+            <button (click)="removeFromCart(item)" class="btn btn-outline-danger">
+              <i class="bi bi-trash"></i> Rimuovi
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="cart-total">
+        <p>Totale: {{ totalAmount | currency:'EUR' }}</p>
+      </div>
+      <div class="checkout-btn">
+        <button (click)="checkout()">Procedi al pagamento</button>
+      </div>
+    </div>
+
+    <ng-template #emptyCart>
+      <p class="text-center text-muted">Il tuo carrello è vuoto. Aggiungi dei prodotti per procedere.</p>
+      <div class="text-center mt-3">
+        <button class="btn btn-dark" routerLink="/shop">Torna ai prodotti</button>
+      </div>
+    </ng-template>
+  </div>
+</div>

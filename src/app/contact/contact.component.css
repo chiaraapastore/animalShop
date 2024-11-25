@@ -5,19 +5,24 @@ body.contact-page {
   overflow: hidden; /* Evita lo scrolling laterale */
 }
 
-
-/* Contenitore principale per centrare */
 .contact-container {
   max-width: 500px;
-  margin: 100px auto;
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 8px;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  position: relative;
-  z-index: 1;
+  position: fixed; /* Posiziona il contenitore rispetto alla finestra */
+  bottom: 300px; /* Aumenta il valore per alzare ulteriormente */
+  left: 50%; /* Centra orizzontalmente */
+  transform: translateX(-50%); /* Compensa per centrare orizzontalmente */
+  z-index: 1; /* Assicura che il contenitore sia visibile sopra lo sfondo */
 }
+
+
+
+
+
 
 /* Stile per il numero di telefono */
 .phone-number {

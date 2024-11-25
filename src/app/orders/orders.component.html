@@ -1,0 +1,69 @@
+<div class="orders-container">
+  <h1>I tuoi ordini</h1>
+
+  <!-- Spinner di caricamento -->
+  <div *ngIf="loading" class="loading-spinner">
+    <p>Caricamento ordini...</p>
+  </div>
+
+  <!-- Filtri -->
+  <div class="filters" *ngIf="!loading && orders.length > 0">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      placeholder="Cerca numero ordine..."
+    />
+    <select [(ngModel)]="selectedStatus">
+      <option value="">Tutti gli stati</option>
+      <option value="Pending">In attesa</option>
+      <option value="Completed">Completato</option>
+      <option value="Cancelled">Annullato</option>
+    </select>
+    <button (click)="applyFilters()">Applica Filtri</button>
+  </div>
+
+  <!-- Tabella degli ordini -->
+  <table *ngIf="!loading && paginatedOrders.length > 0" class="table">
+    <thead>
+    <tr>
+      <th>Numero Ordine</th>
+      <th>Data Ordine</th>
+      <th>Totale</th>
+      <th>Stato</th>
+      <th>Azioni</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let order of paginatedOrders">
+      <td>{{ order.orderNumber }}</td>
+      <td>{{ order.orderDate | date: 'dd/MM/yyyy' }}</td>
+      <td>{{ order.totalAmount | currency: 'EUR' }}</td>
+      <td>{{ order.status }}</td>
+      <td class="button-actions">
+        <button class="details-btn" (click)="viewOrderDetails(order)">Dettagli</button>
+        <button class="cancel-btn" (click)="showCancelConfirmation(order.id)">Cancella</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Popup di conferma -->
+  <div *ngIf="showConfirmationPopup" class="popup-overlay"></div>
+  <div *ngIf="showConfirmationPopup" class="confirmation-popup">
+    <p>Sei sicuro di voler cancellare questo ordine?</p>
+    <button class="confirm" (click)="confirmCancel()">Conferma</button>
+    <button class="cancel" (click)="cancelAction()">Annulla</button>
+  </div>
+
+  <!-- Paginazione -->
+  <div class="pagination" *ngIf="!loading && filteredOrders.length > pageSize">
+    <button (click)="previousPage()" [disabled]="currentPage === 1">Indietro</button>
+    <span>Pagina {{ currentPage }} di {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Avanti</button>
+  </div>
+
+  <!-- Messaggio di errore -->
+  <div *ngIf="errorMessage" class="error">
+    <p>{{ errorMessage }}</p>
+  </div>
+</div>

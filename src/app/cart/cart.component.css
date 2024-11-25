@@ -1,0 +1,136 @@
+.cart-background {
+  position: fixed;
+  top: -10%;
+  left: -10%;
+  width: 120vw;
+  height: 120vh;
+  background-image: url('/assets/images/carrello-sfondo.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(5px);
+  z-index: -1;
+}
+
+.cart-container {
+  position: relative;
+  background: rgba(255, 255, 255, 0.85); /* Sfondo semi-trasparente */
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 60px; /* Spazio più consistente dall'alto */
+  width: 90%; /* Riduci la larghezza */
+  max-width: 800px; /* Limita la dimensione massima */
+  z-index: 1;
+}
+
+.cart-container h1 {
+  font-size: 24px; /* Riduci la dimensione */
+  font-weight: 600; /* Regola il peso del font */
+  margin-bottom: 20px; /* Riduci lo spazio sotto il titolo */
+  color: #333; /* Mantieni il colore scuro */
+  text-transform: uppercase; /* Mantieni il testo in maiuscolo */
+}
+
+
+.cart-item {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0; /* Riduci il padding verticale */
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.cart-item-img {
+  width: 90px; /* Ridimensiona l'immagine */
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-right: 15px;
+}
+
+.cart-item-details {
+  flex: 1;
+  text-align: left;
+}
+
+.cart-item-details h5 {
+  margin: 0;
+  font-size: 16px; /* Riduci leggermente il titolo */
+  color: #333;
+}
+
+.cart-item-details p {
+  margin: 5px 0;
+  font-size: 13px;
+  color: #666;
+}
+
+.cart-item-actions {
+  text-align: right;
+}
+
+.cart-item-actions button {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px; /* Riduci la dimensione del pulsante */
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cart-item-actions button:hover {
+  background-color: #c0392b;
+}
+
+.cart-total {
+  text-align: right;
+  font-size: 18px; /* Riduci la dimensione del totale */
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.checkout-btn {
+  margin-top: 15px;
+  text-align: center; /* Centra il pulsante */
+}
+
+.checkout-btn button {
+  width: 100%;
+  max-width: 300px; /* Limita la larghezza massima */
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 12px;
+  font-size: 16px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.checkout-btn button:hover {
+  background-color: #555;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+.btn-outline-danger {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: #fff;
+}

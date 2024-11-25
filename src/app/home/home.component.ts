@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,9 @@ export class HomeComponent {
   scrollIndex = 0;
   testimonialsPerPage = 3;
 
+  constructor(private router: Router) {
+  }
+
   get visibleTestimonials() {
     return this.testimonials.slice(this.scrollIndex, this.scrollIndex + this.testimonialsPerPage);
   }
@@ -32,5 +36,9 @@ export class HomeComponent {
     } else if (this.scrollIndex > maxScrollIndex) {
       this.scrollIndex = 0;
     }
+  }
+
+  goToProducts(){
+    return this.router.navigate(['/shop'])
   }
 }

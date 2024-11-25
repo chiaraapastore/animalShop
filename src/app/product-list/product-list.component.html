@@ -1,18 +1,99 @@
-<div class="filter-container">
-  <label for="category">Filtra per categoria:</label>
-  <select id="category" [(ngModel)]="selectedCategory" (change)="onCategoryChange(selectedCategory)">
-    <option value="">Tutte le categorie</option>
-    <option *ngFor="let category of categories" [value]="category.categoryName">
-      {{ category.categoryName }}
-    </option>
-  </select>
-</div>
+<div class="background-blur"></div>
+<div class="container">
+  <div class="row">
+    <!-- Colonna Categorie -->
+    <div class="col-4 mt-5">
+      <h2 class="title-category">Esplora le Categorie</h2>
+      <div class="accordion-item mt-3">
+        <ul *ngFor="let category of categories" class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center" (click)="onCategorySelect(category.categoryName)">
+            {{ category.categoryName }}
+            <span class="badge text-bg-dark rounded-pill">{{ category.countProduct }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-<div class="product-grid">
-  <div *ngFor="let product of products" class="product-card">
-    <h3>{{ product.productName }}</h3>
-    <p>{{ product.description }}</p>
-    <p>Prezzo: €{{ product.price }}</p>
-    <p>Quantità disponibile: {{ product.availableQuantity }}</p>
+
+    <!-- Colonna Prodotti -->
+    <div class="col-8 d-flex justify-content-center flex-wrap">
+      <!-- Barra Filtri -->
+      <div class="filter-bar mb-4 d-flex gap-3 align-items-center">
+        <div class="filter-dropdown">
+          <label>Ordina:</label>
+          <select [(ngModel)]="selectedSort" (change)="onSortChange()">
+            <option value="default">Predefinito</option>
+            <option value="priceAsc">Prezzo crescente</option>
+            <option value="priceDesc">Prezzo decrescente</option>
+          </select>
+        </div>
+        <div class="filter-dropdown">
+          <select [(ngModel)]="sizeProduct" (change)="onFilterChange()">
+            <option value="">Tutte le taglie</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="Media">Media</option>
+            <option value="Grande">Grande</option>
+            <option value="Piccolo">Piccolo</option>
+            <option value="Unica">Unica</option>
+          </select>
+        </div>
+        <!-- Icona di ricarica -->
+        <button class="btn btn-outline-secondary d-flex align-items-center" (click)="resetFilters()" title="Ricarica">
+          <i class="bi bi-arrow-clockwise"></i> <!-- Icona Bootstrap -->
+        </button>
+      </div>
+
+      <!-- Prodotti -->
+      <div *ngFor="let product of filteredProducts" class="card m-3 position-relative" style="width: 18rem;">
+        <img [src]="product.imageUrl" class="card-img-top" alt="{{ product.productName }}"/>
+        <div class="card-footer text-center">
+          <h5 class="card-title">{{ product.productName }}</h5>
+          <p class="card-price"><strong>{{ product.price | currency }}</strong></p>
+        </div>
+        <button (click)="addToCart(product.id.toString())" class="cart-icon-btn position-absolute" style="top: 10px; right: 10px;">
+          <i class="fa fa-shopping-cart"></i>
+        </button>
+      </div>
+
+      <!-- Messaggio Login -->
+      <div *ngIf="!isAuthenticated" class="alert alert-info">
+        Effettua il login per visualizzare e aggiungere prodotti al carrello.
+      </div>
+
+      <!-- Checkout -->
+      <button *ngIf="cartId" (click)="checkout()">Procedi al checkout</button>
+
+      <!-- Paginazione -->
+      <div class="pagination-container mt-4">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" [class.disabled]="page === 1">
+              <button class="page-link" (click)="goToPreviousPage()" [disabled]="page === 1" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </button>
+            </li>
+            <li class="page-item disabled">
+              <span class="page-link">Pagina {{ page }} di {{ totalPages }}</span>
+            </li>
+            <li class="page-item" [class.disabled]="page >= totalPages">
+              <button class="page-link" (click)="goToNextPage()" [disabled]="page >= totalPages" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+        <div class="page-size-selector mt-3 text-center">
+          <label for="pageSizeSelect">Prodotti per pagina:</label>
+          <select id="pageSizeSelect" [(ngModel)]="pageSize" (change)="onPageSizeChange($event)" class="form-select d-inline w-auto ms-2">
+            <option *ngFor="let size of tableSize" [value]="size">
+              {{ size }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

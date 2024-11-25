@@ -1,35 +1,62 @@
+/* Sfondo della pagina */
+body.announcements-page {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-image: url('/assets/images/announce.jpg'); /* Assicurati che il percorso sia corretto */
+  background-size: cover; /* Rende l'immagine responsiva */
+  background-position: left center; /* Posiziona il cane a sinistra */
+  background-repeat: no-repeat; /* Evita la ripetizione */
+  min-height: 100vh; /* Assicura che copra l'intera altezza */
+  padding-top: 100px; /* Aggiunge spazio dall'alto */
+}
+
+/* Contenitore principale del testo */
 .announcements-container {
   max-width: 800px;
-  margin: 100px auto; /* Margine superiore per staccarlo dalla barra di navigazione */
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.85); /* Sfondo bianco semi-trasparente */
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.8); /* Sfondo bianco semi-trasparente */
   border-radius: 8px;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   position: relative;
   z-index: 1;
+  text-align: left; /* Allinea il testo a sinistra */
+  margin-left: auto; /* Sposta il contenitore più a destra */
+  margin-right: 5%;
 }
 
-.announcements-container h2 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-}
-
+/* Sezioni degli annunci */
 .announcement {
-  margin-bottom: 20px;
-  padding: 15px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd; /* Bordo grigio chiaro */
+  border-radius: 8px; /* Angoli arrotondati */
+  padding: 1rem; /* Spazio interno */
+  margin-bottom: 1rem; /* Spazio tra i box */
+  background-color: #f9f9f9; /* Sfondo più chiaro per i box */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Aggiungi un'ombra leggera */
 }
 
-.announcement h3 {
-  font-size: 1.8rem;
-  margin-top: 0;
-  margin-bottom: 10px;
+/* Stile per i titoli principali */
+.announcements-container h1 {
+  font-size: 1.8rem; /* Testo più piccolo per il titolo principale */
+  margin-bottom: 1.5rem; /* Spazio sotto il titolo */
+  color: #333;
+  text-align: center;
+}
+
+/* Stile per il testo degli annunci */
+.announcement h2 {
+  font-size: 1.2rem; /* Testo più piccolo per i titoli */
+  margin-bottom: 0.5rem; /* Spazio sotto il titolo */
+  color: #333;
 }
 
 .announcement p {
-  font-size: 1.2rem;
-  margin: 0;
+  font-size: 0.9rem; /* Testo più piccolo per il paragrafo */
+  line-height: 1.5; /* Migliora la leggibilità */
+  color: #555; /* Colore del testo più chiaro */
+}
+
+/* Spaziatura tra annunci */
+.announcement {
+  margin-top: 20px; /* Spazio extra sopra ogni annuncio */
 }
