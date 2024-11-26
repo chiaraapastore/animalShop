@@ -19,6 +19,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   margin-top: 60px; /* Spazio più consistente dall'alto */
+  margin-bottom: 40px; /* Aggiunge spazio con il bordo inferiore */
   width: 90%; /* Riduci la larghezza */
   max-width: 800px; /* Limita la dimensione massima */
   z-index: 1;

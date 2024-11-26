@@ -9,16 +9,15 @@ export class AuthenticationService {
   constructor(private keycloakService: KeycloakService) {}
 
 
-  async getLoggedInUser(): Promise<{ email?: string, username?: string } | null> {
+  async getLoggedInUser(): Promise<{ username?: string } | null> {
     try {
       const isAuthenticated = await this.keycloakService.isLoggedIn();
       if (isAuthenticated) {
         const keycloakInstance = this.keycloakService.getKeycloakInstance();
         if (keycloakInstance && keycloakInstance.tokenParsed) {
           const tokenParsed: any = keycloakInstance.tokenParsed;
-          const email = tokenParsed.email;
           const username = tokenParsed.preferred_username;
-          return { email, username };
+          return { username };
         }
       }
       return null;

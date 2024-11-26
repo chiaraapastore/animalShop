@@ -19,7 +19,7 @@ export class AdminComponent implements OnInit {
     availableQuantity: 0,
     categoryName: '',
     sizeProduct: '',
-    imageUrl: '',
+    imageUrl: ''
   };
 
   categoryId: number = 1;

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { CartService } from "../services/cart.service";
 import { AuthenticationService } from "../auth/authenticationService";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-cart',
@@ -18,7 +19,8 @@ export class CartComponent implements OnInit {
   constructor(
     private router: Router,
     private cartService: CartService,
-    private auth: AuthenticationService
+    private auth: AuthenticationService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -26,27 +28,30 @@ export class CartComponent implements OnInit {
   }
 
   async loadCartProducts(): Promise<void> {
-    const user = await this.auth.getLoggedInUser();
-    if (user) {
-      const username = user.username || 'Email non disponibile';
-      this.cartService.getCartProducts(username).subscribe({
-        next: (products) => {
-          this.cartItems = products.map(product => ({
-            product: {
-              ...product,
-              imageUrl: this.getImageUrlForProduct(product.productName) // Assegna l'immagine corretta
-            },
-            quantity: 1 // Inizializza la quantità
-          }));
-        },
-        error: (error) => {
-          console.error("Errore durante il caricamento dei prodotti nel carrello:", error);
-        }
-      });
-    } else {
-      console.warn("Utente non autenticato.");
+    try {
+      const user = await this.auth.getLoggedInUser();
+      if (user) {
+        const username = user.username || 'Email non disponibile';
+        this.cartService.getCartProducts(username).subscribe({
+          next: (cartProducts) => {
+            this.cartItems = cartProducts.map(cartProduct => ({
+              product: {
+                ...cartProduct.product,
+                imageUrl: this.getImageUrlForProduct(cartProduct.product.productName)
+              },
+              quantity: cartProduct.quantity // Quantità corretta dal backend
+            }));
+          },
+          error: (error) => {
+            console.error("Errore durante il caricamento dei prodotti nel carrello:", error);
+          }
+        });
+      }
+    } catch (error) {
+      console.error("Errore durante il recupero dell'utente autenticato:", error);
     }
   }
+
 
   getImageUrlForProduct(productName: string): string {
     const images: { [key: string]: string } = {
@@ -82,45 +87,84 @@ export class CartComponent implements OnInit {
 
 
   async removeFromCart(item: any): Promise<void> {
-    const user = await this.auth.getLoggedInUser();
-    if (user) {
-      const productId = item.product.id;
+    try {
+      const user = await this.auth.getLoggedInUser();
+      if (user) {
+        const productId = item.product.id;
 
-      // Aggiorna immediatamente la lista dei prodotti nel carrello
-      this.cartItems = this.cartItems.filter(cartItem => cartItem.product.id !== productId);
+        // Aggiorna immediatamente la lista dei prodotti nel carrello
+        this.cartItems = this.cartItems.filter(cartItem => cartItem.product.id !== productId);
 
-      // Effettua la chiamata API per la rimozione del prodotto
-      this.cartService.removeProductFromCart(productId).subscribe({
-        next: () => {
-          console.log('Prodotto rimosso dal carrello con successo');
-        },
-        error: (error) => {
-          console.error('Errore durante la rimozione del prodotto:', error);
-          // Ricarica i prodotti nel carrello in caso di errore
-          this.loadCartProducts();
-        }
-      });
-    } else {
-      console.warn("Utente non autenticato.");
+        // Effettua la chiamata API per la rimozione del prodotto
+        this.cartService.removeProductFromCart(productId).subscribe({
+          next: () => {
+            this.toastr.success('Prodotto rimosso dal carrello con successo', 'Successo');
+          },
+          error: (error) => {
+            console.error('Errore durante la rimozione del prodotto:', error);
+            this.toastr.error('Errore durante la rimozione del prodotto', 'Errore');
+            this.loadCartProducts(); // Ricarica il carrello in caso di errore
+          }
+        });
+      } else {
+        this.toastr.warning('Effettua il login per modificare il carrello', 'Attenzione');
+      }
+    } catch (error) {
+      console.error('Errore durante il recupero dell\'utente autenticato:', error);
     }
   }
 
-
-  updateQuantity(item: any): void {
-    const productId = item.product.id;
-    const quantity = item.quantity;
-
-    if (quantity > 0) {
-      this.cartService.updateProductQuantity(productId, quantity).subscribe({
-        next: () => {
-          console.log('Quantità aggiornata con successo');
-        },
-        error: (error) => {
-          console.error('Errore durante l\'aggiornamento della quantità', error);
+  async updateQuantity(item: any, maxQuantity: number): Promise<void> {
+    try {
+      const user = await this.auth.getLoggedInUser();
+      if (user) {
+        const username = user.username || 'Email non disponibile';
+        if (item.quantity < maxQuantity) {
+          this.cartService.updateProductQuantity(item.product.id, item.quantity + 1, username).subscribe({
+            next: () => {
+              item.quantity++;
+              console.log('Quantità aggiornata con successo');
+            },
+            error: (error) => {
+              console.error('Errore durante l\'aggiornamento della quantità:', error);
+              this.toastr.error('Errore durante l\'aggiornamento della quantità', 'Errore');
+            }
+          });
+        } else {
+          this.toastr.warning('Quantità massima disponibile raggiunta', 'Attenzione');
         }
-      });
-    } else {
-      console.warn("Quantità non valida");
+      } else {
+        this.toastr.warning('Utente non autenticato. Effettua il login.', 'Attenzione');
+      }
+    } catch (error) {
+      console.error('Errore durante il recupero dell\'utente autenticato:', error);
+    }
+  }
+
+  async decreaseQuantity(item: any): Promise<void> {
+    try {
+      const user = await this.auth.getLoggedInUser();
+      if (user) {
+        const username = user.username || 'Email non disponibile';
+        if (item.quantity > 1) {
+          this.cartService.updateProductQuantity(item.product.id, item.quantity - 1, username).subscribe({
+            next: () => {
+              item.quantity--;
+              console.log('Quantità aggiornata con successo');
+            },
+            error: (error) => {
+              console.error('Errore durante l\'aggiornamento della quantità', error);
+              this.toastr.error('Errore durante l\'aggiornamento della quantità', 'Errore');
+            }
+          });
+        } else {
+          this.toastr.warning('Quantità minima raggiunta', 'Attenzione');
+        }
+      } else {
+        this.toastr.warning('Utente non autenticato. Effettua il login.', 'Attenzione');
+      }
+    } catch (error) {
+      console.error('Errore durante il recupero dell\'utente autenticato:', error);
     }
   }
 
