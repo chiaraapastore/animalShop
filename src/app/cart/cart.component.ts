@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { CartService } from "../services/cart.service";
 import { AuthenticationService } from "../auth/authenticationService";
 import {ToastrService} from "ngx-toastr";
+import {Order} from "../models/order.model";
 
 @Component({
   selector: 'app-cart',
@@ -169,6 +170,23 @@ export class CartComponent implements OnInit {
   }
 
   checkout(): void {
-    this.router.navigate(["/payment"]);
+    const cartId = this.cartItems.length > 0 ? this.cartItems[0].cartId : null;
+
+    if (cartId !== null) {
+      this.cartService.checkout(cartId).subscribe({
+        next: () => {
+          console.log("Ordine completato con successo.");
+          this.toastr.success('Ordine completato con successo!', 'Successo');
+          this.router.navigate(['/order-summary']); // Reindirizza a una pagina di riepilogo
+        },
+        error: (err) => {
+          console.error("Errore durante il checkout:", err);
+          this.toastr.error('Errore durante il checkout.', 'Errore');
+        },
+      });
+    } else {
+      console.warn("ID del carrello non trovato. Checkout non possibile.");
+      this.toastr.warning('Carrello vuoto. Checkout non possibile.', 'Attenzione');
+    }
   }
 }

@@ -24,6 +24,8 @@ export class CartService {
     return this.http.post<Order>(`${this.apiUrl}/checkout/${cartId}`, {});
   }
 
+
+
   getCartProducts(username: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/cart-with-products`, { params: { username } });
   }
