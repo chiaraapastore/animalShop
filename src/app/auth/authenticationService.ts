@@ -25,14 +25,7 @@ export class AuthenticationService {
     }
   }
 
-  async getToken(): Promise<string | null> {
-    try {
-      return await this.keycloakService.getToken();
-    } catch (error) {
-      console.error("Errore durante il recupero del token:", error);
-      return null;
-    }
-  }
+
 
   logout(): void {
     const redirectUri = window.location.origin; // Redirect dopo il logout

@@ -27,36 +27,57 @@ export class CartComponent implements OnInit {
     this.loadCartProducts();
   }
 
+
   async loadCartProducts(): Promise<void> {
     try {
       const user = await this.auth.getLoggedInUser();
-      if (user) {
-        const username = user.username || 'Email non disponibile';
+      if (user && user.username) {
+        const username = user.username;
+
+        // Ottieni i prodotti dal backend
         this.cartService.getCartProducts(username).subscribe({
           next: (products) => {
+            console.log('Prodotti caricati dal backend:', products);
+
+            // Ottieni i dati salvati dal localStorage
             const savedCart = localStorage.getItem('cart');
             const parsedCart = savedCart ? JSON.parse(savedCart) : {};
 
+            // Sincronizza prodotti backend con localStorage
             this.cartItems = products.map(product => {
-              const savedQuantity = parsedCart[product.id]?.quantity || 1;
+              const savedQuantity = parsedCart[product.id]?.quantity;
+
+              // Determina la quantità da usare
+              const quantityToUse = savedQuantity !== undefined
+                ? Math.min(savedQuantity, product.availableQuantity) // Rispetta il limite di disponibilità
+                : Math.min(product.quantity || 1, product.availableQuantity);
+
               return {
                 product: {
                   ...product,
-                  imageUrl: this.getImageUrlForProduct(product.productName) // Assegna l'immagine corretta
+                  imageUrl: this.getImageUrlForProduct(product.productName) // Aggiunge l'immagine
                 },
-                quantity: savedQuantity
+                quantity: quantityToUse
               };
             });
+
+            // Salva lo stato aggiornato nel localStorage
+            this.saveCartToLocalStorage();
           },
           error: (error) => {
             console.error("Errore durante il caricamento dei prodotti nel carrello:", error);
           }
         });
+      } else {
+        console.warn("Utente non autenticato");
       }
     } catch (error) {
       console.error("Errore durante il recupero dell'utente autenticato:", error);
     }
   }
+
+
+
 
   getImageUrlForProduct(productName: string): string {
     const images: { [key: string]: string } = {
@@ -86,7 +107,7 @@ export class CartComponent implements OnInit {
       'Crocchette per Cani di Taglia Media': '/assets/images/crocchette-cani-taglia-media.jpg',
       'Cuscino Comodo per Cani': '/assets/images/cuscino.jpg',
     };
-    return images[productName] || '/assets/images/default.jpg'; // Usa un'immagine di default se non è specificata
+    return images[productName];
   }
 
 
@@ -97,10 +118,9 @@ export class CartComponent implements OnInit {
       if (user) {
         const productId = item.product.id;
 
-        // Aggiorna immediatamente la lista dei prodotti nel carrello
         this.cartItems = this.cartItems.filter(cartItem => cartItem.product.id !== productId);
 
-        // Effettua la chiamata API per la rimozione del prodotto
+
         this.cartService.removeProductFromCart(productId).subscribe({
           next: () => {
             this.toastr.success('Prodotto rimosso dal carrello con successo', 'Successo');
@@ -119,50 +139,51 @@ export class CartComponent implements OnInit {
     }
   }
 
-  async updateQuantity(item: any, maxQuantity: number): Promise<void> {
-    try {
-      const user = await this.auth.getLoggedInUser();
-      if (user) {
-        const username = user.username || 'Email non disponibile';
-        if (item.quantity < maxQuantity) {
-          this.cartService.updateProductQuantity(item.product.id, item.quantity + 1, username).subscribe({
-            next: () => {
-              item.quantity++;
-              this.saveCartToLocalStorage();
-              console.log('Quantità aggiornata con successo');
-            },
-            error: (error) => {
-              console.error('Errore durante l\'aggiornamento della quantità:', error);
-              this.toastr.error('Errore durante l\'aggiornamento della quantità', 'Errore');
-            }
-          });
-        } else {
-          this.toastr.warning('Quantità massima disponibile raggiunta', 'Attenzione');
+
+  updateQuantity(item: any): void {
+    const maxQuantity = item.product.availableQuantity;
+
+    if (item.quantity < maxQuantity) {
+      this.auth.getLoggedInUser().then(user => {
+        if (user && user.username) {
+          this.cartService.updateProductQuantity(item.product.id, item.quantity + 1, user.username)
+            .subscribe({
+              next: () => {
+                item.quantity++;
+                console.log(`Quantità aggiornata: ${item.quantity}`);
+                this.saveCartToLocalStorage();
+                this.toastr.success('Quantità aggiornata con successo', 'Successo');
+              },
+              error: (error) => {
+                console.error('Errore durante l\'aggiornamento:', error);
+                this.toastr.error('Errore durante l\'aggiornamento della quantità', 'Errore');
+              }
+            });
         }
-      } else {
-        this.toastr.warning('Utente non autenticato. Effettua il login.', 'Attenzione');
-      }
-    } catch (error) {
-      console.error('Errore durante il recupero dell\'utente autenticato:', error);
+      });
+    } else {
+      this.toastr.warning(`Quantità massima disponibile (${maxQuantity}) raggiunta`, 'Attenzione');
     }
   }
+
 
   async decreaseQuantity(item: any): Promise<void> {
     try {
       const user = await this.auth.getLoggedInUser();
-      if (user) {
-        const username = user.username || 'Email non disponibile';
+      if (user && user.username) {
+        const username = user.username;
+
         if (item.quantity > 1) {
           this.cartService.updateProductQuantity(item.product.id, item.quantity - 1, username).subscribe({
             next: () => {
               item.quantity--;
-              this.saveCartToLocalStorage();
               console.log('Quantità aggiornata con successo');
+              this.saveCartToLocalStorage();
             },
             error: (error) => {
-              console.error('Errore durante l\'aggiornamento della quantità', error);
+              console.error('Errore durante l\'aggiornamento della quantità:', error);
               this.toastr.error('Errore durante l\'aggiornamento della quantità', 'Errore');
-            }
+            },
           });
         } else {
           this.toastr.warning('Quantità minima raggiunta', 'Attenzione');
@@ -175,6 +196,7 @@ export class CartComponent implements OnInit {
     }
   }
 
+
   saveCartToLocalStorage(): void {
     const cartData = this.cartItems.reduce((acc, item) => {
       acc[item.product.id] = { quantity: item.quantity };
@@ -182,7 +204,6 @@ export class CartComponent implements OnInit {
     }, {});
     localStorage.setItem('cart', JSON.stringify(cartData));
   }
-
 
 
   checkout(): void {
