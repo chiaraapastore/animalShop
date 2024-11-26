@@ -24,12 +24,9 @@ export class CartService {
     return this.http.post<Order>(`${this.apiUrl}/checkout/${cartId}`, {});
   }
 
-
-
-  getCartProducts(username: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/cart-with-products`, { params: { username } });
+  getCartProducts(username: string): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}/cart-with-products`, { params: { username } });
   }
-
 
   removeProductFromCart(productId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/remove/${productId}`);

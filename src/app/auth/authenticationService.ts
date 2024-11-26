@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { KeycloakService } from 'keycloak-angular';
 
@@ -7,7 +6,6 @@ import { KeycloakService } from 'keycloak-angular';
 })
 export class AuthenticationService {
   constructor(private keycloakService: KeycloakService) {}
-
 
   async getLoggedInUser(): Promise<{ username?: string } | null> {
     try {
@@ -22,23 +20,24 @@ export class AuthenticationService {
       }
       return null;
     } catch (error) {
-      console.error('Errore durante il recupero dell\'utente loggato:', error);
+      console.error("Errore durante il recupero dell'utente loggato:", error);
       return null;
     }
   }
 
-
-  logout() {
-    const redirectUri = window.location.origin; // Torna alla homepage dopo il logout
-    this.keycloakService.logout(redirectUri)
-      .then(() => {
-        console.log('Logout effettuato con successo');
-      })
-      .catch(error => {
-        console.error('Errore durante il logout:', error);
-      });
+  async getToken(): Promise<string | null> {
+    try {
+      return await this.keycloakService.getToken();
+    } catch (error) {
+      console.error("Errore durante il recupero del token:", error);
+      return null;
+    }
   }
 
-
-
+  logout(): void {
+    const redirectUri = window.location.origin; // Redirect dopo il logout
+    this.keycloakService.logout(redirectUri).catch(error => {
+      console.error("Errore durante il logout:", error);
+    });
+  }
 }

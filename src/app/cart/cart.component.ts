@@ -3,7 +3,6 @@ import { Router } from "@angular/router";
 import { CartService } from "../services/cart.service";
 import { AuthenticationService } from "../auth/authenticationService";
 import {ToastrService} from "ngx-toastr";
-import {Order} from "../models/order.model";
 
 @Component({
   selector: 'app-cart',
@@ -34,13 +33,13 @@ export class CartComponent implements OnInit {
       if (user) {
         const username = user.username || 'Email non disponibile';
         this.cartService.getCartProducts(username).subscribe({
-          next: (cartProducts) => {
-            this.cartItems = cartProducts.map(cartProduct => ({
+          next: (products) => {
+            this.cartItems = products.map(product => ({
               product: {
-                ...cartProduct.product,
-                imageUrl: this.getImageUrlForProduct(cartProduct.product.productName)
+                ...product,
+                imageUrl: this.getImageUrlForProduct(product.productName) // Assegna l'immagine corretta
               },
-              quantity: cartProduct.quantity // Quantità corretta dal backend
+              quantity: 1
             }));
           },
           error: (error) => {
@@ -52,7 +51,6 @@ export class CartComponent implements OnInit {
       console.error("Errore durante il recupero dell'utente autenticato:", error);
     }
   }
-
 
   getImageUrlForProduct(productName: string): string {
     const images: { [key: string]: string } = {
@@ -170,23 +168,6 @@ export class CartComponent implements OnInit {
   }
 
   checkout(): void {
-    const cartId = this.cartItems.length > 0 ? this.cartItems[0].cartId : null;
-
-    if (cartId !== null) {
-      this.cartService.checkout(cartId).subscribe({
-        next: () => {
-          console.log("Ordine completato con successo.");
-          this.toastr.success('Ordine completato con successo!', 'Successo');
-          this.router.navigate(['/order-summary']); // Reindirizza a una pagina di riepilogo
-        },
-        error: (err) => {
-          console.error("Errore durante il checkout:", err);
-          this.toastr.error('Errore durante il checkout.', 'Errore');
-        },
-      });
-    } else {
-      console.warn("ID del carrello non trovato. Checkout non possibile.");
-      this.toastr.warning('Carrello vuoto. Checkout non possibile.', 'Attenzione');
-    }
+    this.router.navigate(["/payment"]);
   }
 }
