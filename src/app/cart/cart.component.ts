@@ -34,13 +34,19 @@ export class CartComponent implements OnInit {
         const username = user.username || 'Email non disponibile';
         this.cartService.getCartProducts(username).subscribe({
           next: (products) => {
-            this.cartItems = products.map(product => ({
-              product: {
-                ...product,
-                imageUrl: this.getImageUrlForProduct(product.productName) // Assegna l'immagine corretta
-              },
-              quantity: 1
-            }));
+            const savedCart = localStorage.getItem('cart');
+            const parsedCart = savedCart ? JSON.parse(savedCart) : {};
+
+            this.cartItems = products.map(product => {
+              const savedQuantity = parsedCart[product.id]?.quantity || 1;
+              return {
+                product: {
+                  ...product,
+                  imageUrl: this.getImageUrlForProduct(product.productName) // Assegna l'immagine corretta
+                },
+                quantity: savedQuantity
+              };
+            });
           },
           error: (error) => {
             console.error("Errore durante il caricamento dei prodotti nel carrello:", error);
@@ -122,6 +128,7 @@ export class CartComponent implements OnInit {
           this.cartService.updateProductQuantity(item.product.id, item.quantity + 1, username).subscribe({
             next: () => {
               item.quantity++;
+              this.saveCartToLocalStorage();
               console.log('Quantità aggiornata con successo');
             },
             error: (error) => {
@@ -149,6 +156,7 @@ export class CartComponent implements OnInit {
           this.cartService.updateProductQuantity(item.product.id, item.quantity - 1, username).subscribe({
             next: () => {
               item.quantity--;
+              this.saveCartToLocalStorage();
               console.log('Quantità aggiornata con successo');
             },
             error: (error) => {
@@ -167,7 +175,18 @@ export class CartComponent implements OnInit {
     }
   }
 
+  saveCartToLocalStorage(): void {
+    const cartData = this.cartItems.reduce((acc, item) => {
+      acc[item.product.id] = { quantity: item.quantity };
+      return acc;
+    }, {});
+    localStorage.setItem('cart', JSON.stringify(cartData));
+  }
+
+
+
   checkout(): void {
+    localStorage.removeItem('cart');
     this.router.navigate(["/payment"]);
   }
 }
