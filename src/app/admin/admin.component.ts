@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { Product } from '../models/product.model';
 import { ToastrService } from 'ngx-toastr';
-
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-admin',
@@ -20,22 +20,33 @@ export class AdminComponent implements OnInit {
     categoryName: '',
     sizeProduct: '',
     imageUrl: '',
-    quantity: 0
+    quantity: 0,
+    category: { id: 0, categoryName: '', countProduct: 0 }
   };
-
+  isAdmin: boolean = false; // Controlla se l'utente è admin
   categoryId: number = 1;
   page: number = 0;
-  size: number = 10;
+  pageSize: number = 1000; // Numero elevato per caricare tutti i prodotti
   selectedSort: string = 'productName';
-  pageSize: number = 10;
   selectedCategory: string = '';
   filteredProducts: Product[] = [];
   totalProducts: number = 0;
 
-  constructor(private productService: ProductService, private toastr: ToastrService) {}
+  constructor(
+    private productService: ProductService,
+    private toastr: ToastrService,
+    private keycloakService: KeycloakService
+  ) {}
 
   ngOnInit(): void {
+    this.checkRole();
     this.loadProducts();
+  }
+
+  checkRole(): void {
+    const roles = this.keycloakService.getUserRoles();
+    this.isAdmin = roles.includes('admin');
+    console.log('Ruolo admin:', this.isAdmin);
   }
 
   loadProducts(): void {
@@ -53,6 +64,7 @@ export class AdminComponent implements OnInit {
           if (response.content && Array.isArray(response.content)) {
             this.products = response.content.map((product: Product) => ({
               ...product,
+              category: product.category || { id: 0, name: '' },
               imageUrl: this.getImageUrlForProduct(product.productName),
             }));
             this.filteredProducts = [...this.products];
@@ -99,52 +111,74 @@ export class AdminComponent implements OnInit {
       'Crocchette per Cani di Taglia Media': '/assets/images/crocchette-cani-taglia-media.jpg',
       'Cuscino Comodo per Cani': '/assets/images/cuscino.jpg',
     };
-    return images[productName] || '/assets/images/default.jpg'; // Usa un'immagine di default se non è specificata
+    return images[productName];
   }
 
 
   createProduct(): void {
+    if (!this.isAdmin) return; // Solo gli admin possono aggiungere prodotti
     this.productService.createProduct(this.newProduct, this.categoryId).subscribe({
       next: () => {
-        this.toastr.success('Prodotto creato con successo!');
-        //aggiungo immagine
+        this.toastr.success('Prodotto creato con successo!', 'Creazione Completata');
         this.loadProducts();
       },
       error: (err) => {
         console.error('Errore nella creazione del prodotto:', err);
-        this.toastr.error('Si è verificato un errore durante la creazione del prodotto.');
+        this.toastr.error('Errore durante la creazione del prodotto.', 'Errore');
       },
     });
   }
 
 
-  updateProduct(product: Product): void {
-    this.productService.updateProduct(product.id!, product, this.categoryId).subscribe({
+  updateProductPrice(product: Product): void {
+    const categoryId = product.category.id || this.categoryId; // Ottieni l'ID della categoria
+    this.productService.updateProduct(product.id!, product, categoryId).subscribe({
       next: () => {
-        this.toastr.success('Prodotto aggiornato con successo!');
-        this.loadProducts();
-        //aggiunta imm o modifica prezzo, foto
+        this.toastr.success(
+          'Prezzo di "${product.productName}" aggiornato a €${product.price.toFixed(2)}', 'Aggiornamento Prezzo'
+      );
+        this.loadProducts(); // Ricarica i prodotti per riflettere le modifiche
       },
       error: (err) => {
-        console.error('Errore nell\'aggiornamento del prodotto:', err);
-        this.toastr.error('Si è verificato un errore durante l\'aggiornamento del prodotto.');
+        console.error('Errore durante l\'aggiornamento del prezzo:', err);
+        this.toastr.error('Errore durante l\'aggiornamento del prezzo.', 'Errore');
       },
     });
   }
 
+
+
+
   deleteProduct(productId: number): void {
-    if (confirm('Sei sicuro di voler eliminare questo prodotto?')) {
-      this.productService.deleteProduct(productId).subscribe({
-        next: () => {
-          this.toastr.success('Prodotto eliminato con successo!');
-          this.loadProducts();
-        },
-        error: (err) => {
-          console.error('Errore nella cancellazione del prodotto:', err);
-          this.toastr.error('Si è verificato un errore durante l\'eliminazione del prodotto.');
-        },
-      });
-    }
+    if (!this.isAdmin) return;
+    this.productService.deleteProduct(productId).subscribe({
+      next: () => {
+        this.toastr.success('Prodotto eliminato con successo!', 'Eliminazione Completata');
+        this.loadProducts();
+      },
+      error: (err) => {
+        console.error('Errore durante l\'eliminazione del prodotto:', err);
+        this.toastr.error('Errore durante l\'eliminazione del prodotto.', 'Errore');
+      }
+    });
   }
 
+  editProduct(product: Product): void {
+    this.newProduct = { ...product };
+  }
+
+  resetForm(): void {
+    this.newProduct = {
+      id: 0,
+      productName: '',
+      price: 0,
+      description: '',
+      availableQuantity: 0,
+      categoryName: '',
+      sizeProduct: '',
+      imageUrl: '',
+      quantity: 0,
+      category: { id: 0, categoryName: '', countProduct: 0 }
+    };
+  }
 }

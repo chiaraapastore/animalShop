@@ -48,13 +48,15 @@ export class ProductService {
   }
 
   // Aggiorna un prodotto esistente
-  updateProduct(id: number, product: Product, categoryId: number): Observable<Product> {
-    return this.http.put<Product>(`${this.productsUrl}/${id}/${categoryId}`, product);
+  updateProduct(productId: number, product: Product, categoryId: number): Observable<Product> {
+    return this.http.put<Product>(`http://localhost:8081/api/products/${productId}/${categoryId}`, product);
   }
+
+
 
   // Elimina un prodotto
   deleteProduct(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.productsUrl}/${id}`);
+    return this.http.delete<void>(`http://localhost:8081/api/products/${id}`);
   }
 
 

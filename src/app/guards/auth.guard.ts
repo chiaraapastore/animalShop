@@ -4,7 +4,7 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanActivate } from
 import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
   constructor(
@@ -20,28 +20,28 @@ export class AuthGuard implements CanActivate {
 
     try {
       const isAuthenticated = await this.keycloakService.isLoggedIn();
+      console.log('Utente autenticato:', isAuthenticated);
+
       if (!isAuthenticated) {
-        await this.keycloakService.login({ redirectUri: state.url });
+        console.log('Utente non autenticato. Reindirizzo al login.');
+        await this.keycloakService.login({ redirectUri: window.location.origin + state.url });
         return false;
       }
+
+      const userRoles = this.keycloakService.getUserRoles();
+      console.log('Ruoli dell\'utente:', userRoles);
 
       const requiredRoles: string[] = route.data['roles'] || [];
+      console.log('Ruoli richiesti per accedere:', requiredRoles);
 
-      const keycloakInstance = this.keycloakService.getKeycloakInstance();
-      if (keycloakInstance?.tokenParsed) {
-        const tokenParsed: any = keycloakInstance.tokenParsed;
-        const roles = tokenParsed?.resource_access?.['dog-shop-app']?.roles || [];
-
-        if (requiredRoles.some(role => roles.includes(role))) {
-          return true;
-        } else {
-          this.router.navigate(['/not-authorized']);
-          return false;
-        }
-      } else {
-        this.router.navigate(['/error']);
-        return false;
+      if (requiredRoles.some((role) => userRoles.includes(role))) {
+        console.log('Accesso consentito alla rotta:', state.url);
+        return true;
       }
+
+      console.log('Accesso negato. Reindirizzo a /not-authorized.');
+      this.router.navigate(['/not-authorized']);
+      return false;
     } catch (error) {
       console.error('Errore durante la verifica dei permessi:', error);
       this.router.navigate(['/error']);

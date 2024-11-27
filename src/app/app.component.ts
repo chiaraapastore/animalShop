@@ -42,6 +42,7 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     if (this.keycloakService.isLoggedIn()) {
       this.getUserDetails();
+      this.logUserRoles();
     }
   }
 
@@ -60,6 +61,10 @@ export class AppComponent implements OnInit{
     }
   }
 
+  private logUserRoles(): void {
+    const roles = this.keycloakService.getUserRoles();
+    console.log('Ruoli utente attuali:', roles);
+  }
 
   private getUserDetails(): void {
     const keycloak = this.keycloakService.getKeycloakInstance();

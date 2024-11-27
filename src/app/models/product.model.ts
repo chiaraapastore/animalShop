@@ -1,3 +1,5 @@
+import {Category} from "./category.model";
+
 export interface Product {
   quantity: number;
   id: number;
@@ -8,4 +10,5 @@ export interface Product {
   categoryName: string;
   sizeProduct: string;
   imageUrl: string;
+  category: Category;
 }

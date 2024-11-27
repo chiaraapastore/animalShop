@@ -26,16 +26,16 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent, canActivate: [AuthGuard], data: { roles: ['user'] } },
   { path: 'payment', component: PaymentComponent, canActivate: [AuthGuard], data: { roles: ['user'] } },
   { path: 'confirm-page', component: ConfirmPageComponent, canActivate: [AuthGuard], data: { roles: ['user'] } },
-  { path: 'user-profile', component: ProfileComponent, canActivate: [AuthGuard], data: { roles: ['user'] } },
+  { path: 'user-profile', component: ProfileComponent, canActivate: [AuthGuard], data: { roles: ['user', 'admin'] } },
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard], data: { roles: ['user'] } },
-  { path: 'not-authorized', component: NotFoundComponent },
+  { path: 'not-authorized', component: HomeComponent },
   { path: 'error', component: ErrorComponent },
   { path: '**', redirectTo: '/error' },
 ];
 
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: false })],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

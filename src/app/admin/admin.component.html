@@ -1,108 +1,59 @@
-<h1>Gestione Prodotti</h1>
+<div class="container mt-5 mb-5">
+  <div class="table-responsive mt-5">
+    <h2 class="text-center mb-4">Lista Prodotti</h2>
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+      <tr>
+        <th>Immagine</th>
+        <th>Nome</th>
+        <th>Prezzo (€)</th>
+        <th>Quantità</th>
+        <th>Categoria</th>
+        <th *ngIf="isAdmin">Azioni</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let product of products">
+        <td>
+          <img [src]="product.imageUrl" class="img-thumbnail" alt="Prodotto">
+        </td>
+        <td>{{ product.productName }}</td>
+        <td>
+          <!-- Campo input per modificare il prezzo -->
+          <input
+            type="number"
+            [(ngModel)]="product.price"
+            class="form-control form-control-sm"
+            (blur)="updateProductPrice(product)" />
+        </td>
+        <td>{{ product.availableQuantity }}</td>
+        <td>{{ product.categoryName }}</td>
+        <td *ngIf="isAdmin">
+          <button
+            (click)="editProduct(product)"
+            class="btn btn-primary btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#productModal">
+            Modifica
+          </button>
+          <button
+            (click)="deleteProduct(product.id!)"
+            class="btn btn-danger btn-sm">
+            Elimina
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 
-<!-- Form per creare o modificare un prodotto -->
-<div class="product-form">
-  <h2>{{ newProduct.id ? 'Modifica Prodotto' : 'Crea Nuovo Prodotto' }}</h2>
-  <form (ngSubmit)="newProduct.id ? updateProduct(newProduct) : createProduct()">
-    <div class="form-group">
-      <label for="productName">Nome Prodotto</label>
-      <input
-        id="productName"
-        type="text"
-        [(ngModel)]="newProduct.productName"
-        name="productName"
-        placeholder="Inserisci il nome del prodotto"
-        required
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="price">Prezzo (€)</label>
-      <input
-        id="price"
-        type="number"
-        [(ngModel)]="newProduct.price"
-        name="price"
-        placeholder="Inserisci il prezzo"
-        required
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="availableQuantity">Quantità Disponibile</label>
-      <input
-        id="availableQuantity"
-        type="number"
-        [(ngModel)]="newProduct.availableQuantity"
-        name="availableQuantity"
-        placeholder="Inserisci la quantità disponibile"
-        required
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="categoryName">Categoria</label>
-      <input
-        id="categoryName"
-        type="text"
-        [(ngModel)]="newProduct.categoryName"
-        name="categoryName"
-        placeholder="Inserisci il nome della categoria"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="sizeProduct">Taglia</label>
-      <input
-        id="sizeProduct"
-        type="text"
-        [(ngModel)]="newProduct.sizeProduct"
-        name="sizeProduct"
-        placeholder="Inserisci la taglia (es. M, L)"
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="imageUrl">URL Immagine</label>
-      <input
-        id="imageUrl"
-        type="text"
-        [(ngModel)]="newProduct.imageUrl"
-        name="imageUrl"
-        placeholder="Inserisci l'URL dell'immagine"
-      />
-    </div>
-
-    <button type="submit" class="btn btn-primary">
-      {{ newProduct.id ? 'Aggiorna Prodotto' : 'Aggiungi Prodotto' }}
+  <div class="text-center mt-5">
+    <button
+      class="btn btn-success btn-lg w-50"
+      data-bs-toggle="modal"
+      data-bs-target="#productModal"
+      (click)="resetForm()">
+      Aggiungi Prodotto
     </button>
-  </form>
+  </div>
 </div>
-
-<!-- Tabella dei prodotti -->
-<h2>Lista Prodotti</h2>
-<table class="product-table">
-  <thead>
-  <tr>
-    <th>Nome</th>
-    <th>Prezzo (€)</th>
-    <th>Quantità</th>
-    <th>Categoria</th>
-    <th>Taglia</th>
-    <th>Azioni</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let product of products">
-    <td>{{ product.productName }}</td>
-    <td>{{ product.price }}</td>
-    <td>{{ product.availableQuantity }}</td>
-    <td>{{ product.categoryName }}</td>
-    <td>{{ product.sizeProduct }}</td>
-    <td>
-      <button (click)="deleteProduct(product.id!)" class="btn btn-danger">Elimina</button>
-    </td>
-  </tr>
-  </tbody>
-</table>
-

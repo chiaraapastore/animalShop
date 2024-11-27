@@ -6,7 +6,6 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NavigationComponent } from './navigation/navigation.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HomeComponent } from './home/home.component';
@@ -30,26 +29,31 @@ import { AdminComponent } from './admin/admin.component';
 export function initializeKeycloak(keycloak: KeycloakService, platformId: Object) {
   return () =>
     isPlatformBrowser(platformId)
-      ? keycloak.init({
-        config: {
-          url: 'http://localhost:8080',
-          realm: 'dog-shop-realm',
-          clientId: 'dog-shop-app'
-        },
-        initOptions: {
-          onLoad: 'check-sso',
-          checkLoginIframe: false
-        },
-        enableBearerInterceptor: true,
-        bearerPrefix: 'Bearer',
-      })
+      ? keycloak
+        .init({
+          config: {
+            url: 'http://localhost:8080',
+            realm: 'dog-shop-realm',
+            clientId: 'dog-shop-app',
+          },
+          initOptions: {
+            onLoad: 'check-sso',
+            checkLoginIframe: false,
+          },
+        })
+        .then(() => {
+          console.log('Keycloak inizializzato con successo');
+          console.log('Ruoli utente:', keycloak.getUserRoles());
+        })
+        .catch((err) => {
+          console.error('Errore inizializzazione Keycloak:', err);
+        })
       : Promise.resolve();
 }
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent,
     AnnouncementsComponent,
     HomeComponent,
     AboutUsComponent,

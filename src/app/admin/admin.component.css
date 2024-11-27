@@ -1,54 +1,96 @@
+/* Titoli principali */
 h1, h2 {
   text-align: center;
-  margin-bottom: 20px;
-}
-
-.product-form {
-  margin: 20px auto;
-  max-width: 600px;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-}
-
-.form-group {
   margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
+  margin-top: 30px; /* Sposta il titolo più in basso */
+  font-family: 'Arial', sans-serif;
   font-weight: bold;
+  color: #000; /* Colore nero */
 }
 
-.form-group input {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
+/* Contenitore principale */
+.container {
+  margin-top: 70px; /* Spazio aggiuntivo sopra il contenitore */
+  margin-bottom: 50px; /* Spazio dal basso */
 }
 
-button {
-  margin: 5px;
-}
-
-.product-table {
-  width: 100%;
+/* Stile tabella */
+.table {
+  margin-top: 20px; /* Spazio sopra la tabella */
+  font-size: 14px;
   border-collapse: collapse;
-  margin: 20px auto;
+  color: #333;
 }
 
-.product-table th, .product-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
-}
-
-.product-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
-
-.product-table td {
+.table th, .table td {
+  text-align: center;
   vertical-align: middle;
+  padding: 12px; /* Spaziatura */
+  border: 1px solid #333;
+}
+
+.table th {
+  background-color: #000;
+  color: #fff;
+}
+
+/* Immagini nella tabella */
+.table img {
+  max-width: 70px;
+  max-height: 70px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* Hover per righe della tabella */
+.table tbody tr:hover {
+  background-color: #f0f0f0;
+}
+
+/* Bottone nella tabella */
+.table button {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+/* Pulsante "Aggiungi Prodotto" */
+.text-center .btn-success {
+  margin-top: 30px; /* Spazio sopra il pulsante */
+  margin-bottom: 30px; /* Spazio sotto il pulsante */
+  background-color: #000;
+  color: white;
+}
+
+.text-center .btn-success:hover {
+  background-color: #333;
+}
+
+/* Pulsanti di azione */
+.btn-primary {
+  background-color: #000;
+  color: white;
+  border: none; /* Rimuove il bordo */
+  outline: none; /* Rimuove il contorno blu */
+  margin-right: 2px; /* Spazio tra "Modifica" ed "Elimina" */
+}
+
+.btn-primary:hover {
+  background-color: #333;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none; /* Rimuove il bordo */
+  outline: none; /* Rimuove il contorno blu */
+}
+
+.btn-danger:hover {
+  background-color: #bd2130;
+}
+
+/* Rimuove il focus blu sui bottoni */
+button:focus {
+  outline: none;
+  box-shadow: none;
 }
