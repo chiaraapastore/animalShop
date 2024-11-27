@@ -1,0 +1,15 @@
+
+<div class="modal">
+  <div class="modal-content">
+    <h3>Aggiungi Prodotto</h3>
+    <input type="text" [(ngModel)]="productName" placeholder="Nome del prodotto">
+    <button (click)="addNewProduct()">Aggiungi</button>
+
+    <h3>Elimina Prodotti</h3>
+    <input type="number" [(ngModel)]="productsToDeleteCount" placeholder="Numero di prodotti da eliminare">
+    <button (click)="deleteProductCount()">Elimina</button>
+
+    <button (click)="close()">Chiudi</button>
+  </div>
+</div>
+
