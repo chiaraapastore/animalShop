@@ -20,6 +20,7 @@ export class PaymentComponent implements OnInit {
   billingAddress: string = '';
   cartItems: any[] = [];
   totalAmount: number = 0;
+  orderId: number = 0;
 
   constructor(
     private router: Router,
@@ -31,6 +32,9 @@ export class PaymentComponent implements OnInit {
   ngOnInit(): void {
     this.loadCartProducts();
   }
+
+
+
 
   async loadCartProducts(): Promise<void> {
     const user = await this.auth.getLoggedInUser();
@@ -58,39 +62,44 @@ export class PaymentComponent implements OnInit {
     this.totalAmount = this.cartItems.reduce((total, item) => total + (item.product.price * item.quantity), 0);
   }
 
-  processPayment(): void {
-    if (this.cardNumber && this.cardHolderName && this.cardHolderSurname && this.expiryDate && this.cvv && this.billingAddress) {
-      const payment: Payment = {
-        customerOrder: {
-          items: this.cartItems,
-          totalAmount: this.totalAmount,
-          paymentDetails: {
-            cardNumber: this.cardNumber,
-            cardHolderName: this.cardHolderName,
-            cardHolderSurname: this.cardHolderSurname,
-            expiryDate: this.expiryDate,
-            cvv: this.cvv,
-            billingAddress: this.billingAddress
-          }
-        },
-        paymentDate: new Date().toISOString(),
-        paymentMethod: "Credit Card",
-        status: "PENDING"
-      };
-
-      this.paymentService.createPayment(payment).subscribe({
-        next: (savedPayment: Payment) => {
-          console.log("Pagamento effettuato con successo!", savedPayment);
-          this.goToConfirmPage();
-        },
-        error: (err: any) => {
-          console.error("Errore nel creare il pagamento:", err);
-        }
-      });
-    } else {
-      console.error("Errore: Tutti i campi sono obbligatori.");
+  async processPayment(): Promise<void> {
+    // Recupera l'utente autenticato
+    const user = await this.auth.getLoggedInUser();
+    if (!user || !user.username) {
+      console.error("Errore: Utente non autenticato.");
+      return;
     }
+
+    if (this.totalAmount <= 0) {
+      console.error("Errore: Totale del pagamento non valido.");
+      return;
+    }
+
+    const payment: Payment = {
+      customerOrder: {
+        id: this.orderId, // ID ordine o rimuovilo se non necessario
+        items: this.cartItems,
+        totalAmount: this.totalAmount,
+      },
+      paymentDate: new Date().toISOString(),
+      paymentMethod: "Credit Card",
+      status: "PENDING",
+    };
+
+    console.log("Dati del pagamento inviati:", payment);
+
+    this.paymentService.createPayment(payment).subscribe({
+      next: (savedPayment: Payment) => {
+        console.log("Pagamento effettuato con successo!", savedPayment);
+        this.goToConfirmPage();
+      },
+      error: (err: any) => {
+        console.error("Errore nel creare il pagamento:", err);
+      },
+    });
   }
+
+
 
   goToConfirmPage() {
     this.router.navigate(["/confirm-page"]);

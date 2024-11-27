@@ -1,7 +1,7 @@
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Payment} from "../models/payment.model";
-import {Observable} from "rxjs";
+import {catchError, Observable, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -14,5 +14,7 @@ export class PaymentService {
   createPayment(payment: Payment): Observable<Payment> {
     return this.http.post<Payment>(`${this.apiUrl}/createPayment`, payment);
   }
+
+
 
 }

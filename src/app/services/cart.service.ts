@@ -4,6 +4,7 @@ import {Order} from "../models/order.model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Product} from "../models/product.model";
+import {Payment} from "../models/payment.model";
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,6 @@ export class CartService {
     return this.http.put<void>(`${this.apiUrl}/update-quantity/${productId}`, null, {
       params: { quantity: quantity.toString(), username}});
   }
-
 
 
 }
