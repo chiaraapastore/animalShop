@@ -23,6 +23,7 @@ import { ErrorComponent } from './error/error.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { AdminComponent } from './admin/admin.component';
+import { ModalComponent } from './modal/modal.component';
 
 
 
@@ -65,7 +66,8 @@ export function initializeKeycloak(keycloak: KeycloakService, platformId: Object
     ProfileComponent,
     OrdersComponent,
     ErrorComponent,
-    AdminComponent
+    AdminComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

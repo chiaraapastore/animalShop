@@ -44,7 +44,7 @@ export class ProductService {
 
   // Crea un nuovo prodotto
   createProduct(product: Product, categoryId: number): Observable<Product> {
-    return this.http.post<Product>(`${this.productsUrl}/create/${categoryId}`, product);
+    return this.http.post<Product>(`http://localhost:8081/api/products/create/${categoryId}`, product);
   }
 
   // Aggiorna un prodotto esistente

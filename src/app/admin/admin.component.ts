@@ -3,6 +3,7 @@ import { ProductService } from '../services/product.service';
 import { Product } from '../models/product.model';
 import { ToastrService } from 'ngx-toastr';
 import { KeycloakService } from 'keycloak-angular';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-admin',
@@ -23,19 +24,21 @@ export class AdminComponent implements OnInit {
     quantity: 0,
     category: { id: 0, categoryName: '', countProduct: 0 }
   };
-  isAdmin: boolean = false; // Controlla se l'utente è admin
+  isAdmin: boolean = false;
   categoryId: number = 1;
   page: number = 0;
-  pageSize: number = 1000; // Numero elevato per caricare tutti i prodotti
+  pageSize: number = 1000;
   selectedSort: string = 'productName';
   selectedCategory: string = '';
   filteredProducts: Product[] = [];
   totalProducts: number = 0;
+  isModalOpen: boolean = false;
 
   constructor(
     private productService: ProductService,
     private toastr: ToastrService,
-    private keycloakService: KeycloakService
+    private keycloakService: KeycloakService,
+    private route: Router
   ) {}
 
   ngOnInit(): void {
@@ -116,10 +119,11 @@ export class AdminComponent implements OnInit {
 
 
   createProduct(): void {
-    if (!this.isAdmin) return; // Solo gli admin possono aggiungere prodotti
+    if (!this.isAdmin) return;
+    this.newProduct.category.id = this.categoryId;
     this.productService.createProduct(this.newProduct, this.categoryId).subscribe({
       next: () => {
-        this.toastr.success('Prodotto creato con successo!', 'Creazione Completata');
+        this.toastr.success('Prodotto creato con successo!', 'Creazione completata');
         this.loadProducts();
       },
       error: (err) => {
@@ -131,13 +135,13 @@ export class AdminComponent implements OnInit {
 
 
   updateProductPrice(product: Product): void {
-    const categoryId = product.category.id || this.categoryId; // Ottieni l'ID della categoria
+    const categoryId = product.category.id || this.categoryId;
     this.productService.updateProduct(product.id!, product, categoryId).subscribe({
       next: () => {
         this.toastr.success(
-          'Prezzo di "${product.productName}" aggiornato a €${product.price.toFixed(2)}', 'Aggiornamento Prezzo'
-      );
-        this.loadProducts(); // Ricarica i prodotti per riflettere le modifiche
+          'Prezzo aggiornato'
+        );
+        this.loadProducts();
       },
       error: (err) => {
         console.error('Errore durante l\'aggiornamento del prezzo:', err);
@@ -145,8 +149,6 @@ export class AdminComponent implements OnInit {
       },
     });
   }
-
-
 
 
   deleteProduct(productId: number): void {
@@ -167,18 +169,34 @@ export class AdminComponent implements OnInit {
     this.newProduct = { ...product };
   }
 
-  resetForm(): void {
-    this.newProduct = {
-      id: 0,
-      productName: '',
-      price: 0,
-      description: '',
-      availableQuantity: 0,
-      categoryName: '',
-      sizeProduct: '',
-      imageUrl: '',
-      quantity: 0,
-      category: { id: 0, categoryName: '', countProduct: 0 }
-    };
+  openModal(): void {
+    this.isModalOpen = true;
   }
+
+  closeModal(): void {
+    this.isModalOpen = false;
+  }
+
+
+  addProduct(product: Product): void {
+    console.log('Nuovo prodotto aggiunto:', product);
+  }
+
+  deleteProducts(count: number): void {
+    if (this.products.length < count) {
+      console.error('Numero di prodotti da eliminare superiore ai prodotti disponibili');
+      return;
+    }
+
+
+    for (let i = 0; i < count; i++) {
+      const productIdToDelete = this.products[i]?.id;
+      if (productIdToDelete) {
+        this.deleteProduct(productIdToDelete);
+      }
+    }
+    console.log(`Eliminati ${count} prodotti.`);
+  }
+
+
 }

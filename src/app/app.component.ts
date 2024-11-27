@@ -43,6 +43,7 @@ export class AppComponent implements OnInit{
     if (this.keycloakService.isLoggedIn()) {
       this.getUserDetails();
       this.logUserRoles();
+      this.redirectAdmin();
     }
   }
 
@@ -50,11 +51,16 @@ export class AppComponent implements OnInit{
     try {
       const isAuthenticated = await this.keycloakService.isLoggedIn();
       if (isAuthenticated) {
-        // Naviga alla pagina del profilo utente
-        await this.router.navigate(['/user-profile']);
+        const roles = this.keycloakService.getUserRoles();
+        if (roles.includes('admin')) {
+          // Naviga alla pagina admin se l'utente è admin
+          await this.router.navigate(['/admin']);
+        } else {
+          // Naviga al profilo utente se non è admin
+          await this.router.navigate(['/user-profile']);
+        }
       } else {
-        // Effettua il login se l'utente non è autenticato
-        await this.keycloakService.login();
+        await this.keycloakService.login(); // Se non autenticato, effettua il login
       }
     } catch (error) {
       console.error('Errore durante il controllo dell\'autenticazione:', error);
@@ -64,6 +70,13 @@ export class AppComponent implements OnInit{
   private logUserRoles(): void {
     const roles = this.keycloakService.getUserRoles();
     console.log('Ruoli utente attuali:', roles);
+  }
+
+  private redirectAdmin(): void {
+    const roles = this.keycloakService.getUserRoles();
+    if (roles.includes('admin')) {
+      this.router.navigate(['/admin']);
+    }
   }
 
   private getUserDetails(): void {

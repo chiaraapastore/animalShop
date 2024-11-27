@@ -18,7 +18,7 @@ import {AdminComponent} from "./admin/admin.component";
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  {path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: ['admin'] } }, // Proteggi questa rotta per gli amministratori},
+  {path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: ['admin']}}, // Proteggi questa rotta per gli amministratori},
   { path: 'shop', component: ProductListComponent },
   { path: 'announcements', component: AnnouncementsComponent },
   { path: 'about-us', component: AboutUsComponent },
