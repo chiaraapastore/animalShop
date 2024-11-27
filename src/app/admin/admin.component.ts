@@ -33,6 +33,8 @@ export class AdminComponent implements OnInit {
   filteredProducts: Product[] = [];
   totalProducts: number = 0;
   isModalOpen: boolean = false;
+  isDeleteModalOpen: boolean = false;
+  productsToDeleteCount: number = 0;
 
   constructor(
     private productService: ProductService,
@@ -53,12 +55,7 @@ export class AdminComponent implements OnInit {
   }
 
   loadProducts(): void {
-    const sortField =
-      this.selectedSort === 'priceAsc'
-        ? 'price'
-        : this.selectedSort === 'priceDesc'
-          ? 'price'
-          : 'productName';
+    const sortField = this.selectedSort === 'priceAsc' ? 'price' : this.selectedSort === 'priceDesc' ? 'price' : 'productName';
     const sortOrder = this.selectedSort === 'priceAsc' ? 'asc' : this.selectedSort === 'priceDesc' ? 'desc' : 'asc';
 
     this.productService.getProducts(this.page, this.pageSize, sortField, sortOrder, this.selectedCategory, this.newProduct.sizeProduct)
@@ -134,6 +131,7 @@ export class AdminComponent implements OnInit {
   }
 
 
+
   updateProductPrice(product: Product): void {
     const categoryId = product.category.id || this.categoryId;
     this.productService.updateProduct(product.id!, product, categoryId).subscribe({
@@ -146,6 +144,20 @@ export class AdminComponent implements OnInit {
       error: (err) => {
         console.error('Errore durante l\'aggiornamento del prezzo:', err);
         this.toastr.error('Errore durante l\'aggiornamento del prezzo.', 'Errore');
+      },
+    });
+  }
+
+  updateProductQuantity(product: Product): void {
+    const categoryId = product.category.id || this.categoryId;
+    this.productService.updateProduct(product.id!, product, categoryId).subscribe({
+      next: () => {
+        this.toastr.success('Quantità aggiornata');
+        this.loadProducts();
+      },
+      error: (err) => {
+        console.error('Errore durante l\'aggiornamento della quantità:', err);
+        this.toastr.error('Errore durante l\'aggiornamento della quantità.', 'Errore');
       },
     });
   }
@@ -177,25 +189,40 @@ export class AdminComponent implements OnInit {
     this.isModalOpen = false;
   }
 
+  openDeleteModal(): void {
+    this.isDeleteModalOpen = true;
+  }
+
+  closeDeleteModal(): void {
+    this.isDeleteModalOpen = false;
+  }
 
   addProduct(product: Product): void {
     console.log('Nuovo prodotto aggiunto:', product);
   }
 
-  deleteProducts(count: number): void {
-    if (this.products.length < count) {
-      console.error('Numero di prodotti da eliminare superiore ai prodotti disponibili');
+  deleteProducts(): void {
+    if (this.productsToDeleteCount <= 0) {
+      console.error('Numero di prodotti da eliminare deve essere maggiore di 0');
       return;
     }
 
+    const productsToDelete = this.products.slice(0, this.productsToDeleteCount);
+    productsToDelete.forEach(product => {
+      this.productService.deleteProduct(product.id!).subscribe({
+        next: () => {
+          this.toastr.success('Prodotto eliminato con successo!', 'Eliminazione Completata');
+        },
+        error: (err) => {
+          console.error('Errore durante l\'eliminazione del prodotto:', err);
+          this.toastr.error('Errore durante l\'eliminazione del prodotto.', 'Errore');
+        }
+      });
+    });
 
-    for (let i = 0; i < count; i++) {
-      const productIdToDelete = this.products[i]?.id;
-      if (productIdToDelete) {
-        this.deleteProduct(productIdToDelete);
-      }
-    }
-    console.log(`Eliminati ${count} prodotti.`);
+    this.toastr.success(`Eliminati ${this.productsToDeleteCount} prodotti.`);
+    this.loadProducts(); // Ricarica la lista dei prodotti
+    this.closeDeleteModal(); // Chiudi il modale di eliminazione
   }
 
 
