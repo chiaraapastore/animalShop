@@ -1,0 +1,122 @@
+
+/* Contenitore principale del modulo */
+.crea-prodotto {
+  max-width: 600px;
+  margin: 100px auto; /* Aumentato lo spazio sopra (150px) */
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 2px solid #000; /* Contorno nero */
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Aggiungi una leggera ombra per profondità */
+}
+
+/* Titolo del modulo */
+.crea-prodotto h2 {
+  text-align: center;
+  font-size: 1.8rem; /* Ridotto per un aspetto più compatto */
+  color: #333;
+  margin-bottom: 20px; /* Ridotto margine */
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Stile per i campi del modulo */
+.crea-prodotto form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Ridotto spazio tra i campi */
+}
+
+/* Etichette dei campi */
+.crea-prodotto label {
+  font-size: 1rem; /* Ridotto */
+  color: #333;
+  margin-bottom: 6px; /* Spazio più ridotto tra etichetta e input */
+}
+
+/* Stile per gli input (testo, numero, URL) */
+.crea-prodotto input[type="text"],
+.crea-prodotto input[type="number"],
+.crea-prodotto input[type="url"],
+.crea-prodotto select {
+  padding: 10px;
+  margin-bottom: 12px; /* Spazio ridotto tra i campi */
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Bordo arrotondato */
+  font-size: 0.95rem; /* Ridotto per maggiore compattezza */
+  width: 100%;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Effetto al focus per gli input */
+.crea-prodotto input[type="text"]:focus,
+.crea-prodotto input[type="number"]:focus,
+.crea-prodotto input[type="url"]:focus,
+.crea-prodotto select:focus {
+  border-color: #000;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Stile per il campo della categoria */
+.crea-prodotto select {
+  background-color: #f8f9fa;
+  color: #333;
+  font-size: 0.95rem;
+  border: 2px solid #ccc;
+  padding: 12px;
+  border-radius: 8px;
+  transition: border-color 0.3s ease;
+}
+
+/* Cambiamento al focus del select */
+.crea-prodotto select:focus {
+  border-color: #000;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Bottoni */
+button {
+  padding: 12px 20px;
+  font-size: 1rem; /* Ridotto */
+  border: none;
+  border-radius: 25px; /* Bordo arrotondato */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 100%;
+  margin-top: 15px; /* Ridotto margine tra i bottoni */
+}
+
+/* Pulsante "Crea Prodotto" */
+button[type="submit"] {
+  background-color: #28a745;
+  color: white;
+}
+
+button[type="submit"]:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+/* Pulsante "Torna alla lista" */
+button[type="button"] {
+  background-color: #6c757d;
+  color: white;
+}
+
+button[type="button"]:hover {
+  background-color: #5a6268;
+  transform: scale(1.05);
+}
+
+/* Aggiungi un po' di spazio tra il pulsante di azione e il modulo */
+.crea-prodotto button:last-child {
+  margin-bottom: 20px;
+}
+
+/* Rimuove il focus blu sui bottoni */
+button:focus {
+  outline: none;
+  box-shadow: none;
+}

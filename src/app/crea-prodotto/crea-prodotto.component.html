@@ -1,0 +1,38 @@
+<div class="crea-prodotto">
+  <h2>Creazione Prodotto</h2>
+
+  <!-- Messaggio di caricamento delle categorie -->
+  <div *ngIf="!categoriesLoaded" class="loading-message">
+    <p>Caricamento delle categorie in corso...</p>
+  </div>
+
+  <!-- Form per la creazione del prodotto -->
+  <form *ngIf="categoriesLoaded" (ngSubmit)="createProduct()">
+    <div>
+      <label for="productName">Nome prodotto</label>
+      <input type="text" id="productName" [(ngModel)]="newProduct.productName" name="productName" required />
+    </div>
+
+    <div>
+      <label for="price">Prezzo</label>
+      <input type="number" id="price" [(ngModel)]="newProduct.price" name="price" required />
+    </div>
+
+    <div>
+      <label for="imageUrl">URL Immagine</label>
+      <input type="url" id="imageUrl" [(ngModel)]="newProduct.imageUrl" name="imageUrl" placeholder="Inserisci l'URL dell'immagine" required />
+    </div>
+
+    <!-- Selezione della categoria -->
+    <div>
+      <label for="category">Categoria</label>
+      <select [(ngModel)]="selectedCategory" name="category" id="category" required>
+        <option *ngFor="let category of categories" [ngValue]="category">{{ category.categoryName }}</option>
+      </select>
+    </div>
+
+    <!-- Pulsanti del form -->
+    <button type="submit">Crea Prodotto</button>
+    <button [routerLink]="['/admin']">Torna alla lista</button>
+  </form>
+</div>
