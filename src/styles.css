@@ -31,10 +31,10 @@ app-navigation {
 body.feedback-page::before {
   content: "";
   position: fixed;
-  top: -10%; /* Estendi l’immagine oltre i bordi */
+  top: -10%;
   left: -10%;
-  width: 120vw; /* Estensione oltre il 100% della larghezza */
-  height: 120vh; /* Estensione oltre il 100% dell’altezza */
+  width: 120vw;
+  height: 120vh;
   background-image: url('/assets/images/feedback.jpg');
   background-size: cover;
   background-position: center;
@@ -53,7 +53,7 @@ body.contact-page::before {
   background-image: url('/assets/images/contact.jpg');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat; /* Impedisce la ripetizione dell'immagine */
+  background-repeat: no-repeat;
   margin: 0;
   border-radius: 0;
   padding: 0;
@@ -62,15 +62,15 @@ body.contact-page::before {
 body.about-us-page::before {
   content: "";
   position: fixed;
-  top: 5%; /* Sposta l'immagine leggermente più in basso */
-  left: -6%; /* Sposta l'immagine più a destra */
-  width: 120%; /* Mantieni l'estensione */
-  height: 120%; /* Mantieni l'estensione */
-  background-image: url('/assets/images/about-us.jpg'); /* Percorso corretto dell'immagine */
-  background-size: contain; /* Ridimensiona mantenendo le proporzioni */
-  background-position: center; /* Mantieni il centraggio */
-  background-repeat: no-repeat; /* Evita ripetizioni */
-  z-index: -1; /* Assicura che sia dietro il contenuto */
+  top: 5%;
+  left: -6%;
+  width: 120%;
+  height: 120%;
+  background-image: url('/assets/images/about-us.jpg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
   margin: 0;
   border-radius: 0;
   padding: 0;
@@ -80,14 +80,14 @@ body.about-us-page::before {
 body.announcements-page::before {
   content: "";
   position: fixed;
-  top: 15%; /* Sposta l'immagine più in basso */
-  left: -3%; /* Sposta l'immagine più a sinistra */
-  width: 50%; /* Mantieni la larghezza dello sfondo */
-  height: 100%; /* Riduci l'altezza dello sfondo */
-  background-image: url('/assets/images/announce.jpg'); /* Percorso corretto dell'immagine */
-  background-size: cover; /* Assicura che l'immagine riempia lo spazio */
-  background-position: left center; /* Mantieni il posizionamento centrato a sinistra */
-  z-index: -1; /* Manda l'immagine dietro il contenuto */
+  top: 15%;
+  left: -3%;
+  width: 50%;
+  height: 100%;
+  background-image: url('/assets/images/announce.jpg');
+  background-size: cover;
+  background-position: left center;
+  z-index: -1;
   border-radius: 0;
   padding: 0;
 }
@@ -98,12 +98,12 @@ body.confirm-page::before {
   left: -42%;
   width: 120%;
   height: 120%;
-  background-image: url('/assets/images/pagamento-successo.jpg'); /* Percorso dell'immagine */
-  background-size: contain; /* Ridimensiona mantenendo le proporzioni */
-  background-position: center; /* Mantieni il centraggio */
-  background-repeat: no-repeat; /* Evita ripetizioni */
-  filter: blur(2px); /* Mantieni la sfocatura */
-  z-index: -1; /* Assicura che sia dietro il contenuto */
+  background-image: url('/assets/images/pagamento-successo.jpg');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(2px);
+  z-index: -1;
   margin: 0;
   border-radius: 0;
   padding: 0;
@@ -112,18 +112,18 @@ body.confirm-page::before {
 body.orders-page::before {
   content: "";
   position: fixed;
-  top: 0; /* Estendi l’immagine oltre i bordi */
+  top: 0;
   left: -20%;
-  width: 120vw; /* Estensione oltre il 100% della larghezza */
-  height: 120vh; /* Estensione oltre il 100% dell’altezza */
+  width: 120vw;
+  height: 120vh;
   border-radius: 0;
   margin: 0;
   padding: 0;
-  background-image: url('/assets/images/sfondo-profile.jpg'); /* Percorso dell'immagine */
+  background-image: url('/assets/images/sfondo-profile.jpg');
   background-size: cover;
   background-position: center 40%;
   filter: blur(3px);
   background-repeat: no-repeat;
-  z-index: -1; /* Posiziona sotto il contenuto */
+  z-index: -1;
 }
 

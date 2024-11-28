@@ -20,7 +20,6 @@ body, html {
 }
 
 
-/* Link della navbar */
 .navbar .navbar-nav {
   display: flex;
   gap: 1rem;
@@ -38,7 +37,7 @@ body, html {
   color: #ffc107;
 }
 
-/* Stili per il link Cart */
+
 .navbar .navbar-nav .cart-link {
   color: #fff;
   font-weight: normal;

@@ -1,7 +1,7 @@
 <div class="background-blur"></div>
 <div class="container">
   <div class="row">
-    <!-- Colonna Categorie -->
+
     <div class="col-4 mt-5">
       <h2 class="title-category">Esplora le Categorie</h2>
       <div class="accordion-item mt-3">
@@ -16,9 +16,9 @@
 
 
 
-    <!-- Colonna Prodotti -->
+
     <div class="col-8 d-flex justify-content-center flex-wrap">
-      <!-- Barra Filtri -->
+
       <div class="filter-bar mb-4 d-flex gap-3 align-items-center">
         <div class="filter-dropdown">
           <label>Ordina:</label>
@@ -41,13 +41,13 @@
             <option value="Unica">Unica</option>
           </select>
         </div>
-        <!-- Icona di ricarica -->
+
         <button class="btn btn-outline-secondary d-flex align-items-center" (click)="resetFilters()" title="Ricarica">
-          <i class="bi bi-arrow-clockwise"></i> <!-- Icona Bootstrap -->
+          <i class="bi bi-arrow-clockwise"></i>
         </button>
       </div>
 
-      <!-- Prodotti -->
+
       <div *ngFor="let product of filteredProducts" class="card m-3 position-relative" style="width: 18rem;">
         <img [src]="product.imageUrl" class="card-img-top" alt="{{ product.productName }}"/>
         <div class="card-footer text-center">
@@ -60,10 +60,10 @@
       </div>
 
 
-      <!-- Checkout -->
+
       <button *ngIf="cartId" (click)="checkout()">Procedi al checkout</button>
 
-      <!-- Paginazione -->
+
       <div class="pagination-container mt-4">
         <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">

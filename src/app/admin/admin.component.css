@@ -1,14 +1,14 @@
 
-/* Contenitore principale della tabella */
+
 .table-responsive {
-  margin: 60px auto; /* Maggiore spazio sopra la tabella */
+  margin: 60px auto;
   max-width: 90%;
   overflow-x: auto;
   border-radius: 8px;
 }
-/* Titolo della lista prodotti */
+
 h1, h2 {
-  margin-top: 60px; /* Maggiore spazio sopra il titolo */
+  margin-top: 60px;
   text-align: center;
   font-size: 2rem;
   color: #333;
@@ -18,10 +18,10 @@ h1, h2 {
   letter-spacing: 1px;
 }
 
-/* Tabella */
+
 .table {
-  margin-top: 50px; /* Aumento dello spazio sopra la tabella */
-  font-size: 12px; /* Font più piccolo per una visualizzazione compatta */
+  margin-top: 50px;
+  font-size: 12px;
   border-collapse: collapse;
   color: #333;
 }
@@ -29,46 +29,46 @@ h1, h2 {
 .table th, .table td {
   text-align: center;
   vertical-align: middle;
-  padding: 10px; /* Spazio tra il testo e i bordi */
+  padding: 10px;
   border: 1px solid #ddd;
 }
 
 .table th {
   background-color: #111;
   color: white;
-  font-size: 13px; /* Font leggermente ridotto per l'intestazione */
+  font-size: 13px;
 }
 
-/* Immagini nella tabella */
+
 .table img {
-  max-width: 70px; /* Immagini più piccole */
+  max-width: 70px;
   max-height: 70px;
   object-fit: cover;
   border-radius: 5px;
 }
 
-/* Hover per righe della tabella */
+
 .table tbody tr:hover {
   background-color: #f8f8f8;
 }
 
-/* Pulsanti nella tabella */
+
 .table button {
   padding: 5px 10px;
-  font-size: 11px; /* Pulsanti più piccoli */
+  font-size: 11px;
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .table button:hover {
-  transform: scale(1.05); /* Aggiungi effetto di zoom al passaggio del mouse */
+  transform: scale(1.05);
 }
 
-/* Pulsante "Aggiungi Prodotto" */
+
 .text-center .btn-success {
   margin-top: 0;
-  margin-bottom: 50px; /* Spazio sotto il pulsante */
+  margin-bottom: 50px;
   background-color: #000;
   color: white;
   border-radius: 25px;
@@ -82,13 +82,13 @@ h1, h2 {
   background-color: #333;
 }
 
-/* Pulsanti di azione */
+
 .btn-primary {
   background-color: #111;
   color: white;
   border: none;
   outline: none;
-  margin-right: 8px; /* Maggiore spazio tra i pulsanti */
+  margin-right: 8px;
   padding: 6px 14px;
   font-size: 12px;
   border-radius: 4px;
@@ -116,15 +116,15 @@ h1, h2 {
   transform: scale(1.05);
 }
 
-/* Rimuove il focus blu sui bottoni */
+
 button:focus {
   outline: none;
   box-shadow: none;
 }
 
-/* Colori di sfondo più eleganti per la pagina */
+
 body {
-  background-color: #f4f4f4; /* Colore di sfondo più chiaro */
+  background-color: #f4f4f4;
   font-family: 'Arial', sans-serif;
   color: #333;
 }

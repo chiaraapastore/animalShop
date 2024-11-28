@@ -34,34 +34,33 @@ export class CartComponent implements OnInit {
       if (user && user.username) {
         const username = user.username;
 
-        // Ottieni i prodotti dal backend
+
         this.cartService.getCartProducts(username).subscribe({
           next: (products) => {
             console.log('Prodotti caricati dal backend:', products);
 
-            // Ottieni i dati salvati dal localStorage
+
             const savedCart = localStorage.getItem('cart');
             const parsedCart = savedCart ? JSON.parse(savedCart) : {};
 
-            // Sincronizza prodotti backend con localStorage
+
             this.cartItems = products.map(product => {
               const savedQuantity = parsedCart[product.id]?.quantity;
 
-              // Determina la quantità da usare
               const quantityToUse = savedQuantity !== undefined
-                ? Math.min(savedQuantity, product.availableQuantity) // Rispetta il limite di disponibilità
+                ? Math.min(savedQuantity, product.availableQuantity)
                 : Math.min(product.quantity || 1, product.availableQuantity);
 
               return {
                 product: {
                   ...product,
-                  imageUrl: this.getImageUrlForProduct(product.productName) // Aggiunge l'immagine
+                  imageUrl: this.getImageUrlForProduct(product.productName)
                 },
                 quantity: quantityToUse
               };
             });
 
-            // Salva lo stato aggiornato nel localStorage
+
             this.saveCartToLocalStorage();
           },
           error: (error) => {

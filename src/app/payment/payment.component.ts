@@ -63,7 +63,7 @@ export class PaymentComponent implements OnInit {
   }
 
   async processPayment(): Promise<void> {
-    // Recupera l'utente autenticato
+
     const user = await this.auth.getLoggedInUser();
     if (!user || !user.username) {
       console.error("Errore: Utente non autenticato.");
@@ -77,7 +77,7 @@ export class PaymentComponent implements OnInit {
 
     const payment: Payment = {
       customerOrder: {
-        id: this.orderId, // ID ordine o rimuovilo se non necessario
+        id: this.orderId,
         items: this.cartItems,
         totalAmount: this.totalAmount,
       },

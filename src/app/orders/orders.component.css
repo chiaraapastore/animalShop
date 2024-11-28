@@ -1,16 +1,16 @@
-/* Contenitore principale */
+
 .orders-container {
   max-width: 900px;
   margin: 140px auto;
   padding: 20px 30px;
-  background-color: #fff; /* Sfondo bianco */
+  background-color: #fff;
   border: 1px solid #ddd;
   font-family: 'Roboto', sans-serif;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.6);
-  border-radius: 8px; /* Angoli arrotondati */
+  border-radius: 8px;
 }
 
-/* Titolo principale */
+
 .orders-container h1 {
   text-align: center;
   font-size: 24px;
@@ -20,7 +20,7 @@
   font-weight: bold;
 }
 
-/* Spinner di caricamento */
+
 .loading-spinner {
   text-align: center;
   font-size: 16px;
@@ -28,7 +28,7 @@
   margin-bottom: 20px;
 }
 
-/* Filtri */
+
 .filters {
   display: flex;
   gap: 10px;
@@ -62,7 +62,7 @@
   background-color: #555;
 }
 
-/* Tabella */
+
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -93,7 +93,7 @@
   transition: background-color 0.2s ease-in-out;
 }
 
-/* Pulsanti delle azioni */
+
 .button-actions button {
   font-size: 12px;
   padding: 8px 16px;
@@ -122,7 +122,7 @@
   background-color: #e53935;
 }
 
-/* Paginazione */
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -154,7 +154,7 @@
   color: black;
 }
 
-/* Popup di conferma */
+
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -215,7 +215,6 @@
   background-color: #e53935;
 }
 
-/* Errori */
 .error {
   text-align: center;
   font-size: 14px;

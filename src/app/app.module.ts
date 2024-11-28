@@ -77,13 +77,13 @@ export function initializeKeycloak(keycloak: KeycloakService, platformId: Object
     FormsModule,
     KeycloakAngularModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule, // Necessario per ngx-toastr
+    BrowserAnimationsModule,
     ToastrModule.forRoot({
-      toastClass: 'ngx-toastr', // Usa la classe personalizzata
-      positionClass: 'toast-top-right', // Posizione
-      timeOut: 5000, // Durata in millisecondi
-      closeButton: true, // Mostra il pulsante di chiusura
-      progressBar: true, // Mostra la barra di progresso
+      toastClass: 'ngx-toastr',
+      positionClass: 'toast-top-right',
+      timeOut: 5000,
+      closeButton: true,
+      progressBar: true,
     }),
   ],
   providers: [

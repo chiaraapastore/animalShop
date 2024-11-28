@@ -9,16 +9,16 @@
   margin: 0;
   padding: 0;
   left: 0;
-  top: -5%; /* Estendi l’immagine oltre i bordi */
+  top: -5%;
   left: -5%;
-  width: 120vw; /* Estensione oltre il 100% della larghezza */
-  height: 120vh; /* Estensione oltre il 100% dell’altezza */
+  width: 120vw;
+  height: 120vh;
   z-index: -1;
 }
 
 .container {
   position: relative;
-  z-index: 1; /* Porta il contenuto sopra lo sfondo */
+  z-index: 1;
 }
 
 .title-and-accordion-container {
@@ -43,7 +43,7 @@
 }
 
 
-/* Stile del titolo */
+
 .title-category {
   font-size: 22px;
   font-weight: 400;
@@ -53,7 +53,7 @@
 }
 
 .card {
-  width: 250px; /* Imposta una larghezza fissa per le card */
+  width: 250px;
   height: 350px;
   display: flex;
   flex-direction: column;
@@ -91,17 +91,17 @@
 
 
 .card-img-top {
-  margin-top: 10px; /* Aggiusta questo valore per ottenere l'altezza desiderata */
+  margin-top: 10px;
   max-height: 200px;
-  object-fit: contain; /* Assicura che l'immagine sia contenuta senza distorsioni */
+  object-fit: contain;
 }
 
 .card-footer {
-  padding-top: 10px; /* Aggiunge spazio tra l'immagine e il titolo/prezzo */
+  padding-top: 10px;
 }
 
 
-/* Allineamento del contenuto della card */
+
 .card-body {
   height: 100px;
   display: flex;
@@ -133,16 +133,16 @@
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Imposta una larghezza minima per ogni card */
-  gap: 20px; /* Spazio tra le card */
-  justify-items: center; /* Centra le card all'interno della griglia */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  justify-items: center;
 }
 
 
-/* Card del prodotto */
+
 .product-card {
-  flex: 1 1 250px; /* Larghezza minima di 250px per ogni card, si espande fino a riempire lo spazio */
-  max-width: 300px; /* Larghezza massima per evitare che le card diventino troppo grandi */
+  flex: 1 1 250px;
+  max-width: 300px;
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
@@ -155,7 +155,7 @@
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Immagine del prodotto */
+
 .product-image {
   width: 100%;
   height: 220px;
@@ -167,7 +167,7 @@
   transform: scale(1.1);
 }
 
-/* Informazioni del prodotto */
+
 .product-info {
   padding: 15px;
   text-align: center;
@@ -267,35 +267,35 @@
 
 
 .pagination .page-item.disabled .page-link {
-  color: #333; /* Colore più scuro */
-  opacity: 1; /* Impedisce al colore di essere semi-trasparente */
+  color: #333;
+  opacity: 1;
 }
 
 .pagination .page-item.disabled .page-link:hover {
-  color: #333; /* Mantiene il colore scuro anche al passaggio del mouse */
-  text-decoration: none; /* Rimuove eventuali sottolineature */
+  color: #333;
+  text-decoration: none;
 }
 
 .pagination-controls .page-item.disabled .page-link {
-  color: #333; /* Colore più scuro per migliorare la visibilità */
+  color: #333;
   background-color: #f8f9fa;
 }
 
 .pagination-controls {
-  flex-grow: 1; /* Permette ai controlli di espandersi */
+  flex-grow: 1;
   display: flex;
-  justify-content: center; /* Centra la paginazione */
+  justify-content: center;
 }
 
-/* Stile per la barra dei filtri */
+
 .filter-bar {
   display: flex;
   gap: 15px;
-  margin-top: 20px; /* Aggiunge spazio sopra la barra */
+  margin-top: 20px;
   margin-bottom: 20px;
   align-items: center;
-  justify-content: flex-end; /* Allinea la barra a destra */
-  padding-top: 10px; /* Aggiunge spazio interno in alto */
+  justify-content: flex-end;
+  padding-top: 10px;
   width: 100%;
 }
 

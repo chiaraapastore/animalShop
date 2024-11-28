@@ -9,7 +9,7 @@ import {AuthenticationService} from "../auth/authenticationService";
 import {Cart} from "../models/cart.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import { ToastrService } from 'ngx-toastr';
-import {error} from "@angular/compiler-cli/src/transformers/util";
+
 
 
 @Component({
@@ -140,20 +140,20 @@ export class ProductListComponent implements OnInit {
 
   async addToCart(productId: string, quantity: number = 1): Promise<void> {
     try {
-      // Controlla se l'utente è loggato
+
       const isAuthenticated = await this.keycloakService.isLoggedIn();
 
       if (!isAuthenticated) {
         console.warn('Utente non autenticato. Effettua il login per aggiungere prodotti al carrello.');
         this.toastr.warning('Effettua il login per aggiungere prodotti al carrello.', 'Attenzione');
-        return; // Esci dalla funzione se l'utente non è loggato
+        return;
       }
 
-      // Recupera le informazioni sull'utente loggato
+
       const user = await this.auth.getLoggedInUser();
       const username = user?.username || 'Email non disponibile';
 
-      // Aggiungi il prodotto al carrello
+
       this.cartService.addProductToCart(productId, quantity, username).subscribe({
         next: (cart) => {
           console.log('Prodotto aggiunto al carrello con successo:', cart);
@@ -200,7 +200,7 @@ export class ProductListComponent implements OnInit {
       'Crocchette per Cani di Taglia Media': '/assets/images/crocchette-cani-taglia-media.jpg',
       'Cuscino Comodo per Cani': '/assets/images/cuscino.jpg'
     };
-    return images[productName] || '/assets/images/default.jpg'; // Usa un'immagine di default se non è specificata
+    return images[productName] || '/assets/images/default.jpg';
   }
 
   onCategorySelect(categoryName: string): void {
@@ -241,7 +241,7 @@ export class ProductListComponent implements OnInit {
   }
 
   get totalPages(): number {
-    return Math.ceil(this.totalProducts / this.pageSize) || 1; // Restituisci almeno 1 pagina
+    return Math.ceil(this.totalProducts / this.pageSize) || 1;
   }
 
 

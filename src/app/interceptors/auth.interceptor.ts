@@ -14,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (!isPlatformBrowser(this.platformId)) {
-      // Se non siamo nel contesto del browser, passa la richiesta senza token
+
       return next.handle(req);
     }
 
@@ -31,7 +31,7 @@ export class AuthInterceptor implements HttpInterceptor {
       }),
       catchError(error => {
         console.error("Errore durante l'intercettazione della richiesta:", error);
-        return next.handle(req); // Continua senza token in caso di errore
+        return next.handle(req);
       })
     );
   }

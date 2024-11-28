@@ -12,7 +12,7 @@
 </div>
 
 
-<!-- Categorie di Prodotti -->
+
 <div class="container-fluid categories">
   <h2>Esplora le Nostre Categorie</h2>
   <div class="category-grid">
@@ -34,16 +34,16 @@
   </div>
 </div>
 
-<!-- Sezione Testimonianze -->
+
 <div class="testimonials">
   <h2>Cosa Dicono i Nostri Clienti</h2>
 
-  <!-- Contenitore del carosello -->
+
   <div class="testimonial-carousel">
-    <!-- Freccia sinistra -->
+
     <button class="carousel-btn prev-btn" (click)="scrollCarousel(-1)">❮</button>
 
-    <!-- Wrapper per il carosello per limitare il numero di testimonianze visibili -->
+
     <div class="testimonial-wrapper">
       <div class="testimonial-grid">
         <div *ngFor="let testimonial of visibleTestimonials" class="testimonial">
@@ -53,7 +53,7 @@
       </div>
     </div>
 
-    <!-- Freccia destra -->
+
     <button class="carousel-btn next-btn" (click)="scrollCarousel(1)">❯</button>
   </div>
 </div>

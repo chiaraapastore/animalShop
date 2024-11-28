@@ -28,7 +28,7 @@ export class AuthenticationService {
 
 
   logout(): void {
-    const redirectUri = window.location.origin; // Redirect dopo il logout
+    const redirectUri = window.location.origin;
     this.keycloakService.logout(redirectUri).catch(error => {
       console.error("Errore durante il logout:", error);
     });

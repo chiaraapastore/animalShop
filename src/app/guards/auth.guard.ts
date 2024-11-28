@@ -10,13 +10,13 @@ export class AuthGuard implements CanActivate {
   constructor(
     private router: Router,
     private keycloakService: KeycloakService,
-    @Inject(PLATFORM_ID) private platformId: Object
+     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     if (!isPlatformBrowser(this.platformId)) {
-      return true;
-    }
+       return true;
+     }
 
     try {
       const isAuthenticated = await this.keycloakService.isLoggedIn();

@@ -1,17 +1,15 @@
-/* Corpo della pagina con sfondo */
 
-/* Contenitore principale del modulo */
 .crea-prodotto {
   max-width: 600px;
-  margin: 100px auto; /* Spazio sopra */
+  margin: 100px auto;
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
-  border: 2px solid #000; /* Contorno nero */
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); /* Ombra leggera */
+  border: 2px solid #000;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Titolo del modulo */
+
 .crea-prodotto h2 {
   text-align: center;
   font-size: 1.8rem;
@@ -22,21 +20,21 @@
   letter-spacing: 0.5px;
 }
 
-/* Stile per i campi del modulo */
+
 .crea-prodotto form {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-/* Etichette dei campi */
+
 .crea-prodotto label {
   font-size: 1rem;
   color: #333;
   margin-bottom: 6px;
 }
 
-/* Stile per gli input */
+
 .crea-prodotto input[type="text"],
 .crea-prodotto input[type="number"],
 .crea-prodotto input[type="url"],
@@ -50,7 +48,7 @@
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Focus sugli input */
+
 .crea-prodotto input[type="text"]:focus,
 .crea-prodotto input[type="number"]:focus,
 .crea-prodotto input[type="url"]:focus,
@@ -60,7 +58,6 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Stile per il select della categoria */
 .crea-prodotto select {
   background-color: #f8f9fa;
   color: #333;
@@ -71,13 +68,13 @@
   transition: border-color 0.3s ease;
 }
 
-/* Focus sul select */
+
 .crea-prodotto select:focus {
   border-color: #000;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Bottoni */
+
 button {
   padding: 12px 20px;
   font-size: 1rem;
@@ -89,7 +86,7 @@ button {
   margin-top: 15px;
 }
 
-/* Pulsante "Crea Prodotto" */
+
 button[type="submit"] {
   background-color: #28a745;
   color: white;
@@ -100,7 +97,7 @@ button[type="submit"]:hover {
   transform: scale(1.05);
 }
 
-/* Pulsante "Torna alla lista" */
+
 button[type="button"] {
   background-color: #6c757d;
   color: white;
@@ -111,12 +108,11 @@ button[type="button"]:hover {
   transform: scale(1.05);
 }
 
-/* Aggiungi spazio tra il pulsante di azione e il modulo */
 .crea-prodotto button:last-child {
   margin-bottom: 20px;
 }
 
-/* Rimuovi il focus blu sui bottoni */
+
 button:focus {
   outline: none;
   box-shadow: none;

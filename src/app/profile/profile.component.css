@@ -1,46 +1,46 @@
-/* Sfondo sfocato */
+
 .background-blur {
   position: fixed;
-  top: -11%; /* Estendi l’immagine oltre i bordi */
+  top: -11%;
   left: -11%;
-  width: 115vw; /* Estensione oltre il 100% della larghezza */
-  height: 115vh; /* Estensione oltre il 100% dell’altezza */
+  width: 115vw;
+  height: 115vh;
   border-radius: 0;
   margin: 0;
   padding: 0;
-  background-image: url('/assets/images/sfondo-profile.jpg'); /* Percorso corretto dell'immagine */
+  background-image: url('/assets/images/sfondo-profile.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  z-index: -1; /* Posiziona sotto il contenuto */
+  z-index: -1;
   overflow: hidden;
 }
 
-/* Contenitore del profilo */
+
 .profile-container {
   text-align: center;
   padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.9); /* Sfondo semi-trasparente per leggibilità */
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  z-index: 1; /* Sopra lo sfondo */
+  z-index: 1;
 }
 
-/* Icona del profilo */
+
 .profile-icon {
   font-size: 6rem;
   color: #000;
   margin-bottom: 20px;
 }
 
-/* Titolo del profilo */
+
 h2 {
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
-/* Dettagli del profilo */
+
 .profile-details {
   text-align: center;
   margin-top: 20px;
@@ -52,7 +52,7 @@ h2 {
   margin-bottom: 15px;
 }
 
-/* Icona di modifica del profilo */
+
 .profile-edit-icon {
   font-size: 1.5rem;
   color: #000;

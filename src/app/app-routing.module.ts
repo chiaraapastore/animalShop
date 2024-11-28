@@ -5,7 +5,6 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { AnnouncementsComponent } from './announcements/announcements.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { ContactComponent } from './contact/contact.component';
-import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthGuard } from './guards/auth.guard';
 import { CartComponent } from './cart/cart.component';
 import { PaymentComponent } from './payment/payment.component';
@@ -19,7 +18,7 @@ import {CreaProdottoComponent} from "./crea-prodotto/crea-prodotto.component";
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  {path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: ['admin']}}, // Proteggi questa rotta per gli amministratori},
+  {path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: ['admin']}},
   { path: 'aggiunta-prodotto', component: CreaProdottoComponent, canActivate: [AuthGuard], data: { roles: ['admin']} },
   { path: 'shop', component: ProductListComponent },
   { path: 'announcements', component: AnnouncementsComponent },

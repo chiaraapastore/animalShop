@@ -21,12 +21,12 @@ export class CreaProdottoComponent implements OnInit {
     sizeProduct: '',
     imageUrl: '',
     quantity: 0,
-    category: { id: 0, categoryName: '', countProduct: 0 }  // Categoria inizialmente vuota
+    category: { id: 0, categoryName: '', countProduct: 0 }
   };
 
   categories: Category[] = [];
-  selectedCategory: Category | null = null;  // Oggetto categoria selezionato, inizialmente null
-  categoriesLoaded: boolean = false; // Flag per indicare se le categorie sono state caricate
+  selectedCategory: Category | null = null;
+  categoriesLoaded: boolean = false;
 
   constructor(
     private productService: ProductService,
@@ -35,17 +35,17 @@ export class CreaProdottoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Carica le categorie dal servizio
+
     this.productService.getCategories().subscribe({
       next: (categories) => {
         this.categories = categories;
-        console.log('Categorie caricate:', this.categories);  // Log delle categorie per debug
-        this.categoriesLoaded = true; // Indica che le categorie sono state caricate
+        console.log('Categorie caricate:', this.categories);
+        this.categoriesLoaded = true;
       },
       error: (err) => {
         console.error('Errore nel recupero delle categorie', err);
         this.toastr.error('Errore nel caricamento delle categorie.', 'Errore');
-        this.categoriesLoaded = false; // Gestisci caso di errore
+        this.categoriesLoaded = false;
       }
     });
   }
@@ -53,27 +53,27 @@ export class CreaProdottoComponent implements OnInit {
   createProduct(): void {
     console.log('Categoria selezionata prima della verifica:', this.selectedCategory);
 
-    // Verifica che una categoria sia selezionata
+
     if (!this.selectedCategory) {
       this.toastr.warning('Seleziona una categoria valida.', 'Attenzione');
       return;
     }
 
-    // Assicurati che la categoria sia correttamente associata al prodotto
+
     this.newProduct.category = this.selectedCategory;
-    this.newProduct.categoryName = this.selectedCategory.categoryName;  // Aggiungi il nome della categoria (se necessario)
+    this.newProduct.categoryName = this.selectedCategory.categoryName;
 
     console.log('Categoria selezionata:', this.selectedCategory);
 
-    // Verifica che i dati del prodotto siano validi
+
     if (this.isValidProduct(this.newProduct)) {
       console.log('Creazione prodotto: ', this.newProduct);
 
-      // Chiamata al servizio per creare il prodotto
+
       this.productService.createProduct(this.newProduct, this.newProduct.category.id)
         .subscribe({
           next: (response) => {
-            // Successo: mostra il messaggio di successo e naviga
+
             this.toastr.success('Prodotto creato con successo!', 'Creazione completata');
             this.route.navigate(['/admin']);
           },
@@ -83,18 +83,19 @@ export class CreaProdottoComponent implements OnInit {
           }
         });
     } else {
-      // Mostra un avviso se i campi non sono validi
+
       this.toastr.warning('Per favore, completa tutti i campi obbligatori.', 'Attenzione');
     }
   }
 
 
-  // Funzione di validazione del prodotto
+
   isValidProduct(product: Product): boolean {
     return (
       product.productName !== '' &&
       product.price > 0 &&
       product.imageUrl !== '' &&
+      product.quantity > 0 &&
       product.category.id > 0
     );
   }

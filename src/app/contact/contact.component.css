@@ -1,8 +1,8 @@
-/* Sfondo e stile generale */
+
 body.contact-page {
   font-family: Arial, sans-serif;
   color: #333;
-  overflow: hidden; /* Evita lo scrolling laterale */
+  overflow: hidden;
 }
 
 .contact-container {
@@ -12,19 +12,15 @@ body.contact-page {
   border-radius: 8px;
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  position: fixed; /* Posiziona il contenitore rispetto alla finestra */
-  bottom: 300px; /* Aumenta il valore per alzare ulteriormente */
-  left: 50%; /* Centra orizzontalmente */
-  transform: translateX(-50%); /* Compensa per centrare orizzontalmente */
-  z-index: 1; /* Assicura che il contenitore sia visibile sopra lo sfondo */
+  position: fixed;
+  bottom: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
 }
 
 
 
-
-
-
-/* Stile per il numero di telefono */
 .phone-number {
   font-size: 1.2rem;
   font-weight: bold;
@@ -41,7 +37,7 @@ body.contact-page {
   text-decoration: underline;
 }
 
-/* Stile per i campi del modulo */
+
 .form-group {
   margin-bottom: 15px;
 }
@@ -58,7 +54,7 @@ textarea {
   height: 100px;
 }
 
-/* Stile per il pulsante di invio */
+
 button {
   background-color: #007bff;
   color: white;

@@ -13,11 +13,11 @@ import {UtenteShopService} from "./services/utenteShop.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  title = 'AnimalShop'; // Titolo dell'app
-  isProductPage = false; // Indica se l'utente si trova nella pagina dei prodotti
-  searchKeyword: string = ''; // Parola chiave per la ricerca dei prodotti
-  searchResults: Product[] = []; // Risultati della ricerca
-  userDetails: any; // Dettagli utente autenticato
+  title = 'AnimalShop';
+  isProductPage = false;
+  searchKeyword: string = '';
+  searchResults: Product[] = [];
+  userDetails: any;
 
 
   constructor(
@@ -25,10 +25,10 @@ export class AppComponent implements OnInit{
     private renderer: Renderer2,
     private auth: AuthenticationService,
     private productService: ProductService,
-    private keycloakService: KeycloakService, // Import del servizio Keycloak
+    private keycloakService: KeycloakService,
     private utenteService: UtenteShopService
   ) {
-    // Monitoraggio delle navigazioni per aggiungere/rimuovere classi specifiche al body
+
     this.router.events
       .pipe(filter((event: Event): event is NavigationEnd => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
@@ -53,14 +53,14 @@ export class AppComponent implements OnInit{
       if (isAuthenticated) {
         const roles = this.keycloakService.getUserRoles();
         if (roles.includes('admin')) {
-          // Naviga alla pagina admin se l'utente è admin
+
           await this.router.navigate(['/admin']);
         } else {
-          // Naviga al profilo utente se non è admin
+
           await this.router.navigate(['/user-profile']);
         }
       } else {
-        await this.keycloakService.login(); // Se non autenticato, effettua il login
+        await this.keycloakService.login();
       }
     } catch (error) {
       console.error('Errore durante il controllo dell\'autenticazione:', error);
@@ -96,7 +96,7 @@ export class AppComponent implements OnInit{
     console.log('Cognome:', this.userDetails.lastName);
     console.log('Keycloak ID:', this.userDetails.keycloakId);
 
-    // Controlla se l'utente esiste nel backend prima di salvarlo
+
     this.utenteService.checkUserExists(this.userDetails.username).subscribe({
       next: (exists) => {
         if (!exists) {
@@ -130,12 +130,12 @@ export class AppComponent implements OnInit{
   }
 
   private updateBodyClasses(url: string): void {
-    // Rimuove classi esistenti
+
     const bodyClasses = ['about-us-page', 'contact-page', 'announcements-page'];
     bodyClasses.forEach(cls => this.renderer.removeClass(document.body, cls));
 
-    // Aggiunge la classe corretta in base all'URL
-    const cleanUrl = url.split('?')[0]; // Rimuove parametri della query string
+
+    const cleanUrl = url.split('?')[0];
     switch (cleanUrl) {
       case '/about-us':
         this.renderer.addClass(document.body, 'about-us-page');
@@ -164,13 +164,13 @@ export class AppComponent implements OnInit{
 
     const trimmedKeyword = this.searchKeyword.trim();
     if (trimmedKeyword) {
-      // Naviga alla pagina dei prodotti con i parametri di ricerca
+
       this.router.navigate(['/shop'], { queryParams: { keyword: trimmedKeyword } }).then(() => {
-        // Rimuove i parametri dalla barra degli indirizzi dopo la navigazione
+
         window.history.replaceState({}, '', '/shop');
       });
     } else {
-      // Naviga alla pagina dei prodotti senza parametri
+
       this.router.navigate(['/shop']);
     }
   }

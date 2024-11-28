@@ -1,55 +1,55 @@
 .payment-background {
   position: fixed;
-  top: -11%; /* Estendi l’immagine oltre i bordi */
+  top: -11%;
   left: -11%;
   width: 120%;
   height: 120vh;
-  background-image: url('/assets/images/sfondo-pagamento.jpg'); /* Percorso corretto */
+  background-image: url('/assets/images/sfondo-pagamento.jpg');
   background-size: cover;
   background-position: center 24%;
   background-repeat: no-repeat;
-  filter: blur(3px); /* Applica la sfocatura solo allo sfondo */
-  z-index: -1; /* Posiziona sotto il contenuto */
+  filter: blur(3px);
+  z-index: -1;
   overflow: hidden;
 }
 
 .payment-container {
   position: relative;
-  background-color: transparent; /* Rimuove ogni colore di sfondo */
-  border: none; /* Rimuove il bordo */
-  box-shadow: none; /* Rimuove l'ombra */
-  z-index: 1; /* Porta i contenuti in primo piano */
-  padding: 20px; /* Mantieni padding per il contenuto interno */
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  z-index: 1;
+  padding: 20px;
 }
 
 body {
-  margin: 0; /* Elimina qualsiasi margine globale */
-  padding: 0; /* Elimina qualsiasi padding globale */
+  margin: 0;
+  padding: 0;
 }
 
 .card {
-  background-color: white; /* Mantiene il contenuto leggibile */
-  border-radius: 15px; /* Bordo arrotondato solo per il contenuto */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombra per distacco visivo */
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .payment-card {
   border-radius: 15px;
-  border: 1px solid rgba(0, 0, 0, 0.1); /* Bordo leggermente visibile */
+  border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.9); /* Bianco semitrasparente */
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 .order-summary-card {
   border-radius: 15px;
-  border: 1px solid rgba(0, 0, 0, 0.1); /* Bordo leggero */
+  border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.9); /* Bianco semitrasparente */
+  background-color: rgba(255, 255, 255, 0.9);
 }
 
 
 .d-flex {
-  padding-top: 10px; /* Spinge tutto il contenuto verso il basso */
+  padding-top: 10px;
 }
 
 
@@ -59,7 +59,7 @@ body {
 }
 
 .order-summary-col {
-  margin-top: 20px; /* Aumenta il margine superiore */
+  margin-top: 20px;
 }
 
 .form-group {

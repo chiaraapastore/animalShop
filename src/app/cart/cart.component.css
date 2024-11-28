@@ -14,29 +14,29 @@
 
 .cart-container {
   position: relative;
-  background: rgba(255, 255, 255, 0.85); /* Sfondo semi-trasparente */
+  background: rgba(255, 255, 255, 0.85);
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  margin-top: 60px; /* Spazio più consistente dall'alto */
-  margin-bottom: 40px; /* Aggiunge spazio con il bordo inferiore */
-  width: 90%; /* Riduci la larghezza */
-  max-width: 800px; /* Limita la dimensione massima */
+  margin-top: 60px;
+  margin-bottom: 40px;
+  width: 90%;
+  max-width: 800px;
   z-index: 1;
 }
 
 .cart-container h1 {
-  font-size: 24px; /* Riduci la dimensione */
-  font-weight: 600; /* Regola il peso del font */
-  margin-bottom: 20px; /* Riduci lo spazio sotto il titolo */
-  color: #333; /* Mantieni il colore scuro */
-  text-transform: uppercase; /* Mantieni il testo in maiuscolo */
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+  text-transform: uppercase;
 }
 
 
 .cart-item {
   border-bottom: 1px solid #ddd;
-  padding: 10px 0; /* Riduci il padding verticale */
+  padding: 10px 0;
   margin-bottom: 10px;
   display: flex;
   align-items: center;
@@ -48,7 +48,7 @@
 }
 
 .cart-item-img {
-  width: 90px; /* Ridimensiona l'immagine */
+  width: 90px;
   height: 90px;
   object-fit: cover;
   border-radius: 8px;
@@ -63,7 +63,7 @@
 
 .cart-item-details h5 {
   margin: 0;
-  font-size: 16px; /* Riduci leggermente il titolo */
+  font-size: 16px;
   color: #333;
 }
 
@@ -82,7 +82,7 @@
   color: #fff;
   border: none;
   border-radius: 5px;
-  padding: 8px 12px; /* Riduci la dimensione del pulsante */
+  padding: 8px 12px;
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -94,19 +94,19 @@
 
 .cart-total {
   text-align: right;
-  font-size: 18px; /* Riduci la dimensione del totale */
+  font-size: 18px;
   font-weight: bold;
   margin-top: 15px;
 }
 
 .checkout-btn {
   margin-top: 15px;
-  text-align: center; /* Centra il pulsante */
+  text-align: center;
 }
 
 .checkout-btn button {
   width: 100%;
-  max-width: 300px; /* Limita la larghezza massima */
+  max-width: 300px;
   background-color: #333;
   color: #fff;
   border: none;

@@ -33,7 +33,7 @@ export class ProductService {
     return this.http.get<any>(this.productsUrl, { params }).pipe(
       catchError((error) => {
         console.error('Errore durante il recupero dei prodotti:', error);
-        return of({ content: [], totalElements: 0 }); // Risposta vuota in caso di errore
+        return of({ content: [], totalElements: 0 });
       })
     );
   }
@@ -42,25 +42,24 @@ export class ProductService {
     return this.http.get<Category[]>(this.categoriesUrl).pipe(
       catchError((error) => {
         console.error('Errore durante il recupero delle categorie:', error);
-        return of([]); // Ritorna un array vuoto in caso di errore
+        return of([]);
       })
     );
   }
 
 
-  // Crea un nuovo prodotto
+
   createProduct(product: Product, categoryId: number): Observable<Product> {
     return this.http.post<Product>(`http://localhost:8081/api/products/create/${categoryId}`, product);
   }
 
-  // Aggiorna un prodotto esistente
+
   updateProduct(productId: number, product: Product, categoryId: number): Observable<Product> {
     return this.http.put<Product>(`http://localhost:8081/api/products/${productId}/${categoryId}`, product);
   }
 
 
 
-  // Elimina un prodotto
   deleteProduct(id: number): Observable<void> {
     return this.http.delete<void>(`http://localhost:8081/api/products/${id}`);
   }

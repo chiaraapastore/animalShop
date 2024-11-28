@@ -17,7 +17,7 @@
         <label><strong>Email:</strong> {{ userDetails.email }}</label>
       </div>
 
-      <!-- Messaggio di errore -->
+
       <div *ngIf="errorMessage" class="error">
         <p>{{ errorMessage }}</p>
       </div>
@@ -30,7 +30,7 @@
 
   </div>
 
-  <!-- Messaggio di caricamento -->
+
   <ng-template #loading>
     <div class="loading-message">
       <p>Caricamento profilo...</p>

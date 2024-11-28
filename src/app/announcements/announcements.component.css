@@ -1,62 +1,62 @@
-/* Sfondo della pagina */
+
 body.announcements-page {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-image: url('/assets/images/announce.jpg'); /* Assicurati che il percorso sia corretto */
-  background-size: cover; /* Rende l'immagine responsiva */
-  background-position: left center; /* Posiziona il cane a sinistra */
-  background-repeat: no-repeat; /* Evita la ripetizione */
-  min-height: 100vh; /* Assicura che copra l'intera altezza */
-  padding-top: 100px; /* Aggiunge spazio dall'alto */
+  background-image: url('/assets/images/announce.jpg');
+  background-size: cover;
+  background-position: left center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding-top: 100px;
 }
 
-/* Contenitore principale del testo */
+
 .announcements-container {
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.8); /* Sfondo bianco semi-trasparente */
+  background-color: rgba(255, 255, 255, 0.8);
   border-radius: 8px;
   position: relative;
   z-index: 1;
-  text-align: left; /* Allinea il testo a sinistra */
-  margin-left: auto; /* Sposta il contenitore più a destra */
+  text-align: left;
+  margin-left: auto;
   margin-right: 5%;
 }
 
-/* Sezioni degli annunci */
+
 .announcement {
-  border: 1px solid #ddd; /* Bordo grigio chiaro */
-  border-radius: 8px; /* Angoli arrotondati */
-  padding: 1rem; /* Spazio interno */
-  margin-bottom: 1rem; /* Spazio tra i box */
-  background-color: #f9f9f9; /* Sfondo più chiaro per i box */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Aggiungi un'ombra leggera */
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Stile per i titoli principali */
+
 .announcements-container h1 {
-  font-size: 1.8rem; /* Testo più piccolo per il titolo principale */
-  margin-bottom: 1.5rem; /* Spazio sotto il titolo */
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
   color: #333;
   text-align: center;
 }
 
-/* Stile per il testo degli annunci */
+
 .announcement h2 {
-  font-size: 1.2rem; /* Testo più piccolo per i titoli */
-  margin-bottom: 0.5rem; /* Spazio sotto il titolo */
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
   color: #333;
 }
 
 .announcement p {
-  font-size: 0.9rem; /* Testo più piccolo per il paragrafo */
-  line-height: 1.5; /* Migliora la leggibilità */
-  color: #555; /* Colore del testo più chiaro */
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #555;
 }
 
-/* Spaziatura tra annunci */
+
 .announcement {
-  margin-top: 20px; /* Spazio extra sopra ogni annuncio */
+  margin-top: 20px;
 }

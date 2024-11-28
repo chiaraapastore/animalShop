@@ -11,6 +11,6 @@ export class ConfirmPageComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    document.body.classList.remove('confirm-page'); // Rimuove la classe quando il componente viene distrutto
+    document.body.classList.remove('confirm-page');
   }
 }

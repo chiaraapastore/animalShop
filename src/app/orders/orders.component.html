@@ -1,12 +1,12 @@
 <div class="orders-container">
   <h1>I tuoi ordini</h1>
 
-  <!-- Spinner di caricamento -->
+
   <div *ngIf="loading" class="loading-spinner">
     <p>Caricamento ordini...</p>
   </div>
 
-  <!-- Filtri -->
+
   <div class="filters" *ngIf="!loading && orders.length > 0">
     <input
       type="text"
@@ -22,7 +22,7 @@
     <button (click)="applyFilters()">Applica Filtri</button>
   </div>
 
-  <!-- Tabella degli ordini -->
+
   <table *ngIf="!loading && paginatedOrders.length > 0" class="table">
     <thead>
     <tr>
@@ -47,7 +47,7 @@
     </tbody>
   </table>
 
-  <!-- Popup di conferma -->
+
   <div *ngIf="showConfirmationPopup" class="popup-overlay"></div>
   <div *ngIf="showConfirmationPopup" class="confirmation-popup">
     <p>Sei sicuro di voler cancellare questo ordine?</p>
@@ -55,14 +55,14 @@
     <button class="cancel" (click)="cancelAction()">Annulla</button>
   </div>
 
-  <!-- Paginazione -->
+
   <div class="pagination" *ngIf="!loading && filteredOrders.length > pageSize">
     <button (click)="previousPage()" [disabled]="currentPage === 1">Indietro</button>
     <span>Pagina {{ currentPage }} di {{ totalPages }}</span>
     <button (click)="nextPage()" [disabled]="currentPage === totalPages">Avanti</button>
   </div>
 
-  <!-- Messaggio di errore -->
+
   <div *ngIf="errorMessage" class="error">
     <p>{{ errorMessage }}</p>
   </div>
