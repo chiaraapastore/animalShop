@@ -14,11 +14,13 @@ import { ProfileComponent } from './profile/profile.component';
 import { OrdersComponent } from './orders/orders.component';
 import { ErrorComponent } from './error/error.component';
 import {AdminComponent} from "./admin/admin.component";
+import {CreaProdottoComponent} from "./crea-prodotto/crea-prodotto.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   {path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: ['admin']}}, // Proteggi questa rotta per gli amministratori},
+  { path: 'aggiunta-prodotto', component: CreaProdottoComponent, canActivate: [AuthGuard], data: { roles: ['admin']} },
   { path: 'shop', component: ProductListComponent },
   { path: 'announcements', component: AnnouncementsComponent },
   { path: 'about-us', component: AboutUsComponent },

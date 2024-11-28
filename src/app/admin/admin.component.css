@@ -1,23 +1,27 @@
-/* Titoli principali */
+
+/* Contenitore principale della tabella */
+.table-responsive {
+  margin: 60px auto; /* Maggiore spazio sopra la tabella */
+  max-width: 90%;
+  overflow-x: auto;
+  border-radius: 8px;
+}
+/* Titolo della lista prodotti */
 h1, h2 {
+  margin-top: 60px; /* Maggiore spazio sopra il titolo */
   text-align: center;
-  margin-bottom: 15px;
-  margin-top: 30px; /* Sposta il titolo più in basso */
-  font-family: 'Arial', sans-serif;
-  font-weight: bold;
-  color: #000; /* Colore nero */
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
-/* Contenitore principale */
-.container {
-  margin-top: 70px; /* Spazio aggiuntivo sopra il contenitore */
-  margin-bottom: 50px; /* Spazio dal basso */
-}
-
-/* Stile tabella */
+/* Tabella */
 .table {
-  margin-top: 20px; /* Spazio sopra la tabella */
-  font-size: 14px;
+  margin-top: 50px; /* Aumento dello spazio sopra la tabella */
+  font-size: 12px; /* Font più piccolo per una visualizzazione compatta */
   border-collapse: collapse;
   color: #333;
 }
@@ -25,18 +29,19 @@ h1, h2 {
 .table th, .table td {
   text-align: center;
   vertical-align: middle;
-  padding: 12px; /* Spaziatura */
-  border: 1px solid #333;
+  padding: 10px; /* Spazio tra il testo e i bordi */
+  border: 1px solid #ddd;
 }
 
 .table th {
-  background-color: #000;
-  color: #fff;
+  background-color: #111;
+  color: white;
+  font-size: 13px; /* Font leggermente ridotto per l'intestazione */
 }
 
 /* Immagini nella tabella */
 .table img {
-  max-width: 70px;
+  max-width: 70px; /* Immagini più piccole */
   max-height: 70px;
   object-fit: cover;
   border-radius: 5px;
@@ -44,21 +49,33 @@ h1, h2 {
 
 /* Hover per righe della tabella */
 .table tbody tr:hover {
-  background-color: #f0f0f0;
+  background-color: #f8f8f8;
 }
 
-/* Bottone nella tabella */
+/* Pulsanti nella tabella */
 .table button {
   padding: 5px 10px;
-  font-size: 12px;
+  font-size: 11px; /* Pulsanti più piccoli */
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.table button:hover {
+  transform: scale(1.05); /* Aggiungi effetto di zoom al passaggio del mouse */
 }
 
 /* Pulsante "Aggiungi Prodotto" */
 .text-center .btn-success {
-  margin-top: 30px; /* Spazio sopra il pulsante */
-  margin-bottom: 30px; /* Spazio sotto il pulsante */
+  margin-top: 0;
+  margin-bottom: 50px; /* Spazio sotto il pulsante */
   background-color: #000;
   color: white;
+  border-radius: 25px;
+  padding: 10px 30px;
+  font-size: 14px;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
 }
 
 .text-center .btn-success:hover {
@@ -67,30 +84,47 @@ h1, h2 {
 
 /* Pulsanti di azione */
 .btn-primary {
-  background-color: #000;
+  background-color: #111;
   color: white;
-  border: none; /* Rimuove il bordo */
-  outline: none; /* Rimuove il contorno blu */
-  margin-right: 2px; /* Spazio tra "Modifica" ed "Elimina" */
+  border: none;
+  outline: none;
+  margin-right: 8px; /* Maggiore spazio tra i pulsanti */
+  padding: 6px 14px;
+  font-size: 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .btn-primary:hover {
   background-color: #333;
+  transform: scale(1.05);
 }
 
 .btn-danger {
-  background-color: #dc3545;
+  background-color: #e74c3c;
   color: white;
-  border: none; /* Rimuove il bordo */
-  outline: none; /* Rimuove il contorno blu */
+  border: none;
+  outline: none;
+  padding: 6px 14px;
+  font-size: 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .btn-danger:hover {
-  background-color: #bd2130;
+  background-color: #c0392b;
+  transform: scale(1.05);
 }
 
 /* Rimuove il focus blu sui bottoni */
 button:focus {
   outline: none;
   box-shadow: none;
+}
+
+/* Colori di sfondo più eleganti per la pagina */
+body {
+  background-color: #f4f4f4; /* Colore di sfondo più chiaro */
+  font-family: 'Arial', sans-serif;
+  color: #333;
 }

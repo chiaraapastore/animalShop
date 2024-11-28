@@ -15,10 +15,6 @@ export class ProductService {
   constructor(private http: HttpClient) {}
 
 
-  getCategories(): Observable<Category[]> {
-    return this.http.get<Category[]>(this.categoriesUrl);
-  }
-
   getProducts(page: number, size: number, sortBy: string, sortDir: string, category?: string, sizeProduct?: string): Observable<any> {
     let params = new HttpParams()
       .set('page', page.toString())
@@ -41,6 +37,16 @@ export class ProductService {
       })
     );
   }
+
+  getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.categoriesUrl).pipe(
+      catchError((error) => {
+        console.error('Errore durante il recupero delle categorie:', error);
+        return of([]); // Ritorna un array vuoto in caso di errore
+      })
+    );
+  }
+
 
   // Crea un nuovo prodotto
   createProduct(product: Product, categoryId: number): Observable<Product> {

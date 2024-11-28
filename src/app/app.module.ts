@@ -23,7 +23,7 @@ import { ErrorComponent } from './error/error.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { AdminComponent } from './admin/admin.component';
-import { ModalComponent } from './modal/modal.component';
+import { CreaProdottoComponent } from './crea-prodotto/crea-prodotto.component';
 
 
 
@@ -59,6 +59,7 @@ export function initializeKeycloak(keycloak: KeycloakService, platformId: Object
     HomeComponent,
     AboutUsComponent,
     ContactComponent,
+    CreaProdottoComponent,
     ProductListComponent,
     CartComponent,
     PaymentComponent,
@@ -67,7 +68,7 @@ export function initializeKeycloak(keycloak: KeycloakService, platformId: Object
     OrdersComponent,
     ErrorComponent,
     AdminComponent,
-    ModalComponent
+    CreaProdottoComponent
   ],
   imports: [
     BrowserModule,

@@ -19,11 +19,9 @@
         </td>
         <td>{{ product.productName }}</td>
         <td>
-          <!-- Campo di input per il prezzo -->
           <input type="number" [(ngModel)]="product.price" class="form-control form-control-sm" (blur)="updateProductPrice(product)" />
         </td>
         <td>
-          <!-- Campo di input per la quantità -->
           <input type="number" [(ngModel)]="product.availableQuantity" class="form-control form-control-sm" (blur)="updateProductQuantity(product)" />
         </td>
         <td>{{ product.categoryName }}</td>
@@ -37,15 +35,6 @@
   </div>
 
   <div class="text-center mt-5">
-    <button class="btn btn-success btn-lg w-50" data-bs-toggle="modal" data-bs-target="#productModal" (click)="openModal()">Aggiungi Prodotto</button>
+    <button class="btn btn-success btn-lg w-50" data-bs-toggle="modal" data-bs-target="#productModal" (click)="goToAddProduct()">Aggiungi Prodotto</button>
   </div>
-
-  <!-- Modale per aggiungere e gestire i prodotti -->
-  <app-modal
-    *ngIf="isModalOpen"
-    [products]="products"
-    (closeModal)="closeModal()"
-    (addProduct)="createProduct()"
-    (deleteProducts)="deleteProducts()">
-  </app-modal>
 </div>

@@ -32,9 +32,6 @@ export class AdminComponent implements OnInit {
   selectedCategory: string = '';
   filteredProducts: Product[] = [];
   totalProducts: number = 0;
-  isModalOpen: boolean = false;
-  isDeleteModalOpen: boolean = false;
-  productsToDeleteCount: number = 0;
 
   constructor(
     private productService: ProductService,
@@ -115,22 +112,6 @@ export class AdminComponent implements OnInit {
   }
 
 
-  createProduct(): void {
-    if (!this.isAdmin) return;
-    this.newProduct.category.id = this.categoryId;
-    this.productService.createProduct(this.newProduct, this.categoryId).subscribe({
-      next: () => {
-        this.toastr.success('Prodotto creato con successo!', 'Creazione completata');
-        this.loadProducts();
-      },
-      error: (err) => {
-        console.error('Errore nella creazione del prodotto:', err);
-        this.toastr.error('Errore durante la creazione del prodotto.', 'Errore');
-      },
-    });
-  }
-
-
 
   updateProductPrice(product: Product): void {
     const categoryId = product.category.id || this.categoryId;
@@ -180,49 +161,8 @@ export class AdminComponent implements OnInit {
   editProduct(product: Product): void {
     this.newProduct = { ...product };
   }
-
-  openModal(): void {
-    this.isModalOpen = true;
-  }
-
-  closeModal(): void {
-    this.isModalOpen = false;
-  }
-
-  openDeleteModal(): void {
-    this.isDeleteModalOpen = true;
-  }
-
-  closeDeleteModal(): void {
-    this.isDeleteModalOpen = false;
-  }
-
-  addProduct(product: Product): void {
-    console.log('Nuovo prodotto aggiunto:', product);
-  }
-
-  deleteProducts(): void {
-    if (this.productsToDeleteCount <= 0) {
-      console.error('Numero di prodotti da eliminare deve essere maggiore di 0');
-      return;
-    }
-
-    const productsToDelete = this.products.slice(0, this.productsToDeleteCount);
-    productsToDelete.forEach(product => {
-      this.productService.deleteProduct(product.id!).subscribe({
-        next: () => {
-          this.toastr.success('Prodotto eliminato con successo!', 'Eliminazione Completata');
-        },
-        error: (err) => {
-          console.error('Errore durante l\'eliminazione del prodotto:', err);
-          this.toastr.error('Errore durante l\'eliminazione del prodotto.', 'Errore');
-        }
-      });
-    });
-
-    this.toastr.success(`Eliminati ${this.productsToDeleteCount} prodotti.`);
-    this.loadProducts(); // Ricarica la lista dei prodotti
-    this.closeDeleteModal(); // Chiudi il modale di eliminazione
+  goToAddProduct(){
+    this.route.navigate(["/aggiunta-prodotto"])
   }
 
 
