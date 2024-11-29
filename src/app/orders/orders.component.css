@@ -10,6 +10,11 @@
   border-radius: 8px;
 }
 
+.button-actions {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
 
 .orders-container h1 {
   text-align: center;
