@@ -67,8 +67,6 @@ export class CartComponent implements OnInit {
             console.error("Errore durante il caricamento dei prodotti nel carrello:", error);
           }
         });
-      } else {
-        console.warn("Utente non autenticato");
       }
     } catch (error) {
       console.error("Errore durante il recupero dell'utente autenticato:", error);

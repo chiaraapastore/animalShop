@@ -45,20 +45,23 @@ export class OrdersComponent implements OnInit, OnDestroy {
   loadOrders(): void {
     this.loading = true;
     this.ordersService.getMyOrders().subscribe(
-      (orders) => {
+      (orders: Order[]) => {
+        console.log('Ordini caricati:', orders); // Debug
         this.orders = orders;
         this.filteredOrders = [...this.orders];
         this.updatePagination();
         this.loading = false;
         this.errorMessage = this.orders.length === 0 ? 'Non hai ancora effettuato alcun ordine.' : '';
       },
-      (error) => {
-        console.error('Errore nel caricamento degli ordini', error);
+      (error: any) => {
+        console.error('Errore nel caricamento degli ordini:', error); // Debug
         this.errorMessage = 'Si è verificato un errore nel recupero degli ordini. Riprova più tardi.';
         this.loading = false;
       }
     );
   }
+
+
 
   applyFilters(): void {
     this.filteredOrders = this.orders.filter((order) => {
@@ -117,10 +120,17 @@ export class OrdersComponent implements OnInit, OnDestroy {
     if (this.orderToCancelId !== null) {
       this.ordersService.cancelOrder(this.orderToCancelId).subscribe({
         next: () => {
-          this.orders = this.orders.filter(order => order.id !== this.orderToCancelId);
-          this.filteredOrders = this.filteredOrders.filter(order => order.id !== this.orderToCancelId);
+          // Trova l'ordine nella lista e aggiorna lo stato a "Cancelled"
+          const orderIndex = this.orders.findIndex(order => order.id === this.orderToCancelId);
+          if (orderIndex !== -1) {
+            this.orders[orderIndex].status = 'Cancelled';
+          }
+
+          // Aggiorna i filtri e la paginazione
+          this.applyFilters();
           this.updatePagination();
-          this.toastr.success('Ordine cancellato con successo.', 'Cancellazione Completata');
+
+          this.toastr.success('Ordine annullato con successo.', 'Cancellazione Completata');
           this.closePopup();
         },
         error: () => {
