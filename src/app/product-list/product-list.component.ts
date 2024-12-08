@@ -161,7 +161,7 @@ export class ProductListComponent implements OnInit {
         },
         error: (err) => {
           console.error('Errore durante l\'aggiunta del prodotto al carrello:', err);
-          this.toastr.error('Errore durante l\'aggiunta del prodotto al carrello.', 'Errore');
+          this.toastr.error('Errore durante l\'aggiunta del prodotto al carrello. Non è possibile aggiungere un prodotto con quantità 0 al carrello', 'Errore');
         }
       });
     } catch (err) {

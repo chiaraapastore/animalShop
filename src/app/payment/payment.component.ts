@@ -45,7 +45,7 @@ export class PaymentComponent implements OnInit {
           console.log("Carrello con prodotti", products);
           this.cartItems = products.map(product => ({
             product,
-            quantity: 1
+            quantity: product.quantity
           }));
           this.calculateTotalAmount();
         },
@@ -53,13 +53,11 @@ export class PaymentComponent implements OnInit {
           console.error("Errore nel caricare i prodotti del carrello:", error);
         }
       );
-    } else {
-      console.warn("User not logged in");
     }
   }
 
   calculateTotalAmount(): void {
-    this.totalAmount = this.cartItems.reduce((total, item) => total + (item.product.price * item.quantity), 0);
+    this.totalAmount = this.cartItems.reduce((total, item) => total + (item.product.product.price * item.quantity), 0);
   }
 
   async processPayment(): Promise<void> {

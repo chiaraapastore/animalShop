@@ -120,7 +120,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     if (this.orderToCancelId !== null) {
       this.ordersService.cancelOrder(this.orderToCancelId).subscribe({
         next: () => {
-          // Trova l'ordine nella lista e aggiorna lo stato a "Cancelled"
+
           const orderIndex = this.orders.findIndex(order => order.id === this.orderToCancelId);
           if (orderIndex !== -1) {
             this.orders[orderIndex].status = 'Cancelled';
@@ -149,6 +149,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
   closePopup(): void {
     this.showConfirmationPopup = false;
     this.orderToCancelId = null;
+    this.loadOrders();
   }
 
   nextPage(): void {

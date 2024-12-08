@@ -12,9 +12,6 @@ import {ToastrService} from "ngx-toastr";
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
 
-  get totalAmount(): number {
-    return this.cartItems.reduce((total, item) => total + (item.product.price * item.quantity), 0);
-  }
 
   constructor(
     private router: Router,
@@ -39,29 +36,17 @@ export class CartComponent implements OnInit {
           next: (products) => {
             console.log('Prodotti caricati dal backend:', products);
 
-
-            const savedCart = localStorage.getItem('cart');
-            const parsedCart = savedCart ? JSON.parse(savedCart) : {};
-
-
             this.cartItems = products.map(product => {
-              const savedQuantity = parsedCart[product.id]?.quantity;
-
-              const quantityToUse = savedQuantity !== undefined
-                ? Math.min(savedQuantity, product.availableQuantity)
-                : Math.min(product.quantity || 1, product.availableQuantity);
-
               return {
                 product: {
-                  ...product,
-                  imageUrl: this.getImageUrlForProduct(product.productName)
+                  ...product.product,
+                  imageUrl: this.getImageUrlForProduct(product.product.productName)
                 },
-                quantity: quantityToUse
+                quantity: product.quantity
               };
             });
-
-
-            this.saveCartToLocalStorage();
+            console.log("Prodotti carrello",this.cartItems)
+             // this.saveCartToLocalStorage();
           },
           error: (error) => {
             console.error("Errore durante il caricamento dei prodotti nel carrello:", error);
@@ -138,31 +123,27 @@ export class CartComponent implements OnInit {
 
 
   updateQuantity(item: any): void {
-    const maxQuantity = item.product.availableQuantity;
 
-    if (item.quantity < maxQuantity) {
       this.auth.getLoggedInUser().then(user => {
         if (user && user.username) {
           this.cartService.updateProductQuantity(item.product.id, item.quantity + 1, user.username)
-            .subscribe({
-              next: () => {
-                item.quantity++;
-                console.log(`Quantità aggiornata: ${item.quantity}`);
-                this.saveCartToLocalStorage();
-                this.toastr.success('Quantità aggiornata con successo', 'Successo');
-              },
-              error: (error) => {
-                console.error('Errore durante l\'aggiornamento:', error);
-                this.toastr.error('Errore durante l\'aggiornamento della quantità', 'Errore');
-              }
+            .toPromise()
+            .then(() => {
+              item.quantity++;
+              console.log(`Quantità aggiornata: ${item.quantity}`);
+              this.toastr.success('Quantità aggiornata con successo', 'Successo' );
+
+            })
+            .catch(error => {
+              console.error("Errore durante l'aggiornamento", error);
+              this.toastr.error('Errore durante l\'aggiornamento della quantità',  'Errore' );
+            })
+            .finally(() => {
+              item.isUpdating = false;
             });
         }
       });
-    } else {
-      this.toastr.warning(`Quantità massima disponibile (${maxQuantity}) raggiunta`, 'Attenzione');
-    }
   }
-
 
   async decreaseQuantity(item: any): Promise<void> {
     try {
@@ -175,7 +156,6 @@ export class CartComponent implements OnInit {
             next: () => {
               item.quantity--;
               console.log('Quantità aggiornata con successo');
-              this.saveCartToLocalStorage();
             },
             error: (error) => {
               console.error('Errore durante l\'aggiornamento della quantità:', error);
@@ -194,17 +174,28 @@ export class CartComponent implements OnInit {
   }
 
 
-  saveCartToLocalStorage(): void {
-    const cartData = this.cartItems.reduce((acc, item) => {
-      acc[item.product.id] = { quantity: item.quantity };
-      return acc;
-    }, {});
-    localStorage.setItem('cart', JSON.stringify(cartData));
-  }
+ // saveCartToLocalStorage(): void {
+ //    const cartData = this.cartItems.reduce((acc, item) => {
+ //      acc[item.product.id] = { quantity: item.quantity };
+ //      return acc;
+ //    }, {});
+ //    localStorage.setItem('cart', JSON.stringify(cartData));
+ //  }
 
 
   checkout(): void {
     localStorage.removeItem('cart');
     this.router.navigate(["/payment"]);
   }
+
+  get totalAmount(): number {
+    const total = this.cartItems.reduce((sum, item) => {
+      const price = item.product.price || 0;
+      const quantity = item.quantity || 0;
+      return sum + (price * quantity);
+    }, 0);
+    return total;
+  }
+
+
 }
