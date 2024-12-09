@@ -61,44 +61,6 @@ export class PaymentComponent implements OnInit {
     this.totalAmount = this.cartItems.reduce((total, item) => total + (item.product.product.price * item.quantity), 0);
   }
 
- /* async processPayment(): Promise<void> {
-
-    const user = await this.auth.getLoggedInUser();
-    if (!user || !user.username) {
-      console.error("Errore: Utente non autenticato.");
-      return;
-    }
-
-    if (this.totalAmount <= 0) {
-      console.error("Errore: Totale del pagamento non valido.");
-      return;
-    }
-
-    const payment: Payment = {
-      customerOrder: {
-        id: this.orderId,
-        items: this.cartItems,
-        totalAmount: this.totalAmount,
-      },
-      paymentDate: new Date().toISOString(),
-      paymentMethod: "Credit Card",
-      status: "PENDING",
-    };
-
-    console.log("Dati del pagamento inviati:", payment);
-
-    this.paymentService.createPayment(payment).subscribe({
-      next: (savedPayment: Payment) => {
-        console.log("Pagamento effettuato con successo!", savedPayment);
-        this.goToConfirmPage();
-      },
-      error: (err: any) => {
-        console.error("Errore nel creare il pagamento:", err);
-      },
-    });
-  }
-*/
-
   async processPayment(): Promise<void> {
     const user = await this.auth.getLoggedInUser();
     if (!user || !user.username) {

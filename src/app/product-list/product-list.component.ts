@@ -192,7 +192,6 @@ export class ProductListComponent implements OnInit {
       'Snack Naturali per Cani': '/assets/images/snack-naturali.jpg',
       'Taglia Unghie per Cani': '/assets/images/taglia-unghie.jpg',
       'Cuccia per Cani': '/assets/images/cuccia.jpg',
-      'Spazzola per Cani': '/assets/images/spazzola.jpg',
       'Pettorina Comfort per Cani': '/assets/images/pettorina.jpg',
       'Museruola per Cani': '/assets/images/museruola.jpg',
       'Guinzaglio Retrattile per Cani': '/assets/images/guinzaglio.jpg',
@@ -200,7 +199,7 @@ export class ProductListComponent implements OnInit {
       'Crocchette per Cani di Taglia Media': '/assets/images/crocchette-cani-taglia-media.jpg',
       'Cuscino Comodo per Cani': '/assets/images/cuscino.jpg'
     };
-    return images[productName] || '/assets/images/default.jpg';
+    return images[productName];
   }
 
   onCategorySelect(categoryName: string): void {

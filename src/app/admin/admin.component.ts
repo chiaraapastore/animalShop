@@ -100,7 +100,6 @@ export class AdminComponent implements OnInit {
       'Snack Naturali per Cani': '/assets/images/snack-naturali.jpg',
       'Taglia Unghie per Cani': '/assets/images/taglia-unghie.jpg',
       'Cuccia per Cani': '/assets/images/cuccia.jpg',
-      'Spazzola per Cani': '/assets/images/spazzola.jpg',
       'Pettorina Comfort per Cani': '/assets/images/pettorina.jpg',
       'Museruola per Cani': '/assets/images/museruola.jpg',
       'Guinzaglio Retrattile per Cani': '/assets/images/guinzaglio.jpg',
