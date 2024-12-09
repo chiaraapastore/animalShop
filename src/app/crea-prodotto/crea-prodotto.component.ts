@@ -52,8 +52,6 @@ export class CreaProdottoComponent implements OnInit {
 
   createProduct(): void {
     console.log('Categoria selezionata prima della verifica:', this.selectedCategory);
-
-
     if (!this.selectedCategory) {
       this.toastr.warning('Seleziona una categoria valida.', 'Attenzione');
       return;
@@ -62,9 +60,8 @@ export class CreaProdottoComponent implements OnInit {
 
     this.newProduct.category = this.selectedCategory;
     this.newProduct.categoryName = this.selectedCategory.categoryName;
-
     console.log('Categoria selezionata:', this.selectedCategory);
-
+    console.log('Prodotto creato:', this.newProduct);
 
     if (this.isValidProduct(this.newProduct)) {
       console.log('Creazione prodotto: ', this.newProduct);
@@ -73,7 +70,6 @@ export class CreaProdottoComponent implements OnInit {
       this.productService.createProduct(this.newProduct, this.newProduct.category.id)
         .subscribe({
           next: (response) => {
-
             this.toastr.success('Prodotto creato con successo!', 'Creazione completata');
             this.route.navigate(['/admin']);
           },
@@ -86,16 +82,15 @@ export class CreaProdottoComponent implements OnInit {
 
       this.toastr.warning('Per favore, completa tutti i campi obbligatori.', 'Attenzione');
     }
+
   }
-
-
 
   isValidProduct(product: Product): boolean {
     return (
       product.productName !== '' &&
       product.price > 0 &&
       product.imageUrl !== '' &&
-      product.quantity > 0 &&
+      product.availableQuantity > 0 &&
       product.category.id > 0
     );
   }

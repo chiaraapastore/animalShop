@@ -7,7 +7,7 @@
   </div>
 
 
-  <form *ngIf="categoriesLoaded" (ngSubmit)="createProduct()">
+  <form *ngIf="categoriesLoaded">
     <div>
       <label for="productName">Nome prodotto</label>
       <input type="text" id="productName" [(ngModel)]="newProduct.productName" name="productName" required />
@@ -24,8 +24,8 @@
     </div>
 
     <div>
-      <label for="quantity">Quantità</label>
-      <input type="number" id="quantity" [(ngModel)]="newProduct.quantity" name="quantity" min="0" required />
+      <label for="availableQuantity">Quantità</label>
+      <input type="number" id="availableQuantity" [(ngModel)]="newProduct.availableQuantity" name="availableQuantity" min="0" required />
     </div>
 
 
@@ -37,7 +37,7 @@
     </div>
 
 
-    <button type="submit">Crea Prodotto</button>
+    <button type="button" (click)="createProduct()">Crea Prodotto</button>
     <button [routerLink]="['/admin']">Torna alla lista</button>
   </form>
 </div>
