@@ -5,6 +5,7 @@ import { PaymentService } from "../services/payment.service";
 import { CartService } from "../services/cart.service";
 import {AuthenticationService} from "../auth/authenticationService";
 
+
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
@@ -60,7 +61,7 @@ export class PaymentComponent implements OnInit {
     this.totalAmount = this.cartItems.reduce((total, item) => total + (item.product.product.price * item.quantity), 0);
   }
 
-  async processPayment(): Promise<void> {
+ /* async processPayment(): Promise<void> {
 
     const user = await this.auth.getLoggedInUser();
     if (!user || !user.username) {
@@ -96,8 +97,53 @@ export class PaymentComponent implements OnInit {
       },
     });
   }
+*/
 
+  async processPayment(): Promise<void> {
+    const user = await this.auth.getLoggedInUser();
+    if (!user || !user.username) {
+      console.error("Errore: Utente non autenticato.");
+      return;
+    }
 
+    this.paymentService.checkout().subscribe({
+      next: (ordine) => {
+        console.log("Checkout completato con successo!", ordine);
+        this.orderId = ordine.id;
+        this.completePayment();
+      },
+      error: (err) => {
+        console.error("Errore durante il checkout:", err);
+      },
+    });
+  }
+
+  completePayment(): void {
+    if (!this.orderId) {
+      console.error("Errore: ID dell'ordine non presente.");
+      return;
+    }
+
+    const payment: Payment = {
+      id: this.orderId,
+      paymentDate: new Date().toISOString(),
+      paymentMethod: "Credit Card",
+      status: "PENDING",
+    };
+
+    console.log("Payload inviato per il pagamento:", payment);
+
+    this.paymentService.acquista(payment).subscribe({
+      next: (savedPayment) => {
+        console.log("Pagamento completato con successo!", savedPayment);
+        this.goToConfirmPage();
+      },
+      error: (err) => {
+        console.error("Errore durante il pagamento:", err);
+        alert("Errore durante il pagamento. Verifica e riprova.");
+      },
+    });
+  }
 
   goToConfirmPage() {
     this.router.navigate(["/confirm-page"]);
