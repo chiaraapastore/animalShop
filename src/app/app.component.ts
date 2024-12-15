@@ -111,9 +111,6 @@ export class AppComponent implements OnInit{
     });
   }
 
-
-
-
   private saveUserToBackend(userDetails: any): void {
     this.utenteService.createUser(userDetails).subscribe({
       next: (response) => {

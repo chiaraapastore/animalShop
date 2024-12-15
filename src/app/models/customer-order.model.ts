@@ -1,3 +1,5 @@
+import {OrderProduct} from "./order-product.model";
+
 export interface CustomerOrder {
   id: number;
   utenteShopId: number;
@@ -9,8 +11,3 @@ export interface CustomerOrder {
   orderProducts: OrderProduct[];
 }
 
-export interface OrderProduct {
-  id: number;
-  productId: number;
-  quantity: number;
-}

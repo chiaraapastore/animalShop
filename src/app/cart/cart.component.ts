@@ -46,7 +46,6 @@ export class CartComponent implements OnInit {
               };
             });
             console.log("Prodotti carrello",this.cartItems)
-             // this.saveCartToLocalStorage();
           },
           error: (error) => {
             console.error("Errore durante il caricamento dei prodotti nel carrello:", error);
@@ -109,7 +108,7 @@ export class CartComponent implements OnInit {
           error: (error) => {
             console.error('Errore durante la rimozione del prodotto:', error);
             this.toastr.error('Errore durante la rimozione del prodotto', 'Errore');
-            this.loadCartProducts(); // Ricarica il carrello in caso di errore
+            this.loadCartProducts();
           }
         });
       } else {

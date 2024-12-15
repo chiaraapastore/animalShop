@@ -4,6 +4,7 @@ import { Payment } from "../models/payment.model";
 import { PaymentService } from "../services/payment.service";
 import { CartService } from "../services/cart.service";
 import {AuthenticationService} from "../auth/authenticationService";
+import {ToastrService} from "ngx-toastr";
 
 
 @Component({
@@ -28,6 +29,7 @@ export class PaymentComponent implements OnInit {
     private paymentService: PaymentService,
     private cartService: CartService,
     private auth: AuthenticationService,
+    private toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -102,10 +104,42 @@ export class PaymentComponent implements OnInit {
       },
       error: (err) => {
         console.error("Errore durante il pagamento:", err);
-        alert("Errore durante il pagamento. Verifica e riprova.");
       },
     });
   }
+  annullaOrdine(): void {
+    this.paymentService.checkout().subscribe({
+      next: (ordine) => {
+        if (!ordine || !ordine.id) {
+          this.toastr.error('Errore durante il checkout. Ordine non valido.');
+          console.error('Errore: ID ordine non restituito dal backend.');
+          return;
+        }
+
+        const orderId = ordine.id;
+        console.log('ID ordine generato dal checkout per annullamento:', orderId);
+
+        this.toastr.info('Sto annullando l\'ordine...', 'Conferma');
+
+
+        this.paymentService.annullaOrdine(orderId).subscribe({
+          next: () => {
+            this.toastr.success('Ordine annullato con successo.', 'Successo');
+
+            this.router.navigate(['/shop']);
+          },
+          error: (error) => {
+            console.error('Errore durante l\'annullamento dell\'ordine:', error);
+          },
+        });
+      },
+      error: (err) => {
+        console.error('Errore durante il checkout:', err);
+        this.toastr.error('Errore durante il checkout.', 'Errore');
+      },
+    });
+  }
+
 
   goToConfirmPage() {
     this.router.navigate(["/confirm-page"]);

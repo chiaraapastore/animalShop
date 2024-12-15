@@ -46,7 +46,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.ordersService.getMyOrders().subscribe(
       (orders: Order[]) => {
-        console.log('Ordini caricati:', orders); // Debug
+        console.log('Ordini caricati:', orders);
         this.orders = orders;
         this.filteredOrders = [...this.orders];
         this.updatePagination();
@@ -54,7 +54,7 @@ export class OrdersComponent implements OnInit, OnDestroy {
         this.errorMessage = this.orders.length === 0 ? 'Non hai ancora effettuato alcun ordine.' : '';
       },
       (error: any) => {
-        console.error('Errore nel caricamento degli ordini:', error); // Debug
+        console.error('Errore nel caricamento degli ordini:', error);
         this.errorMessage = 'Si è verificato un errore nel recupero degli ordini. Riprova più tardi.';
         this.loading = false;
       }
@@ -126,7 +126,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
             this.orders[orderIndex].status = 'Cancelled';
           }
 
-          // Aggiorna i filtri e la paginazione
           this.applyFilters();
           this.updatePagination();
 

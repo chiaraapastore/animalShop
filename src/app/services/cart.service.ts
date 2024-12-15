@@ -3,7 +3,6 @@ import {Cart} from "../models/cart.model";
 import {Order} from "../models/order.model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Injectable} from "@angular/core";
-import {Product} from "../models/product.model";
 import {CartProduct} from "../models/cartProduct.model";
 
 
@@ -15,16 +14,15 @@ export class CartService {
 
   constructor(private http: HttpClient) {}
 
-  addProductToCart(productId: string, quantity: number = 1, userName: string): Observable<Cart> {
+  addProductToCart(productId: string, quantity: number = 1, username: string): Observable<Cart> {
     if (quantity <= 0) {
       throw new Error('Quantità non valida. Non è possibile aggiungere un prodotto con quantità 0 al carrello.');
     }
 
-    const payload = { productId, quantity, userName };
+    const payload = { productId, quantity, username };
     console.log("Payload inviato:", payload);
     return this.http.post<Cart>(`${this.apiUrl}/addProductToCart`, payload);
   }
-
 
 
   checkout(cartId: number): Observable<Order> {

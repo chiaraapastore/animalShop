@@ -1,4 +1,4 @@
-<div class="payment-background"></div>
+<div class="payment-background" xmlns:click></div>
 
 <div class="d-flex justify-content-center align-items-center min-vh-100">
   <div class="d-flex flex-wrap payment-container" style="width: 100%; max-width: 900px;">
@@ -12,7 +12,7 @@
             <i class="fab fa-cc-amex fa-2x mx-2 amex-icon"></i>
           </div>
 
-          <form (ngSubmit)="processPayment()" #paymentForm="ngForm" novalidate>
+          <form  #paymentForm="ngForm" novalidate>
             <div class="form-group">
               <label for="cardHolderName">Nome del Titolare</label>
               <input type="text" id="cardHolderName" class="form-control" [(ngModel)]="cardHolderName" name="cardHolderName" required #cardHolderNameField="ngModel">
@@ -55,8 +55,8 @@
               <div *ngIf="billingAddressField.invalid && billingAddressField.touched" class="text-danger">L'indirizzo di fatturazione è obbligatorio.
               </div>
             </div>
-            <button type="submit" class="btn btn-dark mt-3" [disabled]="paymentForm.invalid">Concludi Pagamento
-            </button>
+            <button (click)="processPayment()" type="button" class="btn btn-dark mt-3" [disabled]="paymentForm.invalid">Concludi Pagamento</button>
+            <button (click)="annullaOrdine()" type="button" class="btn btn-dark mt-3">Annulla Pagamento</button>
           </form>
         </div>
       </div>

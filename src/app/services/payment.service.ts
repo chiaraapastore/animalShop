@@ -12,10 +12,6 @@ export class PaymentService {
 
   constructor(private http: HttpClient) {}
 
-  /*createPayment(payment: Payment): Observable<Payment> {
-    return this.http.post<Payment>(`${this.apiUrl}/createPayment`, payment);
-  }*/
-
 
   checkout(): Observable<CustomerOrder> {
     return this.http.post<CustomerOrder>(`${this.apiUrl}/checkout`, {});
@@ -24,6 +20,11 @@ export class PaymentService {
   acquista(payment: Payment): Observable<Payment> {
     return this.http.post<Payment>(`${this.apiUrl}/acquista`, payment);
   }
+
+  annullaOrdine(orderId: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${orderId}/cancel`, null, { responseType: 'text' });
+  }
+
 
 
 }
